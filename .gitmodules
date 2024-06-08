@@ -1,0 +1,3 @@
+[submodule "src/RebelMint"]
+	path = src/RebelMint
+	url = https://github.com/RebelMint/RebelMint.git
