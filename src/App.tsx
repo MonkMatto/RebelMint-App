@@ -7,36 +7,47 @@ function App() {
     const contractAddress = searchParams.get('contract')
     const [inputAddress, setInputAddress] = useState<string>()
     useEffect(() => {}, [inputAddress])
-    //0xfbE3687896B583E9E9727a58BD96207f35fD015c
+    //0x078AAdc0Bf407B3845603B2Fe5f66eB51A5AF4ed
     if (contractAddress) {
         return (
-            <div className="flex h-[100svh] w-[100vw] justify-center bg-blue-200 align-middle">
-                <RebelMint contractAddress={contractAddress} />
+            <div className="flex h-[100svh] flex-col items-center justify-center">
+                <h1>This is an app running the RebelMint Component</h1>
+                <div className="flex h-[80svh] w-[80vw] justify-center bg-blue-200 align-middle">
+                    <RebelMint contractAddress={contractAddress} />
+                </div>
             </div>
         )
     } else {
         return (
-            <>
-                <h1>Please enter a Contract Address</h1>
-                <p>/?contract=0x62d8cf316aD924D887533e67BC7067De3cE124eB</p>
+            <div className="flex h-[100svh] w-[100vw] flex-col items-center justify-center">
+                <h1 className="text-2xl">Please enter a Contract Address</h1>
                 <form
+                    className="text-md mb-5 flex flex-col gap-2"
                     onSubmit={(e) => {
                         e.preventDefault()
                         setSearchParams(
                             inputAddress ? { contract: inputAddress } : ''
                         )
-                        // setSearchParams({e.target.value})
                     }}
                 >
                     <input
-                        className="bg-black"
+                        className="w-[26rem] rounded-md border-2 border-black p-2"
                         onChange={(e) => {
                             setInputAddress(e.target.value)
                         }}
                     ></input>
-                    <button type="submit"></button>
+                    <button
+                        type="submit"
+                        className="h-[5rem] w-[26rem] rounded-lg bg-black text-white"
+                    >
+                        Load Contract
+                    </button>
                 </form>
-            </>
+                <p className="text-sm">or enter this into the url</p>
+                <p className="text-sm">
+                    /?contract=0x078AAdc0Bf407B3845603B2Fe5f66eB51A5AF4ed
+                </p>
+            </div>
         )
     }
 }
