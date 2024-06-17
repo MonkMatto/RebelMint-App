@@ -13,7 +13,10 @@ function App() {
             <div className="flex h-[100svh] flex-col items-center justify-center">
                 <h1>This is an app running the RebelMint Component</h1>
                 <div className="flex h-[80svh] w-[80vw] justify-center bg-blue-200 align-middle">
-                    <RebelMint contractAddress={contractAddress} />
+                    <RebelMint
+                        contractAddress={contractAddress}
+                        chain="sepolia"
+                    />
                 </div>
             </div>
         )
