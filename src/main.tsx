@@ -1,10 +1,22 @@
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './output.css'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import TokenBuilder from './pages/TokenBuilder.tsx'
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <App />,
+    },
+    {
+        path: '/tokenbuilder',
+        element: <TokenBuilder />,
+    },
+])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <Router>
-        <App />
-    </Router>
+    <div className="h-fit w-full">
+        <RouterProvider router={router} />
+    </div>
 )
