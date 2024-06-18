@@ -1,4 +1,7 @@
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
+import TraitInputs from '../components/TraitInputs'
+import CustomMetadataInputs from '../components/CustomMetadataInputs'
+import TokenPreview from '../components/TokenPreview'
 
 interface Trait {
     trait_type: string
@@ -13,43 +16,29 @@ interface CustomMetadata {
 interface FormStruct {
     name: string
     artist: string
-    externalUrl: string
+    external_url: string
     description: string
     image: string
-    animation: string
-    traits: Trait[]
+    animation_url: string
+    attributes: Trait[]
     customMetadata: CustomMetadata[]
+    [key: string]: any // Allows for custom metadata fields
 }
 
 const TokenBuilder = () => {
     const [form, setForm] = useState<FormStruct>({
         name: '',
         artist: '',
-        externalUrl: '',
+        external_url: '',
         description: '',
         image: '',
-        animation: '',
-        traits: [],
-        customMetadata: [],
+        animation_url: '',
+        attributes: [],
+        customMetadata: [], // Initialize custom metadata
     })
 
     const [errors, setErrors] = useState<number[]>([])
-    const [selectedInputIndex, setSelectedInputIndex] = useState<number | null>(
-        null
-    )
-    const [focusedInput, setFocusedInput] = useState<
-        | 'name'
-        | 'artist'
-        | 'externalUrl'
-        | 'description'
-        | 'image'
-        | 'animation'
-        | 'trait_type'
-        | 'value'
-        | 'metadata_key'
-        | 'metadata_value'
-        | null
-    >(null)
+    const [focusedInput, setFocusedInput] = useState<string | null>(null)
     const focusedElementRef = useRef<
         HTMLInputElement | HTMLTextAreaElement | null
     >(null)
@@ -62,28 +51,16 @@ const TokenBuilder = () => {
             ...prevForm,
             [name]: value,
         }))
-
-        setFocusedInput(
-            name as
-                | 'name'
-                | 'artist'
-                | 'externalUrl'
-                | 'description'
-                | 'image'
-                | 'animation'
-                | 'trait_type'
-                | 'metadata_key'
-                | 'metadata_value'
-                | 'value'
-                | null
-        )
+        setFocusedInput(name)
     }
 
     const checkForDuplicates = (
-        traits: Trait[],
+        attributes: Trait[],
         customMetadata: CustomMetadata[]
     ) => {
-        const traitNames = traits.map((trait) => trait.trait_type.toLowerCase())
+        const traitNames = attributes.map((trait) =>
+            trait.trait_type.toLowerCase()
+        )
         const metadataKeys = customMetadata.map((metadata) =>
             metadata.key.toLowerCase()
         )
@@ -107,7 +84,7 @@ const TokenBuilder = () => {
                 traitNames.includes(key) ||
                 formKeys.includes(key)
             ) {
-                duplicates.add(index + traits.length)
+                duplicates.add(index + attributes.length)
             }
         })
 
@@ -122,26 +99,24 @@ const TokenBuilder = () => {
             inputType: 'trait_type' | 'value'
         ) => {
             setForm((prevForm) => {
-                const newTraits = [...prevForm.traits]
-                newTraits[index] = {
-                    ...newTraits[index],
+                const newAttributes = [...prevForm.attributes]
+                newAttributes[index] = {
+                    ...newAttributes[index],
                     [field]: value,
                 }
 
                 const duplicates = checkForDuplicates(
-                    newTraits,
-                    prevForm.customMetadata
+                    newAttributes,
+                    form.customMetadata || []
                 )
                 setErrors(duplicates)
 
                 return {
                     ...prevForm,
-                    traits: newTraits,
+                    attributes: newAttributes,
                 }
             })
-
-            setSelectedInputIndex(index) // Remember the selected input
-            setFocusedInput(inputType) // Remember the focused input type
+            setFocusedInput(`attribute-${index}-${field}`)
         },
         [form]
     )
@@ -154,14 +129,14 @@ const TokenBuilder = () => {
             inputType: 'metadata_key' | 'metadata_value'
         ) => {
             setForm((prevForm) => {
-                const newMetadata = [...prevForm.customMetadata]
+                const newMetadata = [...(prevForm.customMetadata || [])]
                 newMetadata[index] = {
                     ...newMetadata[index],
                     [field]: value,
                 }
 
                 const duplicates = checkForDuplicates(
-                    prevForm.traits,
+                    prevForm.attributes,
                     newMetadata
                 )
                 setErrors(duplicates)
@@ -171,9 +146,7 @@ const TokenBuilder = () => {
                     customMetadata: newMetadata,
                 }
             })
-
-            setSelectedInputIndex(index + form.traits.length) // Remember the selected input
-            setFocusedInput(inputType) // Remember the focused input type
+            setFocusedInput(`metadata-${index}-${field}`)
         },
         [form]
     )
@@ -181,209 +154,82 @@ const TokenBuilder = () => {
     const addTrait = () => {
         setForm((prevForm) => ({
             ...prevForm,
-            traits: [...prevForm.traits, { trait_type: '', value: '' }],
+            attributes: [...prevForm.attributes, { trait_type: '', value: '' }],
         }))
+        setFocusedInput(`attribute-${form.attributes.length}-trait_type`)
     }
 
     const addMetadata = () => {
         setForm((prevForm) => ({
             ...prevForm,
             customMetadata: [
-                ...prevForm.customMetadata,
+                ...(prevForm.customMetadata || []),
                 { key: '', value: '' },
             ],
         }))
+        setFocusedInput(`metadata-${form.customMetadata.length}-key`)
     }
 
     useEffect(() => {
-        // Restore focus to the previously focused element
-        if (focusedElementRef.current) {
-            focusedElementRef.current.focus()
+        const [type, index, field] = (focusedInput || '').split('-')
+        let targetRef = null
+        if (type === 'attribute') {
+            targetRef =
+                field === 'trait_type'
+                    ? focusedElementRef.current
+                    : focusedElementRef.current
+        } else if (type === 'metadata') {
+            targetRef =
+                field === 'metadata_key'
+                    ? focusedElementRef.current
+                    : focusedElementRef.current
+        } else {
+            targetRef = document.querySelector(`[name="${focusedInput}"]`)
+        }
+        if (targetRef) {
+            ;(targetRef as HTMLInputElement | HTMLTextAreaElement).focus()
         }
     }, [form])
 
-    const TraitInputs = () => {
-        const traitTypeRefs = useRef<(HTMLInputElement | null)[]>([])
-        const valueTypeRefs = useRef<(HTMLInputElement | null)[]>([])
+    const prepareMetadataForExport = () => {
+        const { customMetadata, attributes, ...rest } = form
 
-        useEffect(() => {
-            // Focus on the last edited trait input on render
-            if (selectedInputIndex !== null && focusedInput !== null) {
-                if (
-                    focusedInput === 'trait_type' &&
-                    traitTypeRefs.current[selectedInputIndex]
-                ) {
-                    focusedElementRef.current =
-                        traitTypeRefs.current[selectedInputIndex]
-                } else if (
-                    focusedInput === 'value' &&
-                    valueTypeRefs.current[selectedInputIndex]
-                ) {
-                    focusedElementRef.current =
-                        valueTypeRefs.current[selectedInputIndex]
-                }
-            }
-        }, [selectedInputIndex, focusedInput])
-
-        const inputClass =
-            'flex-1 p-3 border-2 bg-bgcol border-textcol rounded-lg'
-
-        return (
-            <div className="mb-12 flex h-fit w-full flex-col gap-5">
-                <h1 className="text-2xl font-bold">Traits</h1>
-                {form.traits.map((trait, index) => (
-                    <div key={index} className="flex flex-col gap-1">
-                        <div className="flex gap-5">
-                            <input
-                                ref={(ref) =>
-                                    (traitTypeRefs.current[index] = ref)
-                                }
-                                className={`${inputClass} ${errors.includes(index) ? 'border-red-500' : ''}`}
-                                placeholder="Trait Type"
-                                value={trait.trait_type}
-                                onChange={(e) =>
-                                    handleTraitChange(
-                                        index,
-                                        'trait_type',
-                                        e.target.value,
-                                        'trait_type'
-                                    )
-                                }
-                            />
-                            <input
-                                ref={(ref) =>
-                                    (valueTypeRefs.current[index] = ref)
-                                }
-                                className={`${inputClass} ${errors.includes(index) ? 'border-red-500' : ''}`}
-                                placeholder="Value"
-                                value={trait.value}
-                                onChange={(e) =>
-                                    handleTraitChange(
-                                        index,
-                                        'value',
-                                        e.target.value,
-                                        'value'
-                                    )
-                                }
-                            />
-                        </div>
-                    </div>
-                ))}
-                {errors.some((index) => index < form.traits.length) && (
-                    <p className="text-red-500">
-                        Trait keys must be unique and cannot match form keys or
-                        custom metadata keys.
-                    </p>
-                )}
-                <button
-                    className="border-textcol w-1/3 rounded-lg border-2 p-3 hover:invert-[10%] active:invert-[20%]"
-                    type="button"
-                    onClick={addTrait}
-                >
-                    Add Trait
-                </button>
-            </div>
+        // Filter out attributes with empty trait_type or value
+        const filteredAttributes = attributes.filter(
+            (attr) => attr.trait_type && attr.value
         )
-    }
 
-    const CustomMetadataInputs = () => {
-        const metadataKeyRefs = useRef<(HTMLInputElement | null)[]>([])
-        const metadataValueRefs = useRef<(HTMLInputElement | null)[]>([])
-
-        useEffect(() => {
-            // Focus on the last edited metadata input on render
-            if (
-                focusedInput === 'metadata_key' ||
-                focusedInput === 'metadata_value'
-            ) {
-                const lastEditedIndex =
-                    focusedInput === 'metadata_key'
-                        ? metadataKeyRefs.current.length - 1
-                        : metadataValueRefs.current.length - 1
-
-                if (
-                    focusedInput === 'metadata_key' &&
-                    metadataKeyRefs.current[lastEditedIndex]
-                ) {
-                    focusedElementRef.current =
-                        metadataKeyRefs.current[lastEditedIndex]
-                } else if (
-                    focusedInput === 'metadata_value' &&
-                    metadataValueRefs.current[lastEditedIndex]
-                ) {
-                    focusedElementRef.current =
-                        metadataValueRefs.current[lastEditedIndex]
+        // Prepare the metadata object
+        const metadata: { [key: string]: any } = {
+            ...customMetadata.reduce<{ [key: string]: string }>((acc, item) => {
+                if (item.key && item.value) {
+                    acc[item.key] = item.value
                 }
+                return acc
+            }, {}),
+        }
+
+        // Add non-empty attributes array if there are attributes
+        if (filteredAttributes.length > 0) {
+            metadata.attributes = filteredAttributes
+        }
+
+        // Add other fields from the form if they have a value
+        Object.keys(rest).forEach((key) => {
+            if (rest[key]) {
+                metadata[key] = rest[key]
             }
-        }, [focusedInput])
+        })
 
-        const inputClass =
-            'flex-1 p-3 border-2 bg-bgcol border-textcol rounded-lg'
-
-        return (
-            <div className="mb-12 flex h-fit w-full flex-col gap-5">
-                <h1 className="text-2xl font-bold">Custom Metadata</h1>
-                {form.customMetadata.map((metadata, index) => (
-                    <div key={index} className="flex flex-col gap-1">
-                        <div className="flex gap-5">
-                            <input
-                                ref={(ref) =>
-                                    (metadataKeyRefs.current[index] = ref)
-                                }
-                                className={`${inputClass} ${errors.includes(index + form.traits.length) ? 'border-red-500' : ''}`}
-                                placeholder="Metadata Key"
-                                value={metadata.key}
-                                onChange={(e) =>
-                                    handleMetadataChange(
-                                        index,
-                                        'key',
-                                        e.target.value,
-                                        'metadata_key'
-                                    )
-                                }
-                            />
-                            <input
-                                ref={(ref) =>
-                                    (metadataValueRefs.current[index] = ref)
-                                }
-                                className={`${inputClass} ${errors.includes(index + form.traits.length) ? 'border-red-500' : ''}`}
-                                placeholder="Metadata Value"
-                                value={metadata.value}
-                                onChange={(e) =>
-                                    handleMetadataChange(
-                                        index,
-                                        'value',
-                                        e.target.value,
-                                        'metadata_value'
-                                    )
-                                }
-                            />
-                        </div>
-                    </div>
-                ))}
-                {errors.some((index) => index >= form.traits.length) && (
-                    <p className="text-red-500">
-                        Metadata keys must be unique and cannot match form keys
-                        or trait keys.
-                    </p>
-                )}
-                <button
-                    className="border-textcol w-1/3 rounded-lg border-2 p-3 hover:invert-[10%] active:invert-[20%]"
-                    type="button"
-                    onClick={addMetadata}
-                >
-                    Add Metadata
-                </button>
-            </div>
-        )
-    }
-
-    const metadata = JSON.stringify(form, null, 2)
-    const copyToClipboard = async () => {
-        await navigator.clipboard.writeText(metadata)
+        return JSON.stringify(metadata, null, 2)
     }
 
     const inputClass = 'flex-1 p-3 border-2 bg-bgcol border-textcol rounded-lg'
+
+    const metadata = prepareMetadataForExport()
+    const copyToClipboard = async () => {
+        await navigator.clipboard.writeText(metadata)
+    }
 
     return (
         <div className="bg-bgcol text-textcol mint-h-[100svh] font-satoshi flex h-fit w-full flex-col items-center p-24">
@@ -412,14 +258,14 @@ const TokenBuilder = () => {
                     />
                     <input
                         className={inputClass}
-                        name="externalUrl"
+                        name="external_url"
                         placeholder="External URL"
-                        value={form.externalUrl}
+                        value={form.external_url}
                         onChange={handleChange}
                     />
                 </div>
                 <textarea
-                    className="border-textcol bg-bgcol h-[40svh] w-full rounded-lg border-2 p-3"
+                    className={`${inputClass} border-textcol h-[40svh] w-full rounded-lg border-2 p-3`}
                     name="description"
                     placeholder="Token Description"
                     value={form.description}
@@ -435,23 +281,41 @@ const TokenBuilder = () => {
                     />
                     <input
                         className={inputClass}
-                        name="animation"
+                        name="animation_url"
                         placeholder="Animation or HTML URL (optional)"
-                        value={form.animation}
+                        value={form.animation_url}
                         onChange={handleChange}
                     />
                 </div>
-                <TraitInputs />
-                <CustomMetadataInputs />
+                <TraitInputs
+                    attributes={form.attributes}
+                    errors={errors}
+                    handleTraitChange={handleTraitChange}
+                    addTrait={addTrait}
+                    focusedElementRef={focusedElementRef}
+                    setFocusedInput={setFocusedInput}
+                />
+                <CustomMetadataInputs
+                    customMetadata={form.customMetadata}
+                    errors={errors}
+                    handleMetadataChange={handleMetadataChange}
+                    addMetadata={addMetadata}
+                    focusedElementRef={focusedElementRef}
+                    setFocusedInput={setFocusedInput}
+                />
             </form>
-
+            <h1 className="mb-6 mt-5 w-full text-5xl font-bold">
+                Metadata Output
+            </h1>
             <div
                 id="metadata-display"
                 onClick={copyToClipboard}
-                className="border-textcol h-fit min-h-10 w-full cursor-copy rounded-lg border-2 p-3 hover:invert-[10%] active:invert-[20%]"
+                className="border-textcol mb-24 h-fit min-h-10 w-full cursor-copy rounded-lg border-2 p-3 hover:invert-[10%] active:invert-[20%]"
             >
                 {metadata}
             </div>
+            <h1 className="mb-6 text-5xl font-bold">Token Preview</h1>
+            <TokenPreview metadata={metadata} />
         </div>
     )
 }

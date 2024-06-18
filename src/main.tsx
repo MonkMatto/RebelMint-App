@@ -3,6 +3,7 @@ import App from './App.tsx'
 import './output.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import TokenBuilder from './pages/TokenBuilder.tsx'
+import TokenPreviewPage from './pages/TokenPreviewPage.tsx'
 
 const router = createBrowserRouter([
     {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
     {
         path: '/tokenbuilder',
         element: <TokenBuilder />,
+    },
+    {
+        path: '/tokenpreviewer',
+        element: <TokenPreviewPage />,
     },
 ])
 
