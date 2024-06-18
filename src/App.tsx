@@ -15,7 +15,7 @@ function App() {
                 <div className="flex h-[80svh] w-[80vw] justify-center bg-blue-200 align-middle">
                     <RebelMint
                         contractAddress={contractAddress}
-                        chain="sepolia"
+                        chain={'sepolia'}
                     />
                 </div>
             </div>
