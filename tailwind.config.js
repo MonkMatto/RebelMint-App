@@ -7,7 +7,19 @@ export default {
         '!./src/components/RebelMint/node_modules/**/*.{html,js,ts,tsx,jsx}',
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                satoshi: ['Satoshi'],
+            },
+            colors: {
+                textcol: '#ffffff',
+                bgcol: '#11191E',
+                bghover: '#2a2a2a',
+                card: '#3c3c3c',
+                cardhover: '#4e4e4e',
+                accent: '#E66799',
+            },
+        },
     },
     plugins: [],
 }
