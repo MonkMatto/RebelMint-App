@@ -4,6 +4,8 @@ import './output.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import TokenBuilder from './pages/TokenBuilder.tsx'
 import TokenPreviewPage from './pages/TokenPreviewPage.tsx'
+import ContractBuilderPage from './pages/ContractBuilder.tsx'
+import PageWrapper from './components/PageWrapper.tsx'
 
 const router = createBrowserRouter([
     {
@@ -17,6 +19,14 @@ const router = createBrowserRouter([
     {
         path: '/tokenpreviewer',
         element: <TokenPreviewPage />,
+    },
+    {
+        path: '/createcontract',
+        element: (
+            <PageWrapper>
+                <ContractBuilderPage />
+            </PageWrapper>
+        ),
     },
 ])
 
