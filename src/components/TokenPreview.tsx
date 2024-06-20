@@ -20,6 +20,27 @@ interface FormStruct {
     [key: string]: any // Allows for custom metadata fields
 }
 
+const filterKeys = (obj: FormStruct) => {
+    const keysToExclude = [
+        'name',
+        'artist',
+        'external_url',
+        'description',
+        'image',
+        'animation_url',
+        'attributes',
+    ]
+
+    const result: { [key: string]: any } = {}
+    for (const key in obj) {
+        if (!keysToExclude.includes(key)) {
+            result[key] = obj[key]
+        }
+    }
+
+    return result
+}
+
 export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
     const token = JSON.parse(metadata) as FormStruct
     const { name, image, description, attributes, animation_url, artist } =
@@ -27,6 +48,8 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
     const style = {
         '--image-url': ` url(${image})`,
     } as React.CSSProperties
+
+    const customData = JSON.stringify(filterKeys(token))
 
     const openInNewTab = () => {
         window.open(
@@ -42,8 +65,8 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
                 <div className="mt-auto flex flex-wrap gap-2 justify-self-end overflow-y-auto">
                     {attributes.map((a: traitStruct, index: number) => (
                         <div key={index} className="bg-card flex w-fit p-1">
-                            <p key={index}>{a.trait_type + ': '}</p>
-                            <p key={index + attributes.length}>{a.value}</p>
+                            <p key={index}>{`${a.trait_type}: ${a.value}`}</p>
+                            {/* <p key={index + attributes.length}>{a.value}</p> */}
                         </div>
                     ))}
                 </div>
@@ -95,7 +118,7 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
     }
 
     return (
-        <div className="flex h-full w-full items-center justify-center">
+        <div className="flex h-full w-full flex-col items-center justify-center">
             <div
                 onClick={(e) => {
                     e.stopPropagation()
@@ -111,13 +134,13 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
                         id="OM-popup-token-info"
                         className="flex h-full w-1/2 flex-col justify-start"
                     >
-                        <h1 className="text-center text-2xl font-bold">
+                        <h1 className="mb-1 w-full text-2xl font-bold">
                             {name}
                         </h1>
-                        <h1 className="mb-8 text-center text-lg font-light">
+                        <h1 className="mb-8 w-full text-lg font-light">
                             {artist ? `by ${artist}` : ''}
                         </h1>
-                        <p className="max-h-96 overflow-y-auto text-wrap font-light">
+                        <p className="mb-8 max-h-96 flex-1 overflow-y-auto text-wrap font-light">
                             {description}
                         </p>
 
@@ -125,6 +148,9 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
                     </div>
                 </div>
             </div>
+            <p id="custom-data-preview" className="mt-8 w-full">
+                {`Custom Metadata: ${customData ? customData : ''}`}
+            </p>
         </div>
     )
 }

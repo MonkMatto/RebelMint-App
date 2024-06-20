@@ -310,7 +310,7 @@ const TokenBuilder = () => {
             <div
                 id="metadata-display"
                 onClick={copyToClipboard}
-                className="border-textcol mb-24 h-fit min-h-10 w-full cursor-copy rounded-lg border-2 p-3 hover:invert-[10%] active:invert-[20%]"
+                className="border-textcol mb-24 h-fit min-h-10 w-full cursor-copy overflow-hidden text-wrap rounded-lg border-2 p-3 hover:invert-[10%] active:invert-[20%]"
             >
                 {metadata}
             </div>
