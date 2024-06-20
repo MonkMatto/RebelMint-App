@@ -22,6 +22,7 @@ interface ABIEntry {
 }
 
 interface Version {
+    simpleName: string
     ABI: ABIEntry[]
     bytecode: string
 }
@@ -32,6 +33,7 @@ interface VersionData {
 
 const versionData: VersionData = {
     v0j0: {
+        simpleName: 'Version 0',
         ABI: [
             {
                 inputs: [],

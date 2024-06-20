@@ -5,35 +5,27 @@ import {
     useWaitForTransactionReceipt,
     useWalletClient,
 } from 'wagmi'
-import { sepolia, mainnet, base, baseSepolia } from 'wagmi/chains'
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 
 const versions = ['v0j0'] as const
-const chains = {
-    mainnet: mainnet,
-    sepolia: sepolia,
-    base: base,
-    baseSepolia: baseSepolia,
-} as const
-
 type Version = (typeof versions)[number]
-type ChainKey = keyof typeof chains
 
 const ContractBuilderPage = () => {
+    const { address, chain, chainId } = useAccount()
+    const { open } = useWeb3Modal()
+
+    const { data: walletClient } = useWalletClient({ chainId: chain?.id })
     const [version, setVersion] = useState<Version>(versions[0])
-    const [chainSelected, setChainSelected] = useState<ChainKey>('sepolia')
     const [contractAddress, setContractAddress] = useState<string | null>(null)
     const [recentHash, setRecentHash] = useState<`0x${string}` | undefined>(
         undefined
     )
-    const chain = chains[chainSelected]
 
-    const scanURL = chain ? chain.blockExplorers.default.url : ''
-    const chainId = chain.id
+    const scanURL =
+        chain && chain.blockExplorers ? chain.blockExplorers.default.url : ''
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         if (e.target.name === 'version') setVersion(e.target.value as Version)
-        if (e.target.name === 'chain')
-            setChainSelected(e.target.value as ChainKey)
     }
 
     const {
@@ -44,9 +36,8 @@ const ContractBuilderPage = () => {
         hash: recentHash,
     })
 
-    const { data: walletClient } = useWalletClient({ chainId })
     const { ABI, bytecode } = versionData[version]
-    const { address } = useAccount()
+
     async function onSubmit() {
         if (!walletClient) {
             console.error('Wallet client not available')
@@ -67,14 +58,14 @@ const ContractBuilderPage = () => {
                     args: [],
                 })
             console.log(hash)
-            console.log(scanURL + '/tx/' + recentHash)
+            console.log(scanURL + '/tx/' + hash)
             setRecentHash(hash)
         } catch (error) {
             console.error('Error deploying contract:', error)
         }
     }
     const createContract = () => {
-        console.log(`Creating contract version ${version} on ${chain.name}`)
+        console.log(`Creating contract version ${version} on ${chain?.name}`)
         onSubmit()
     }
 
@@ -86,78 +77,108 @@ const ContractBuilderPage = () => {
         console.log(scanURL + '/tx/' + recentHash)
     }, [receipt, recentHash])
 
+    if (!address || !chain || !chainId) {
+        return (
+            <div className="bg-bgcol text-textcol font-satoshi flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap p-24 text-9xl font-bold">
+                <div className="fixed right-0 top-0 m-5">
+                    <w3m-network-button />
+                </div>
+                <span className="text-justify leading-[10rem]">
+                    <span
+                        onClick={() => {
+                            open()
+                        }}
+                    >
+                        Please Connect Wallet with
+                    </span>
+                    <a href="https://basescan.org/" target="_blank">
+                        <span className="text-red-500"> Base </span>
+                    </a>
+                    <span>to use the RebelMint Contract Creator</span>
+                </span>
+            </div>
+        )
+    }
+
     return (
         <div className="bg-bgcol text-textcol font-satoshi flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 p-24">
-            <div className="fixed right-0 top-0 m-5">
-                <w3m-button balance="hide" />
-            </div>
-            <h1 className="mt-5 w-full text-5xl font-bold">
-                Create New RebelMint Contract
-            </h1>
-            <p className="text-md mb-10 mt-5 w-full">
-                Creates a new RebelMint Contract on the chain of your choosing
-            </p>
-            <div className="flex w-full gap-5">
-                <select
-                    name="version"
-                    value={version}
-                    onChange={handleChange}
-                    className="bg-bgcol border-textcol h-fit flex-1 rounded-lg border-2 p-5"
-                >
-                    {versions.map((option) => (
-                        <option
-                            key={option}
-                            value={option}
-                            className="font-bold"
+            {!recentHash && (
+                <div className="flex h-fit w-full flex-col gap-5">
+                    <div className="fixed right-0 top-0 m-5">
+                        <w3m-network-button />
+                    </div>
+                    <h1 className="mt-5 w-full text-5xl font-bold">
+                        Create New RebelMint Contract
+                    </h1>
+                    <p className="text-md mb-10 mt-5 w-full">
+                        Creates a new RebelMint Contract on the chain of your
+                        choosing
+                    </p>
+
+                    <div className="flex w-full gap-5">
+                        <select
+                            name="version"
+                            value={version}
+                            onChange={handleChange}
+                            className="bg-bgcol border-textcol h-fit flex-1 rounded-lg border-2 p-5"
                         >
-                            {option}
-                        </option>
-                    ))}
-                </select>
-                <select
-                    name="chain"
-                    value={chainSelected}
-                    onChange={handleChange}
-                    className="bg-bgcol border-textcol h-fit flex-1 rounded-lg border-2 p-5"
-                >
-                    {Object.keys(chains).map((option) => (
-                        <option
-                            key={option}
-                            value={option}
-                            className="font-bold"
-                        >
-                            {option}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <button
-                onClick={createContract}
-                className="bg-textcol border-bgcol text-bgcol h-fit w-full rounded-lg border-2 p-5 font-bold"
-            >
-                Create Contract
-            </button>
-            {isPending && recentHash && (
-                <div className="flex h-24 w-52 items-center justify-center bg-yellow-400 text-center">
-                    Pending
+                            {versions.map((option) => (
+                                <option
+                                    key={option}
+                                    value={option}
+                                    className="font-bold"
+                                >
+                                    {option}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <button
+                        onClick={createContract}
+                        disabled={recentHash != undefined}
+                        className="bg-textcol border-bgcol text-bgcol h-fit w-full rounded-lg border-2 p-5 font-bold disabled:invert-[30%]"
+                    >
+                        {`Create Contract on ${chain.name}`}
+                    </button>
                 </div>
             )}
-            {isSuccess && (
-                <a href={scanURL + '/tx/' + recentHash} target="_blank">
-                    <div className="flex h-24 w-52 items-center justify-center bg-green-400 text-center">
-                        {` Success, View Transaction On ${chain.blockExplorers.default.name}`}
+            {isPending && recentHash && !isSuccess && (
+                <div className="mt-24 flex h-fit w-full flex-col items-center justify-center gap-5 p-5">
+                    <h1>{`Please do not refresh or leave the page`}</h1>
+                    <div className="text-bgcol flex h-24 w-52 items-center justify-center rounded-lg bg-yellow-200 text-center">
+                        {`Deploying Contract to ${chain.name}...`}
                     </div>
-                </a>
+                </div>
             )}
-            {contractAddress && (
-                <a
-                    href={scanURL + '/address/' + contractAddress}
-                    target="_blank"
-                >
-                    <div className="flex h-24 w-52 items-center justify-center bg-blue-400 text-center">
-                        {`Contract Address: ${contractAddress} /n View On ${chain.blockExplorers.default.name}`}
+            {isSuccess && contractAddress && (
+                <div className="flex h-[60svh] flex-col items-center justify-center gap-12">
+                    <div className="flex items-center justify-center text-center text-9xl font-bold">
+                        {`CONTRACT DEPLOYED`}
                     </div>
-                </a>
+                    <a href={scanURL + '/tx/' + recentHash} target="_blank">
+                        <div className="flex h-fit w-fit items-center justify-center rounded-lg p-1 text-center">
+                            {`View Transaction On ${chain.blockExplorers.default.name}`}
+                        </div>
+                    </a>
+
+                    <a
+                        href={scanURL + '/address/' + contractAddress}
+                        target="_blank"
+                    >
+                        <div className="border-textcol flex h-24 w-fit items-center justify-center rounded-lg border-2 p-5 text-center font-bold">
+                            {`View Contract On ${chain.blockExplorers.default.name}`}
+                        </div>
+                    </a>
+                    <a
+                        href={`/tokenmanager/?contractaddress=${contractAddress}`}
+                        target="_blank"
+                    >
+                        <div className="border-textcol bg-textcol text-bgcol flex h-24 w-fit items-center justify-center rounded-lg border-2 p-5 text-center text-3xl font-bold">
+                            {`Next Step: Manage tokens ->`}
+                        </div>
+                    </a>
+                </div>
             )}
         </div>
     )

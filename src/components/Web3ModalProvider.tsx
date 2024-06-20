@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 
 import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
 import { WagmiProvider } from 'wagmi'
-import { sepolia, base, mainnet, baseSepolia } from 'wagmi/chains'
+import { base, baseSepolia } from 'wagmi/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 interface Web3ModalProviderProps {
@@ -23,7 +23,7 @@ const metadata = {
     icons: ['https://avatars.githubusercontent.com/u/37784886'],
 }
 
-const chains = [mainnet, sepolia, base, baseSepolia] as const
+const chains = [base, baseSepolia] as const
 const config = defaultWagmiConfig({
     chains,
     projectId,
