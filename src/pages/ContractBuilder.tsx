@@ -7,33 +7,33 @@ import {
 } from 'wagmi'
 import { sepolia, mainnet, base, baseSepolia } from 'wagmi/chains'
 
-const ContractBuilderPage = () => {
-    const versions = ['v0j0']
-    const chains = {
-        mainnet: mainnet,
-        sepolia: sepolia,
-        base: base,
-        baseSepolia: baseSepolia,
-    }
-    const [version, setVersion] = useState(versions[0])
-    const [chain, setChain] = useState('sepolia')
-    const scanURL = chains[chain]
-        ? chains[chain].blockExplorers.default.url
-        : ''
+const versions = ['v0j0'] as const
+const chains = {
+    mainnet: mainnet,
+    sepolia: sepolia,
+    base: base,
+    baseSepolia: baseSepolia,
+} as const
 
-    const chainName = chains[chain].name
-    console.log(scanURL)
+type Version = (typeof versions)[number]
+type ChainKey = keyof typeof chains
+
+const ContractBuilderPage = () => {
+    const [version, setVersion] = useState<Version>(versions[0])
+    const [chainSelected, setChainSelected] = useState<ChainKey>('sepolia')
     const [contractAddress, setContractAddress] = useState<string | null>(null)
-    const chainId = chains[chain].id
     const [recentHash, setRecentHash] = useState<`0x${string}` | undefined>(
         undefined
     )
-    const { ABI, bytecode } = versionData[version]
-    const { address } = useAccount()
+    const chain = chains[chainSelected]
+
+    const scanURL = chain ? chain.blockExplorers.default.url : ''
+    const chainId = chain.id
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        if (e.target.name === 'version') setVersion(e.target.value)
-        if (e.target.name === 'chain') setChain(e.target.value)
+        if (e.target.name === 'version') setVersion(e.target.value as Version)
+        if (e.target.name === 'chain')
+            setChainSelected(e.target.value as ChainKey)
     }
 
     const {
@@ -45,14 +45,8 @@ const ContractBuilderPage = () => {
     })
 
     const { data: walletClient } = useWalletClient({ chainId })
-
-    useEffect(() => {
-        if (isSuccess && receipt?.contractAddress) {
-            console.log('New contract deployed at:', receipt.contractAddress)
-            setContractAddress(receipt.contractAddress)
-        }
-    }, [isSuccess, receipt])
-
+    const { ABI, bytecode } = versionData[version]
+    const { address } = useAccount()
     async function onSubmit() {
         if (!walletClient) {
             console.error('Wallet client not available')
@@ -79,15 +73,18 @@ const ContractBuilderPage = () => {
             console.error('Error deploying contract:', error)
         }
     }
-
     const createContract = () => {
-        console.log(`Creating contract version ${version} on ${chain}`)
+        console.log(`Creating contract version ${version} on ${chain.name}`)
         onSubmit()
     }
 
     useEffect(() => {
+        if (receipt?.contractAddress) {
+            setContractAddress(receipt.contractAddress)
+        }
+        // Log link to transaction
         console.log(scanURL + '/tx/' + recentHash)
-    }, [recentHash])
+    }, [receipt, recentHash])
 
     return (
         <div className="bg-bgcol text-textcol font-satoshi flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 p-24">
@@ -119,7 +116,7 @@ const ContractBuilderPage = () => {
                 </select>
                 <select
                     name="chain"
-                    value={chain}
+                    value={chainSelected}
                     onChange={handleChange}
                     className="bg-bgcol border-textcol h-fit flex-1 rounded-lg border-2 p-5"
                 >
@@ -140,15 +137,25 @@ const ContractBuilderPage = () => {
             >
                 Create Contract
             </button>
-            {isPending && (
+            {isPending && recentHash && (
                 <div className="flex h-24 w-52 items-center justify-center bg-yellow-400 text-center">
                     Pending
                 </div>
             )}
             {isSuccess && (
-                <a href={scanURL + '/tx/' + recentHash}>
+                <a href={scanURL + '/tx/' + recentHash} target="_blank">
                     <div className="flex h-24 w-52 items-center justify-center bg-green-400 text-center">
-                        Success
+                        {` Success, View Transaction On ${chain.blockExplorers.default.name}`}
+                    </div>
+                </a>
+            )}
+            {contractAddress && (
+                <a
+                    href={scanURL + '/address/' + contractAddress}
+                    target="_blank"
+                >
+                    <div className="flex h-24 w-52 items-center justify-center bg-blue-400 text-center">
+                        {`Contract Address: ${contractAddress} /n View On ${chain.blockExplorers.default.name}`}
                     </div>
                 </a>
             )}
