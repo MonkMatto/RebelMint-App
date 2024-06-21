@@ -158,7 +158,7 @@ const ContractBuilderPage = () => {
                     </div>
                     <a href={scanURL + '/tx/' + recentHash} target="_blank">
                         <div className="flex h-fit w-fit items-center justify-center rounded-lg p-1 text-center">
-                            {`View Transaction On ${chain.blockExplorers.default.name}`}
+                            {`View Transaction On ${chain && chain.blockExplorers ? chain.blockExplorers.default.name : ''}`}
                         </div>
                     </a>
 
@@ -167,7 +167,7 @@ const ContractBuilderPage = () => {
                         target="_blank"
                     >
                         <div className="border-textcol flex h-24 w-fit items-center justify-center rounded-lg border-2 p-5 text-center font-bold">
-                            {`View Contract On ${chain.blockExplorers.default.name}`}
+                            {`View Contract On ${chain && chain.blockExplorers ? chain.blockExplorers.default.name : ''}`}
                         </div>
                     </a>
                     <a
