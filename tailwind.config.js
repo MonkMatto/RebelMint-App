@@ -17,6 +17,7 @@ export default {
                 bghover: '#2a2a2a',
                 card: '#3c3c3c',
                 cardhover: '#4e4e4e',
+                depth: '#eeeeee',
                 accent: '#E66799',
             },
         },

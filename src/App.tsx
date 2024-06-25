@@ -25,10 +25,26 @@ function App() {
         )
     } else {
         return (
-            <div className="flex h-[100svh] w-[100vw] flex-col items-center justify-center">
-                <h1 className="text-2xl">Please enter a Contract Address</h1>
+            <div className="flex h-fit min-h-[100svh] w-[100vw] flex-col items-center justify-center p-3 md:p-10">
+                <div
+                    id="hero"
+                    className="mb-24 mt-[30svh] flex flex-col items-center rounded-lg bg-bgcol p-10 text-textcol"
+                >
+                    <h1 className="mb-4 text-5xl font-extrabold md:text-9xl">
+                        REBELMINT
+                    </h1>
+                    <p>{`WEB3 STOREFRONTS`}</p>
+                </div>
+                <span className="mb-2 text-base font-extralight md:text-lg">
+                    <span>Enter a shop's</span>
+                    <span className="bg-depth m-1 font-normal">
+                        {' '}
+                        Contract Address{' '}
+                    </span>
+                    <span>to view the listings</span>
+                </span>
                 <form
-                    className="text-md mb-5 flex flex-col gap-2"
+                    className="mb-6 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
                     onSubmit={(e) => {
                         e.preventDefault()
                         setSearchParams(
@@ -37,22 +53,57 @@ function App() {
                     }}
                 >
                     <input
-                        className="w-[26rem] rounded-md border-2 border-black p-2"
+                        className="h-[3rem] w-[23rem] rounded-md border-2 border-black p-2 md:w-[26rem]"
                         onChange={(e) => {
                             setInputAddress(e.target.value)
                         }}
                     ></input>
                     <button
                         type="submit"
-                        className="h-[5rem] w-[26rem] rounded-lg bg-black text-white"
+                        className="h-[3rem] w-[23rem] rounded-lg bg-black text-white hover:invert-[5%] active:invert-[10%] md:w-[26rem] lg:w-fit lg:px-4"
                     >
-                        Load Contract
+                        Load Shop
                     </button>
                 </form>
-                <p className="text-sm">or enter this into the url</p>
-                <p className="text-sm">
-                    /?contract=0x078AAdc0Bf407B3845603B2Fe5f66eB51A5AF4ed
-                </p>
+                <button
+                    onClick={() => {
+                        setSearchParams({
+                            contract:
+                                '0x078aadc0bf407b3845603b2fe5f66eb51a5af4ed',
+                        })
+                    }}
+                    className="bg-depth mb-52 h-[2rem] w-[13rem] rounded-lg text-sm text-black hover:invert-[5%] active:invert-[10%]"
+                >
+                    Or view this example storefront
+                </button>
+                <div className="bg-depth flex flex-col p-5">
+                    <h1 className="mb-4 flex items-center justify-center font-semibold">
+                        TOOLS
+                    </h1>
+                    <div className="grid grid-cols-1 gap-4 font-bold md:grid-cols-2">
+                        <a
+                            href="/tokenbuilder"
+                            className="flex w-64 items-center justify-center gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
+                        >
+                            <img src="create.svg" />
+                            TOKEN BUILDER
+                        </a>
+                        <a
+                            href="/tokenpreviewer"
+                            className="flex w-64 items-center justify-center gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
+                        >
+                            <img src="eye.svg" />
+                            TOKEN PREVIEWER
+                        </a>
+                        <a
+                            href="/createContract"
+                            className="flex w-64 items-center justify-center gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
+                        >
+                            <img src="store.svg" />
+                            CONTRACT BUILDER
+                        </a>
+                    </div>
+                </div>
             </div>
         )
     }
