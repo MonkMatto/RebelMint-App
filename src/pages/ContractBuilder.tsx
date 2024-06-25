@@ -79,7 +79,7 @@ const ContractBuilderPage = () => {
 
     if (!address || !chain || !chainId) {
         return (
-            <div className="bg-bgcol text-textcol font-satoshi flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap p-24 text-9xl font-bold">
+            <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi text-9xl font-bold text-textcol">
                 <div className="fixed right-0 top-0 m-5">
                     <w3m-network-button />
                 </div>
@@ -101,7 +101,7 @@ const ContractBuilderPage = () => {
     }
 
     return (
-        <div className="bg-bgcol text-textcol font-satoshi flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 p-24">
+        <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 bg-bgcol p-24 font-satoshi text-textcol">
             {!recentHash && (
                 <div className="flex h-fit w-full flex-col gap-5">
                     <div className="fixed right-0 top-0 m-5">
@@ -120,7 +120,7 @@ const ContractBuilderPage = () => {
                             name="version"
                             value={version}
                             onChange={handleChange}
-                            className="bg-bgcol border-textcol h-fit flex-1 rounded-lg border-2 p-5"
+                            className="h-fit flex-1 rounded-lg border-2 border-textcol bg-bgcol p-5"
                         >
                             {versions.map((option) => (
                                 <option
@@ -137,7 +137,7 @@ const ContractBuilderPage = () => {
                     <button
                         onClick={createContract}
                         disabled={recentHash != undefined}
-                        className="bg-textcol border-bgcol text-bgcol h-fit w-full rounded-lg border-2 p-5 font-bold disabled:invert-[30%]"
+                        className="h-fit w-full rounded-lg border-2 border-bgcol bg-textcol p-5 font-bold text-bgcol disabled:invert-[30%]"
                     >
                         {`Create Contract on ${chain.name}`}
                     </button>
@@ -146,7 +146,7 @@ const ContractBuilderPage = () => {
             {isPending && recentHash && !isSuccess && (
                 <div className="mt-24 flex h-fit w-full flex-col items-center justify-center gap-5 p-5">
                     <h1>{`Please do not refresh or leave the page`}</h1>
-                    <div className="text-bgcol flex h-24 w-52 items-center justify-center rounded-lg bg-yellow-200 text-center">
+                    <div className="flex h-24 w-52 items-center justify-center rounded-lg bg-yellow-200 text-center text-bgcol">
                         {`Deploying Contract to ${chain.name}...`}
                     </div>
                 </div>
@@ -166,7 +166,7 @@ const ContractBuilderPage = () => {
                         href={scanURL + '/address/' + contractAddress}
                         target="_blank"
                     >
-                        <div className="border-textcol flex h-24 w-fit items-center justify-center rounded-lg border-2 p-5 text-center font-bold">
+                        <div className="flex h-24 w-fit items-center justify-center rounded-lg border-2 border-textcol p-5 text-center font-bold">
                             {`View Contract On ${chain && chain.blockExplorers ? chain.blockExplorers.default.name : ''}`}
                         </div>
                     </a>
@@ -174,7 +174,7 @@ const ContractBuilderPage = () => {
                         href={`/tokenmanager/?contractaddress=${contractAddress}`}
                         target="_blank"
                     >
-                        <div className="border-textcol bg-textcol text-bgcol flex h-24 w-fit items-center justify-center rounded-lg border-2 p-5 text-center text-3xl font-bold">
+                        <div className="flex h-24 w-fit items-center justify-center rounded-lg border-2 border-textcol bg-textcol p-5 text-center text-3xl font-bold text-bgcol">
                             {`Next Step: Manage tokens ->`}
                         </div>
                     </a>
