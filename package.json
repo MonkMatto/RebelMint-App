@@ -12,10 +12,12 @@
     },
     "dependencies": {
         "@web3modal/wagmi": "^5.0.2",
+        "ethers": "^6.13.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.23.1",
         "wagmi": "^2.10.3",
+        "web3": "^4.10.0",
         "web3modal": "^1.9.12"
     },
     "devDependencies": {
