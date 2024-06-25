@@ -5,8 +5,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "install-all": "npm install && cd /src/RebelMint && npm install",
-        "build": "tsc && install-all && vite build",
+        "install-all": "npm ci && cd /src/RebelMint && npm ci",
+        "build": "tsc && vite build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview"
     },

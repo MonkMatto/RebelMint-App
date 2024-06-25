@@ -95,8 +95,8 @@ const TokenBuilder = () => {
         (
             index: number,
             field: keyof Trait,
-            value: string,
-            inputType: 'trait_type' | 'value'
+            value: string
+            // inputType: 'trait_type' | 'value'
         ) => {
             setForm((prevForm) => {
                 const newAttributes = [...prevForm.attributes]
@@ -125,8 +125,8 @@ const TokenBuilder = () => {
         (
             index: number,
             field: keyof CustomMetadata,
-            value: string,
-            inputType: 'metadata_key' | 'metadata_value'
+            value: string
+            // inputType: 'metadata_key' | 'metadata_value'
         ) => {
             setForm((prevForm) => {
                 const newMetadata = [...(prevForm.customMetadata || [])]
@@ -171,7 +171,7 @@ const TokenBuilder = () => {
     }
 
     useEffect(() => {
-        const [type, index, field] = (focusedInput || '').split('-')
+        const [type, field] = (focusedInput || '').split('-')
         let targetRef = null
         if (type === 'attribute') {
             targetRef =
@@ -232,7 +232,7 @@ const TokenBuilder = () => {
     }
 
     return (
-        <div className="bg-bgcol text-textcol mint-h-[100svh] font-satoshi flex h-fit w-full flex-col items-center p-24">
+        <div className="mint-h-[100svh] flex h-fit w-full flex-col items-center bg-bgcol p-24 font-satoshi text-textcol">
             <h1 className="mt-5 w-full text-5xl font-bold">
                 Token Metadata Builder
             </h1>
@@ -265,7 +265,7 @@ const TokenBuilder = () => {
                     />
                 </div>
                 <textarea
-                    className={`${inputClass} border-textcol h-[40svh] w-full rounded-lg border-2 p-3`}
+                    className={`${inputClass} h-[40svh] w-full rounded-lg border-2 border-textcol p-3`}
                     name="description"
                     placeholder="Token Description"
                     value={form.description}
@@ -310,7 +310,7 @@ const TokenBuilder = () => {
             <div
                 id="metadata-display"
                 onClick={copyToClipboard}
-                className="border-textcol mb-24 h-fit min-h-10 w-full cursor-copy overflow-hidden text-wrap rounded-lg border-2 p-3 hover:invert-[10%] active:invert-[20%]"
+                className="mb-24 h-fit min-h-10 w-full cursor-copy overflow-hidden text-wrap rounded-lg border-2 border-textcol p-3 hover:invert-[10%] active:invert-[20%]"
             >
                 {metadata}
             </div>
