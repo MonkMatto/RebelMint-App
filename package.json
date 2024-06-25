@@ -5,14 +5,18 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "tsc && vite build",
+        "install-all": "npm install && cd /src/RebelMint && npm install",
+        "build": "tsc && install-all && vite build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview"
     },
     "dependencies": {
+        "@web3modal/wagmi": "^5.0.2",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-router-dom": "^6.23.1"
+        "react-router-dom": "^6.23.1",
+        "wagmi": "^2.10.3",
+        "web3modal": "^1.9.12"
     },
     "devDependencies": {
         "@types/react": "^18.2.15",
