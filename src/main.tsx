@@ -5,7 +5,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import TokenBuilder from './pages/TokenBuilder.tsx'
 import TokenPreviewPage from './pages/TokenPreviewPage.tsx'
 import ContractBuilderPage from './pages/ContractBuilder.tsx'
-import PageWrapper from './components/PageWrapper.tsx'
+import { Web3ModalProvider } from './components/Web3ModalProvider.tsx'
+import TokenManager from './pages/TokenManager.tsx'
+import EditContract from './pages/EditContract.tsx'
 
 const router = createBrowserRouter([
     {
@@ -22,16 +24,22 @@ const router = createBrowserRouter([
     },
     {
         path: '/createcontract',
-        element: (
-            <PageWrapper>
-                <ContractBuilderPage />
-            </PageWrapper>
-        ),
+        element: <ContractBuilderPage />,
+    },
+    {
+        path: '/tokenmanager',
+        element: <TokenManager />,
+    },
+    {
+        path: '/editcontract',
+        element: <EditContract />,
     },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <div className="h-fit w-full">
-        <RouterProvider router={router} />
+        <Web3ModalProvider>
+            <RouterProvider router={router} />
+        </Web3ModalProvider>
     </div>
 )

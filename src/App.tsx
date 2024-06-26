@@ -15,12 +15,12 @@ function App() {
     //0x078AAdc0Bf407B3845603B2Fe5f66eB51A5AF4ed
     if (contractAddress) {
         return (
-            <div className="flex h-fit min-h-[100svh] flex-col items-center justify-center">
+            <div className="flex h-fit min-h-[100svh] flex-col items-center justify-start">
                 <h1>This is an app running the RebelMint Component</h1>
-                <div className="flex h-[80svh] w-[80vw] justify-center bg-blue-200 align-middle">
+                <div className="justify-cente flex h-full min-h-[100svh] w-[100vw] bg-bgcol align-middle">
                     <RebelMint
                         contractAddress={contractAddress}
-                        chain={'sepolia'}
+                        chain={'baseSepolia'}
                     />
                 </div>
             </div>
@@ -44,7 +44,7 @@ function App() {
                     </h1>
                     <p>{`WEB3 STOREFRONTS`}</p>
                 </div>
-                <span className="mb-2 text-base md:text-lg">
+                {/* <span className="mb-2 text-base md:text-lg">
                     <span>Enter a shop's </span>
                     <a
                         href="https://ethereum.org/en/developers/docs/accounts/#contract-accounts"
@@ -53,7 +53,7 @@ function App() {
                         <span className="font-semibold">Contract Address</span>
                     </a>
                     <span> to view the listings</span>
-                </span>
+                </span> */}
                 <form
                     className="mb-4 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
                     onSubmit={(e) => {
@@ -65,6 +65,7 @@ function App() {
                 >
                     <input
                         spellCheck={false}
+                        placeholder="Enter a shop's Contract Address"
                         className="h-[3rem] w-[23rem] rounded-md border-2 border-bgcol p-2 md:w-[26rem]"
                         onChange={(e) => {
                             setInputAddress(e.target.value)
@@ -90,7 +91,7 @@ function App() {
                     }}
                     className="bg-base-100 mb-52 h-[2rem] w-[13rem] rounded-lg text-sm font-extralight text-bgcol hover:invert-[5%] active:invert-[10%]"
                 >
-                    Or view this example storefront
+                    View example shop
                 </button>
                 <div className="bg-base-100 flex flex-col rounded-lg p-5">
                     <h1 className="mb-4 flex items-center justify-center font-semibold">
@@ -112,10 +113,17 @@ function App() {
                             <img src="eye.svg" className="brightness-110" />
                         </a>
                         <a
-                            href="/createContract"
+                            href="/createcontract"
                             className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
                         >
                             CONTRACT BUILDER
+                            <img src="store.svg" className="brightness-110" />
+                        </a>
+                        <a
+                            href="/tokenmanager"
+                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
+                        >
+                            TOKEN MANAGER
                             <img src="store.svg" className="brightness-110" />
                         </a>
                     </div>
