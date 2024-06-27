@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import TraitInputs from '../components/TraitInputs'
 import CustomMetadataInputs from '../components/CustomMetadataInputs'
 import TokenPreview from '../components/TokenPreview'
+import { downloadJSON, removeSpaces } from '../util/handleJson'
 
 interface Trait {
     trait_type: string
@@ -92,12 +93,7 @@ const TokenBuilder = () => {
     }
 
     const handleTraitChange = useCallback(
-        (
-            index: number,
-            field: keyof Trait,
-            value: string
-            // inputType: 'trait_type' | 'value'
-        ) => {
+        (index: number, field: keyof Trait, value: string) => {
             setForm((prevForm) => {
                 const newAttributes = [...prevForm.attributes]
                 newAttributes[index] = {
@@ -122,12 +118,7 @@ const TokenBuilder = () => {
     )
 
     const handleMetadataChange = useCallback(
-        (
-            index: number,
-            field: keyof CustomMetadata,
-            value: string
-            // inputType: 'metadata_key' | 'metadata_value'
-        ) => {
+        (index: number, field: keyof CustomMetadata, value: string) => {
             setForm((prevForm) => {
                 const newMetadata = [...(prevForm.customMetadata || [])]
                 newMetadata[index] = {
@@ -231,6 +222,10 @@ const TokenBuilder = () => {
         await navigator.clipboard.writeText(metadata)
     }
 
+    const handleDownload = () => {
+        downloadJSON(metadata, removeSpaces(form.name) + '_metadata')
+    }
+
     return (
         <div className="mint-h-[100svh] flex h-fit w-full flex-col items-center bg-bgcol p-24 font-satoshi text-textcol">
             <h1 className="mt-5 w-full text-5xl font-bold">
@@ -307,6 +302,7 @@ const TokenBuilder = () => {
             <h1 className="mb-6 mt-5 w-full text-5xl font-bold">
                 Metadata Output
             </h1>
+            <button onClick={handleDownload}>Download JSON</button>
             <div
                 id="metadata-display"
                 onClick={copyToClipboard}

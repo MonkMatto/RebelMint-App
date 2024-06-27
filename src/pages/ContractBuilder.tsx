@@ -171,7 +171,7 @@ const ContractBuilderPage = () => {
                         </div>
                     </a>
                     <a
-                        href={`/tokenmanager/?contractaddress=${contractAddress}`}
+                        href={`/tokenmanager/?address=${contractAddress}`}
                         target="_blank"
                     >
                         <div className="flex h-24 w-fit items-center justify-center rounded-lg border-2 border-textcol bg-textcol p-5 text-center text-3xl font-bold text-bgcol">
