@@ -27,7 +27,7 @@ const TokenManager = () => {
     const [input, setInput] = useState('')
     const address = searchParams.get('contract')
     const account = useAccount()
-    const { chainId, chain } = useAccount()
+    const { chainId } = useAccount()
     console.log(account)
     console.log(chainId)
 
