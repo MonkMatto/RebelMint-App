@@ -7,7 +7,7 @@ import TokenPreviewPage from './pages/TokenPreviewPage.tsx'
 import ContractBuilderPage from './pages/ContractBuilder.tsx'
 import { Web3ModalProvider } from './components/Web3ModalProvider.tsx'
 import TokenManager from './pages/TokenManager.tsx'
-import EditContract from './pages/EditContract.tsx'
+import ConfigureContract from './pages/ConfigureContract.tsx'
 
 const router = createBrowserRouter([
     {
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/editcontract',
-        element: <EditContract />,
+        element: <ConfigureContract />,
     },
 ])
 

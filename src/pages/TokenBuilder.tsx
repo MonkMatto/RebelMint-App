@@ -227,7 +227,7 @@ const TokenBuilder = () => {
     }
 
     return (
-        <div className="mint-h-[100svh] flex h-fit w-full flex-col items-center bg-bgcol p-24 font-satoshi text-textcol">
+        <div className="mint-h-[100svh] flex h-fit w-full flex-col items-center bg-bgcol p-4 font-satoshi text-textcol md:p-24">
             <h1 className="mt-5 w-full text-5xl font-bold">
                 Token Metadata Builder
             </h1>
@@ -236,7 +236,7 @@ const TokenBuilder = () => {
                 object. Use complete URLs, and avoid special characters.
             </p>
             <form className="flex w-full flex-col gap-5">
-                <div className="flex w-full gap-5">
+                <div className="flex w-full flex-wrap gap-5">
                     <input
                         className={inputClass}
                         name="name"
@@ -266,7 +266,7 @@ const TokenBuilder = () => {
                     value={form.description}
                     onChange={handleChange}
                 />
-                <div className="mb-8 flex gap-5">
+                <div className="mb-8 flex flex-wrap gap-5">
                     <input
                         className={inputClass}
                         name="image"
@@ -302,14 +302,19 @@ const TokenBuilder = () => {
             <h1 className="mb-6 mt-5 w-full text-5xl font-bold">
                 Metadata Output
             </h1>
-            <button onClick={handleDownload}>Download JSON</button>
             <div
                 id="metadata-display"
                 onClick={copyToClipboard}
-                className="mb-24 h-fit min-h-10 w-full cursor-copy overflow-hidden text-wrap rounded-lg border-2 border-textcol p-3 hover:invert-[10%] active:invert-[20%]"
+                className="mb-4 h-fit min-h-10 w-full cursor-copy overflow-hidden text-wrap rounded-lg border-2 border-textcol p-3 hover:invert-[10%] active:invert-[20%]"
             >
                 {metadata}
             </div>
+            <button
+                onClick={handleDownload}
+                className="mb-24 w-fit rounded-lg border bg-textcol p-4 font-medium text-bgcol"
+            >
+                Download JSON
+            </button>
             <h1 className="mb-6 text-5xl font-bold">Token Preview</h1>
             <TokenPreview metadata={metadata} />
         </div>

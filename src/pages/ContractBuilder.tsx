@@ -171,11 +171,12 @@ const ContractBuilderPage = () => {
                         </div>
                     </a>
                     <a
-                        href={`/tokenmanager/?address=${contractAddress}`}
+                        href={`/editcontract/?contract=${contractAddress}`}
                         target="_blank"
                     >
                         <div className="flex h-24 w-fit items-center justify-center rounded-lg border-2 border-textcol bg-textcol p-5 text-center text-3xl font-bold text-bgcol">
-                            {`Next Step: Manage tokens ->`}
+                            {`Next Step: Set Up Details`}
+                            <img src="arrowright.svg" />
                         </div>
                     </a>
                 </div>
