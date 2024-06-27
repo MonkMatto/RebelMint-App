@@ -12,12 +12,12 @@ function App() {
         invalidInput = true
     }
 
-    //0x078AAdc0Bf407B3845603B2Fe5f66eB51A5AF4ed
+    //0x21fed8cd09e1355ec79c79a195bd0d43cb26e52a
     if (contractAddress) {
         return (
             <div className="flex h-fit min-h-[100svh] flex-col items-center justify-start">
                 <h1>This is an app running the RebelMint Component</h1>
-                <div className="justify-cente flex h-full min-h-[100svh] w-[100vw] bg-bgcol align-middle">
+                <div className="justify-cente bg-base-900 flex h-full min-h-[100svh] w-[100vw] align-middle">
                     <RebelMint
                         contractAddress={contractAddress}
                         chain={'baseSepolia'}
@@ -86,7 +86,7 @@ function App() {
                     onClick={() => {
                         setSearchParams({
                             contract:
-                                '0x078aadc0bf407b3845603b2fe5f66eb51a5af4ed',
+                                '0x21fed8cd09e1355ec79c79a195bd0d43cb26e52a',
                         })
                     }}
                     className="bg-base-100 mb-52 h-[2rem] w-[13rem] rounded-lg text-sm font-extralight text-bgcol hover:invert-[5%] active:invert-[10%]"

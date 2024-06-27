@@ -13,9 +13,9 @@ export default {
             },
             colors: {
                 textcol: '#ffffff',
-                bgcol: '#11191E',
+                bgcol: '#000000',
                 base: {
-                    DEFAULT: '#11191E',
+                    DEFAULT: '#000000',
                     50: '#FFFFFF',
                     100: '#F0F0F0',
                     200: '#D1D1D1',
