@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import TokenPreview from '../components/TokenPreview'
 
-const TokenPreviewPage = () => {
+const MetadataPreviewPage = () => {
     const [metadata, setMetadata] = useState('{}')
     const [isValidJSON, setIsValidJSON] = useState<boolean>(true)
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -17,7 +17,7 @@ const TokenPreviewPage = () => {
     }
     console.log(metadata)
     return (
-        <div className="bg-bgcol text-textcol font-satoshi flex h-fit min-h-[100svh] w-full flex-col items-center p-24">
+        <div className="flex h-fit min-h-[100svh] w-full flex-col items-center bg-bgcol p-24 font-satoshi text-textcol">
             <h1 className="mt-5 w-full text-5xl font-bold">Token Previewer</h1>
             <p className="text-md mb-10 mt-5 w-full">
                 Input metadata and see a token preview
@@ -26,7 +26,7 @@ const TokenPreviewPage = () => {
                 id="metadata-display"
                 placeholder="{...someMetadata}"
                 onChange={handleChange}
-                className={`${isValidJSON ? 'border-textcol' : 'border-red-500 focus:outline-none'} bg-bgcol mb-24 h-fit min-h-10 w-full rounded-lg border-2 p-3`}
+                className={`${isValidJSON ? 'border-textcol' : 'border-red-500 focus:outline-none'} mb-24 h-fit min-h-10 w-full rounded-lg border-2 bg-bgcol p-3`}
                 value={metadata}
             />
 
@@ -35,4 +35,4 @@ const TokenPreviewPage = () => {
     )
 }
 
-export default TokenPreviewPage
+export default MetadataPreviewPage

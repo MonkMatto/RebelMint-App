@@ -99,17 +99,17 @@ function App() {
                     </h1>
                     <div className="grid grid-cols-1 gap-4 font-bold md:grid-cols-2">
                         <a
-                            href="/tokenbuilder"
+                            href="/metadatabuilder"
                             className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
                         >
-                            TOKEN BUILDER
+                            METADATA BUILDER
                             <img src="create.svg" className="brightness-110" />
                         </a>
                         <a
-                            href="/tokenpreviewer"
+                            href="/metadatapreviewer"
                             className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
                         >
-                            TOKEN PREVIEWER
+                            METADATA PREVIEWER
                             <img src="eye.svg" className="brightness-110" />
                         </a>
                         <a

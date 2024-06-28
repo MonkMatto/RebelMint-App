@@ -57,7 +57,7 @@ const TokenManager = () => {
                 <span className="px-2 font-normal">
                     <span>{'You can use our '}</span>
                     <a
-                        href="/tokenbuilder"
+                        href="/metadatabuilder"
                         target="_blank"
                         className="bg-card p-1 font-semibold underline"
                     >

@@ -26,7 +26,7 @@ interface FormStruct {
     [key: string]: any // Allows for custom metadata fields
 }
 
-const TokenBuilder = () => {
+const MetadataBuilder = () => {
     const [form, setForm] = useState<FormStruct>({
         name: '',
         artist: '',
@@ -321,4 +321,4 @@ const TokenBuilder = () => {
     )
 }
 
-export default TokenBuilder
+export default MetadataBuilder
