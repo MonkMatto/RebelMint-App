@@ -7,12 +7,30 @@ import {
 } from 'wagmi'
 import contractABI from '../RebelMint/src/contract/abi'
 import { useSearchParams } from 'react-router-dom'
+import { NavBar } from '../components/NavBar'
 interface ContractDetails {
     title: string
     creator: string
     desc: string
     paymentAddress: string
     royaltyPercentage: number
+}
+
+function sanitizeAndEscapeInput(inputString: string) {
+    // Remove control characters except for newlines, tabs, and carriage returns
+    const sanitizedString = inputString.replace(
+        /[\x00-\x1F\x7F-\x9F]/g,
+        (char: string) => {
+            if (char === '\n' || char === '\r' || char === '\t') {
+                return char
+            }
+            return ''
+        }
+    )
+
+    // Escape newline characters
+    const escapedString = sanitizedString.replace(/\n/g, '\\n')
+    return escapedString
 }
 
 const ConfigureContract = () => {
@@ -59,7 +77,7 @@ const ConfigureContract = () => {
                 args: [
                     form.title,
                     form.creator,
-                    form.desc,
+                    sanitizeAndEscapeInput(form.desc),
                     form.paymentAddress as `0x${string}`,
                     BigInt(form.royaltyPercentage * 100),
                 ],
@@ -70,6 +88,14 @@ const ConfigureContract = () => {
             console.error('Error sending transaction:', error)
         }
     }
+    let buttonMessage
+    if (form.royaltyPercentage <= 10) {
+        buttonMessage = isConfirming
+            ? 'Updating Collection...'
+            : 'Submit Details'
+    } else {
+        buttonMessage = 'Max Royalties 10%'
+    }
 
     const inputClass =
         'flex-1 p-3 border h-2 bg-bgcol border-textcol rounded-lg font-normal'
@@ -77,6 +103,7 @@ const ConfigureContract = () => {
     if (contractAddress) {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col gap-5 text-wrap bg-bgcol p-4 font-satoshi font-bold text-textcol md:p-24">
+                <NavBar />
                 <h1 className="text-3xl">Collection Details</h1>
                 <div className="flex w-full flex-col gap-5">
                     <div className="flex flex-col gap-2">
@@ -122,6 +149,7 @@ const ConfigureContract = () => {
 
                         <input
                             typeof="number"
+                            max={10}
                             name="royaltyPercentage"
                             value={form.royaltyPercentage}
                             onChange={handleChange}
@@ -130,19 +158,21 @@ const ConfigureContract = () => {
                     </div>
                     <button
                         className="w-fit self-end rounded-lg bg-textcol p-4 text-bgcol disabled:invert-[30%]"
-                        disabled={isConfirming || isConfirmed || !isValidForm}
+                        disabled={
+                            isConfirming ||
+                            isConfirmed ||
+                            !isValidForm ||
+                            form.royaltyPercentage > 10
+                        }
                         onClick={setCollectionData}
                     >
-                        {isConfirming
-                            ? 'Updating Collection...'
-                            : 'Submit Details'}
+                        {buttonMessage}
                     </button>
                     {isConfirmed && (
                         <a
                             className="w-fit self-end rounded-lg bg-textcol p-4 text-bgcol disabled:invert-[30%]"
                             href={`/tokenmanager?contract=${contractAddress}`}
-                            target="_blank"
-                        >{`Create Tokens for ${form.title} ->`}</a>
+                        >{`Next Step: Create Tokens for ${form.title} ->`}</a>
                     )}
                 </div>
             </div>

@@ -11,6 +11,9 @@ export default {
             fontFamily: {
                 satoshi: ['Satoshi'],
             },
+            backgroundImage: (theme) => ({
+                logo: "url('/public/android-chrome-512x512.png')",
+            }),
             colors: {
                 textcol: '#ffffff',
                 bgcol: '#000000',
@@ -26,7 +29,7 @@ export default {
                     700: '#434343',
                     800: '#292929',
                     900: '#101010',
-                    950: '#030303',
+                    950: '#000000',
                 },
                 sapphire: {
                     DEFAULT: '#303399',
