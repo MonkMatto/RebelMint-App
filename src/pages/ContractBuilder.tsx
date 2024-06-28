@@ -170,10 +170,7 @@ const ContractBuilderPage = () => {
                             {`View Contract On ${chain && chain.blockExplorers ? chain.blockExplorers.default.name : ''}`}
                         </div>
                     </a>
-                    <a
-                        href={`/editcontract/?contract=${contractAddress}`}
-                        target="_blank"
-                    >
+                    <a href={`/editcontract/?contract=${contractAddress}`}>
                         <div className="flex h-24 w-fit items-center justify-center rounded-lg border-2 border-textcol bg-textcol p-5 text-center text-3xl font-bold text-bgcol">
                             {`Next Step: Set Up Details`}
                             <img src="arrowright.svg" />

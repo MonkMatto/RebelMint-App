@@ -170,8 +170,7 @@ const ConfigureContract = () => {
                         <a
                             className="w-fit self-end rounded-lg bg-textcol p-4 text-bgcol disabled:invert-[30%]"
                             href={`/tokenmanager?contract=${contractAddress}`}
-                            target="_blank"
-                        >{`Create Tokens for ${form.title} ->`}</a>
+                        >{`Next Step: Create Tokens for ${form.title} ->`}</a>
                     )}
                 </div>
             </div>
