@@ -15,6 +15,23 @@ interface ContractDetails {
     royaltyPercentage: number
 }
 
+function sanitizeAndEscapeInput(inputString: string) {
+    // Remove control characters except for newlines, tabs, and carriage returns
+    const sanitizedString = inputString.replace(
+        /[\x00-\x1F\x7F-\x9F]/g,
+        (char: string) => {
+            if (char === '\n' || char === '\r' || char === '\t') {
+                return char
+            }
+            return ''
+        }
+    )
+
+    // Escape newline characters
+    const escapedString = sanitizedString.replace(/\n/g, '\\n')
+    return escapedString
+}
+
 const ConfigureContract = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const contractAddress = searchParams.get('contract')
@@ -59,7 +76,7 @@ const ConfigureContract = () => {
                 args: [
                     form.title,
                     form.creator,
-                    form.desc,
+                    sanitizeAndEscapeInput(form.desc),
                     form.paymentAddress as `0x${string}`,
                     BigInt(form.royaltyPercentage * 100),
                 ],
