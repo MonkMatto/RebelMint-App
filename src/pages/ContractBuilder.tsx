@@ -6,6 +6,7 @@ import {
     useWalletClient,
 } from 'wagmi'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { NavBar } from '../components/NavBar'
 
 const versions = ['v0j0'] as const
 type Version = (typeof versions)[number]
@@ -80,6 +81,7 @@ const ContractBuilderPage = () => {
     if (!address || !chain || !chainId) {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi text-9xl font-bold text-textcol">
+                <NavBar />
                 <div className="fixed right-0 top-0 m-5">
                     <w3m-network-button />
                 </div>
@@ -101,12 +103,10 @@ const ContractBuilderPage = () => {
     }
 
     return (
-        <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 bg-bgcol p-24 font-satoshi text-textcol">
+        <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 bg-bgcol p-24 pt-32 font-satoshi text-textcol">
+            <NavBar />
             {!recentHash && (
                 <div className="flex h-fit w-full flex-col gap-5">
-                    <div className="fixed right-0 top-0 m-5">
-                        <w3m-network-button />
-                    </div>
                     <h1 className="mt-5 w-full text-5xl font-bold">
                         Create New RebelMint Contract
                     </h1>

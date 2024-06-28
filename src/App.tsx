@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import RebelMint from './RebelMint/src/RebelMint'
 import { useSearchParams } from 'react-router-dom'
+import { NavBar } from './components/NavBar'
 
 function App() {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -15,7 +16,8 @@ function App() {
     //0x21fed8cd09e1355ec79c79a195bd0d43cb26e52a
     if (contractAddress) {
         return (
-            <div className="flex h-fit min-h-[100svh] flex-col items-center justify-start">
+            <div className="flex h-fit min-h-[100svh] flex-col items-center justify-start pt-24">
+                <NavBar hasNewShop={true} />
                 <h1>This is an app running the RebelMint Component</h1>
                 <div className="justify-cente bg-base-900 flex h-full min-h-[100svh] w-[100vw] align-middle">
                     <RebelMint
@@ -28,13 +30,7 @@ function App() {
     } else {
         return (
             <div className="relative flex h-fit min-h-[100svh] w-[100vw] flex-col items-center justify-center p-3 md:p-10">
-                <a
-                    href="/createcontract"
-                    className="absolute right-0 top-0 m-5 flex w-fit items-center justify-center gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
-                >
-                    NEW SHOP
-                    <img src="add.svg" />
-                </a>
+                <NavBar hasNewShop={true} />
                 <div
                     id="hero"
                     className="mb-24 mt-[30svh] flex flex-col items-center rounded-lg bg-bgcol p-10 text-textcol"
@@ -44,16 +40,6 @@ function App() {
                     </h1>
                     <p>{`WEB3 STOREFRONTS`}</p>
                 </div>
-                {/* <span className="mb-2 text-base md:text-lg">
-                    <span>Enter a shop's </span>
-                    <a
-                        href="https://ethereum.org/en/developers/docs/accounts/#contract-accounts"
-                        target="_blank"
-                    >
-                        <span className="font-semibold">Contract Address</span>
-                    </a>
-                    <span> to view the listings</span>
-                </span> */}
                 <form
                     className="mb-4 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
                     onSubmit={(e) => {
@@ -99,6 +85,20 @@ function App() {
                     </h1>
                     <div className="grid grid-cols-1 gap-4 font-bold md:grid-cols-2">
                         <a
+                            href="/createcontract"
+                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
+                        >
+                            CONTRACT BUILDER
+                            <img src="store.svg" className="brightness-110" />
+                        </a>
+                        <a
+                            href="/tokenmanager"
+                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
+                        >
+                            TOKEN MANAGER
+                            <img src="apps.svg" className="brightness-110" />
+                        </a>
+                        <a
                             href="/metadatabuilder"
                             className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
                         >
@@ -111,20 +111,6 @@ function App() {
                         >
                             METADATA PREVIEWER
                             <img src="eye.svg" className="brightness-110" />
-                        </a>
-                        <a
-                            href="/createcontract"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
-                        >
-                            CONTRACT BUILDER
-                            <img src="store.svg" className="brightness-110" />
-                        </a>
-                        <a
-                            href="/tokenmanager"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
-                        >
-                            TOKEN MANAGER
-                            <img src="store.svg" className="brightness-110" />
                         </a>
                     </div>
                 </div>

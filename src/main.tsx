@@ -8,6 +8,7 @@ import TokenManager from './pages/TokenManager.tsx'
 import ConfigureContract from './pages/ConfigureContract.tsx'
 import MetadataPreviewPage from './pages/MetadataPreviewPage.tsx'
 import MetadataBuilder from './pages/MetadataBuilder.tsx'
+import { About } from './pages/About.tsx'
 
 const router = createBrowserRouter([
     {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
     {
         path: '/editcontract',
         element: <ConfigureContract />,
+    },
+    {
+        path: '/about',
+        element: <About />,
     },
 ])
 

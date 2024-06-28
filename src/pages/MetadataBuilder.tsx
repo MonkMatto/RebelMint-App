@@ -3,6 +3,7 @@ import TraitInputs from '../components/TraitInputs'
 import CustomMetadataInputs from '../components/CustomMetadataInputs'
 import TokenPreview from '../components/TokenPreview'
 import { downloadJSON, removeSpaces } from '../util/handleJson'
+import { NavBar } from '../components/NavBar'
 
 interface Trait {
     trait_type: string
@@ -228,6 +229,8 @@ const MetadataBuilder = () => {
 
     return (
         <div className="mint-h-[100svh] flex h-fit w-full flex-col items-center bg-bgcol p-4 font-satoshi text-textcol md:p-24">
+            <NavBar hasNewShop={true} />
+
             <h1 className="mt-5 w-full text-5xl font-bold">
                 Token Metadata Builder
             </h1>
