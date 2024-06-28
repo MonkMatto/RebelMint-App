@@ -20,6 +20,14 @@ interface FormStruct {
     [key: string]: any // Allows for custom metadata fields
 }
 
+function objectToStringArray<T extends Record<string, any>>(obj: T): string[] {
+    const result: string[] = []
+    Object.entries(obj).forEach(([key, value]) => {
+        result.push(`${key}: ${String(value)}`)
+    })
+    return result
+}
+
 const filterKeys = (obj: FormStruct) => {
     const keysToExclude = [
         'name',
@@ -49,7 +57,8 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
         '--image-url': ` url(${image})`,
     } as React.CSSProperties
 
-    const customData = JSON.stringify(filterKeys(token))
+    const customData = objectToStringArray(filterKeys(token))
+    console.log(customData)
 
     const openInNewTab = () => {
         window.open(
@@ -64,9 +73,29 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
             return (
                 <div className="mt-auto flex flex-wrap gap-2 justify-self-end overflow-y-auto">
                     {attributes.map((a: traitStruct, index: number) => (
-                        <div key={index} className="bg-card flex w-fit p-1">
+                        <div
+                            key={index}
+                            className="flex w-fit rounded-lg bg-card p-2"
+                        >
                             <p key={index}>{`${a.trait_type}: ${a.value}`}</p>
                             {/* <p key={index + attributes.length}>{a.value}</p> */}
+                        </div>
+                    ))}
+                </div>
+            )
+        }
+    }
+
+    function AllCustomData() {
+        if (customData && customData[0]) {
+            return (
+                <div className="mt-auto flex flex-wrap gap-2 justify-self-end overflow-y-auto">
+                    {customData.map((a, index: number) => (
+                        <div
+                            key={index}
+                            className="flex w-fit rounded-lg bg-card p-2"
+                        >
+                            <p key={index}>{`${a}`}</p>
                         </div>
                     ))}
                 </div>
@@ -78,7 +107,7 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
         if (animation_url) {
             return (
                 <div
-                    className="bg-bgcol relative flex aspect-square h-full w-1/2 items-center rounded-lg"
+                    className="relative flex aspect-square h-full w-full items-center rounded-lg bg-bgcol"
                     onClick={openInNewTab}
                 >
                     <iframe
@@ -90,7 +119,7 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
                         className="hover:curs group absolute left-0 top-0 z-30 flex h-full w-full items-center justify-center duration-100 hover:backdrop-blur-sm"
                         onClick={openInNewTab}
                     >
-                        <p className="group-hover:bg-bgcol hidden p-2 text-neutral-300 duration-100 group-hover:block">
+                        <p className="hidden p-2 text-neutral-300 duration-100 group-hover:block group-hover:bg-bgcol">
                             Open Live View
                         </p>
                     </div>
@@ -98,7 +127,7 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
             )
         } else {
             return (
-                <div className="bg-bgcol relative flex aspect-square max-h-full w-1/2 items-center rounded-lg">
+                <div className="relative flex aspect-square max-h-full w-full items-center rounded-lg bg-bgcol">
                     <div
                         className="aspect-square max-h-full w-full bg-[image:var(--image-url)] bg-contain bg-center bg-no-repeat"
                         style={style}
@@ -108,7 +137,7 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
                         className="group absolute left-0 top-0 z-30 flex h-full w-full items-center justify-center duration-100 hover:cursor-pointer hover:backdrop-blur-sm"
                         onClick={openInNewTab}
                     >
-                        <p className="group-hover:bg-bgcol hidden p-2 duration-100 group-hover:block">
+                        <p className="hidden p-2 duration-100 group-hover:block group-hover:bg-bgcol">
                             Open Live View
                         </p>
                     </div>
@@ -118,39 +147,52 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
     }
 
     return (
-        <div className="flex h-full w-full flex-col items-center justify-center">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-5">
             <div
+                id="OM-popup-window"
                 onClick={(e) => {
                     e.stopPropagation()
                 }}
-                className="bg-bghover relative flex h-4/5 w-4/5 flex-col justify-between rounded-lg p-5"
+                className="flex h-[90svh] w-full flex-col justify-between overflow-y-auto rounded-lg bg-bghover p-5 lg:h-fit"
             >
-                <div
-                    id="OM-popup-token-card"
-                    className="@md:flex-col flex h-3/4 w-full flex-row flex-nowrap gap-12"
-                >
-                    <Display />
+                <div className="bg-base-800 flex w-full flex-col">
                     <div
-                        id="OM-popup-token-info"
-                        className="flex h-full w-1/2 flex-col justify-start"
+                        id="OM-popup-token-card"
+                        className="flex h-fit w-full flex-col items-center gap-12 lg:flex-row lg:items-start"
                     >
-                        <h1 className="mb-1 w-full text-2xl font-bold">
-                            {name}
-                        </h1>
-                        <h1 className="mb-8 w-full text-lg font-light">
-                            {artist ? `by ${artist}` : ''}
-                        </h1>
-                        <p className="mb-8 max-h-96 flex-1 overflow-y-auto text-wrap font-light">
-                            {description}
-                        </p>
+                        <div className="flex aspect-square h-full w-full items-center justify-center">
+                            <Display />
+                        </div>
 
-                        <AllTraits />
+                        <div
+                            id="OM-popup-token-info"
+                            className="flex h-full w-full flex-col justify-start p-4"
+                        >
+                            <div className="bg-base-50 text-base-950 h-fit w-full flex-col gap-8 rounded-lg p-6">
+                                <h1 className="w-fit text-3xl font-bold">
+                                    {name}
+                                </h1>
+                                {artist && (
+                                    <h1 className="w-fit text-lg font-thin">
+                                        {artist}
+                                    </h1>
+                                )}
+                            </div>
+                            <p className="border-base-800 bg-base-950 my-4 max-h-[50svh] overflow-y-auto text-wrap rounded-lg p-6 font-light">
+                                {description}
+                            </p>
+                            <div className="flex h-fit max-h-[20svh] w-full justify-self-end">
+                                <AllTraits />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <p id="custom-data-preview" className="mt-8 w-full">
-                {`Custom Metadata: ${customData ? customData : ''}`}
-            </p>
+            <div className="mt-12 flex w-full flex-col gap-5">
+                <h3 className="text-3xl font-bold">Custom Data:</h3>
+
+                <AllCustomData />
+            </div>
         </div>
     )
 }

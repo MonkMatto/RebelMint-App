@@ -315,7 +315,7 @@ const MetadataBuilder = () => {
             >
                 Download JSON
             </button>
-            <h1 className="mb-6 text-5xl font-bold">Token Preview</h1>
+            <h1 className="mb-6 w-full text-5xl font-bold">Token Preview</h1>
             <TokenPreview metadata={metadata} />
         </div>
     )
