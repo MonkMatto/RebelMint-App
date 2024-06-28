@@ -70,6 +70,14 @@ const ConfigureContract = () => {
             console.error('Error sending transaction:', error)
         }
     }
+    let buttonMessage
+    if (form.royaltyPercentage <= 10) {
+        buttonMessage = isConfirming
+            ? 'Updating Collection...'
+            : 'Submit Details'
+    } else {
+        buttonMessage = 'Max Royalties 10%'
+    }
 
     const inputClass =
         'flex-1 p-3 border h-2 bg-bgcol border-textcol rounded-lg font-normal'
@@ -122,6 +130,7 @@ const ConfigureContract = () => {
 
                         <input
                             typeof="number"
+                            max={10}
                             name="royaltyPercentage"
                             value={form.royaltyPercentage}
                             onChange={handleChange}
@@ -130,12 +139,15 @@ const ConfigureContract = () => {
                     </div>
                     <button
                         className="w-fit self-end rounded-lg bg-textcol p-4 text-bgcol disabled:invert-[30%]"
-                        disabled={isConfirming || isConfirmed || !isValidForm}
+                        disabled={
+                            isConfirming ||
+                            isConfirmed ||
+                            !isValidForm ||
+                            form.royaltyPercentage > 10
+                        }
                         onClick={setCollectionData}
                     >
-                        {isConfirming
-                            ? 'Updating Collection...'
-                            : 'Submit Details'}
+                        {buttonMessage}
                     </button>
                     {isConfirmed && (
                         <a
