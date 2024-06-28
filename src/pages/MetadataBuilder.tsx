@@ -190,25 +190,25 @@ const MetadataBuilder = () => {
             (attr) => attr.trait_type && attr.value
         )
 
-        // Prepare the metadata object
-        const metadata: { [key: string]: any } = {
-            ...customMetadata.reduce<{ [key: string]: string }>((acc, item) => {
-                if (item.key && item.value) {
-                    acc[item.key] = item.value
-                }
-                return acc
-            }, {}),
-        }
+        // Prepare the metadata object with official fields first
+        const metadata: { [key: string]: any } = {}
+
+        // Add other fields from the form if they have a value
+        Object.keys(rest).forEach((key) => {
+            if (rest[key]) {
+                metadata[key] = rest[key]
+            }
+        })
 
         // Add non-empty attributes array if there are attributes
         if (filteredAttributes.length > 0) {
             metadata.attributes = filteredAttributes
         }
 
-        // Add other fields from the form if they have a value
-        Object.keys(rest).forEach((key) => {
-            if (rest[key]) {
-                metadata[key] = rest[key]
+        // Append custom metadata
+        customMetadata.forEach((item) => {
+            if (item.key && item.value) {
+                metadata[item.key] = item.value
             }
         })
 
