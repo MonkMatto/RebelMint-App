@@ -5,17 +5,21 @@ export default {
         './src/**/*.{html,js,jsx,tsx,ts}',
         '!./src/components/RebelMint/**/*.{html,js,ts,tsx,jsx}',
         '!./src/components/RebelMint/node_modules/**/*.{html,js,ts,tsx,jsx}',
+        '!./node_nodules/**/*.{html,js,jsx,tsx,ts}',
     ],
     theme: {
         extend: {
             fontFamily: {
                 satoshi: ['Satoshi'],
             },
+            backgroundImage: (theme) => ({
+                logo: "url('/public/android-chrome-512x512.png')",
+            }),
             colors: {
                 textcol: '#ffffff',
-                bgcol: '#11191E',
+                bgcol: '#000000',
                 base: {
-                    DEFAULT: '#11191E',
+                    DEFAULT: '#000000',
                     50: '#FFFFFF',
                     100: '#F0F0F0',
                     200: '#D1D1D1',
@@ -26,7 +30,7 @@ export default {
                     700: '#434343',
                     800: '#292929',
                     900: '#101010',
-                    950: '#030303',
+                    950: '#000000',
                 },
                 sapphire: {
                     DEFAULT: '#303399',
@@ -48,6 +52,7 @@ export default {
                 depth: '#eeeeee',
                 accent: '#E66799',
                 accentB: '#303399',
+                rmaccent: '#EF4444',
             },
         },
     },

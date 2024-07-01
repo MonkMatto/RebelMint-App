@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import RebelMint from './RebelMint/src/RebelMint'
 import { useSearchParams } from 'react-router-dom'
+import { NavBar } from './components/NavBar'
 
 function App() {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -12,15 +13,17 @@ function App() {
         invalidInput = true
     }
 
-    //0x078AAdc0Bf407B3845603B2Fe5f66eB51A5AF4ed
+    //0x21fed8cd09e1355ec79c79a195bd0d43cb26e52a
     if (contractAddress) {
         return (
-            <div className="flex h-fit min-h-[100svh] flex-col items-center justify-start">
+            <div className="flex h-fit min-h-[100svh] flex-col items-center justify-start pt-24">
+                <NavBar hasNewShop={true} />
                 <h1>This is an app running the RebelMint Component</h1>
-                <div className="justify-cente flex h-full min-h-[100svh] w-[100vw] bg-bgcol align-middle">
+                <div className="justify-cente bg-base-900 flex h-full min-h-[100svh] w-[100vw] align-middle">
                     <RebelMint
                         contractAddress={contractAddress}
                         chain={'baseSepolia'}
+                        apiKey={import.meta.env.VITE_ALCHEMY_KEY}
                     />
                 </div>
             </div>
@@ -28,32 +31,16 @@ function App() {
     } else {
         return (
             <div className="relative flex h-fit min-h-[100svh] w-[100vw] flex-col items-center justify-center p-3 md:p-10">
-                <a
-                    href="/createcontract"
-                    className="absolute right-0 top-0 m-5 flex w-fit items-center justify-center gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
-                >
-                    NEW SHOP
-                    <img src="add.svg" />
-                </a>
+                <NavBar hasNewShop={true} />
                 <div
                     id="hero"
-                    className="mb-24 mt-[30svh] flex flex-col items-center rounded-lg bg-bgcol p-10 text-textcol"
+                    className="bg-base-900 text-base-50 mb-24 mt-[30svh] flex flex-col items-center rounded-lg p-10"
                 >
                     <h1 className="mb-4 text-5xl font-extrabold lg:text-9xl">
                         REBELMINT
                     </h1>
                     <p>{`WEB3 STOREFRONTS`}</p>
                 </div>
-                {/* <span className="mb-2 text-base md:text-lg">
-                    <span>Enter a shop's </span>
-                    <a
-                        href="https://ethereum.org/en/developers/docs/accounts/#contract-accounts"
-                        target="_blank"
-                    >
-                        <span className="font-semibold">Contract Address</span>
-                    </a>
-                    <span> to view the listings</span>
-                </span> */}
                 <form
                     className="mb-4 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
                     onSubmit={(e) => {
@@ -73,7 +60,7 @@ function App() {
                     ></input>
                     <button
                         type="submit"
-                        className="h-[3rem] w-[23rem] rounded-lg bg-bgcol text-textcol hover:invert-[5%] active:invert-[10%] md:w-[26rem] lg:w-fit lg:px-4"
+                        className="hover:bg-base-800 active:bg-base-700 h-[3rem] w-[23rem] rounded-lg bg-bgcol text-textcol md:w-[26rem] lg:w-fit lg:px-4"
                     >
                         Load Shop
                     </button>
@@ -86,7 +73,7 @@ function App() {
                     onClick={() => {
                         setSearchParams({
                             contract:
-                                '0x078aadc0bf407b3845603b2fe5f66eb51a5af4ed',
+                                '0x21fed8cd09e1355ec79c79a195bd0d43cb26e52a',
                         })
                     }}
                     className="bg-base-100 mb-52 h-[2rem] w-[13rem] rounded-lg text-sm font-extralight text-bgcol hover:invert-[5%] active:invert-[10%]"
@@ -99,32 +86,32 @@ function App() {
                     </h1>
                     <div className="grid grid-cols-1 gap-4 font-bold md:grid-cols-2">
                         <a
-                            href="/tokenbuilder"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
-                        >
-                            TOKEN BUILDER
-                            <img src="create.svg" className="brightness-110" />
-                        </a>
-                        <a
-                            href="/tokenpreviewer"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
-                        >
-                            TOKEN PREVIEWER
-                            <img src="eye.svg" className="brightness-110" />
-                        </a>
-                        <a
                             href="/createcontract"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
+                            className="hover:bg-base-800 active:bg-base-700 flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol"
                         >
                             CONTRACT BUILDER
                             <img src="store.svg" className="brightness-110" />
                         </a>
                         <a
                             href="/tokenmanager"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
+                            className="hover:bg-base-800 active:bg-base-700 flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol"
                         >
                             TOKEN MANAGER
-                            <img src="store.svg" className="brightness-110" />
+                            <img src="apps.svg" className="brightness-110" />
+                        </a>
+                        <a
+                            href="/metadatabuilder"
+                            className="hover:bg-base-800 active:bg-base-700 flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol"
+                        >
+                            METADATA BUILDER
+                            <img src="create.svg" className="brightness-110" />
+                        </a>
+                        <a
+                            href="/metadatapreviewer"
+                            className="hover:bg-base-800 active:bg-base-700 flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol"
+                        >
+                            METADATA PREVIEWER
+                            <img src="eye.svg" className="brightness-110" />
                         </a>
                     </div>
                 </div>

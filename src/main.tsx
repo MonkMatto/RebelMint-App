@@ -2,12 +2,13 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './output.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import TokenBuilder from './pages/TokenBuilder.tsx'
-import TokenPreviewPage from './pages/TokenPreviewPage.tsx'
 import ContractBuilderPage from './pages/ContractBuilder.tsx'
 import { Web3ModalProvider } from './components/Web3ModalProvider.tsx'
 import TokenManager from './pages/TokenManager.tsx'
-import EditContract from './pages/EditContract.tsx'
+import ConfigureContract from './pages/ConfigureContract.tsx'
+import MetadataPreviewPage from './pages/MetadataPreviewPage.tsx'
+import MetadataBuilder from './pages/MetadataBuilder.tsx'
+import { About } from './pages/About.tsx'
 
 const router = createBrowserRouter([
     {
@@ -15,12 +16,12 @@ const router = createBrowserRouter([
         element: <App />,
     },
     {
-        path: '/tokenbuilder',
-        element: <TokenBuilder />,
+        path: '/metadatabuilder',
+        element: <MetadataBuilder />,
     },
     {
-        path: '/tokenpreviewer',
-        element: <TokenPreviewPage />,
+        path: '/metadatapreviewer',
+        element: <MetadataPreviewPage />,
     },
     {
         path: '/createcontract',
@@ -32,7 +33,11 @@ const router = createBrowserRouter([
     },
     {
         path: '/editcontract',
-        element: <EditContract />,
+        element: <ConfigureContract />,
+    },
+    {
+        path: '/about',
+        element: <About />,
     },
 ])
 
