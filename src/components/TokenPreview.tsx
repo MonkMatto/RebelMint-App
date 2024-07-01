@@ -51,8 +51,15 @@ const filterKeys = (obj: FormStruct) => {
 
 export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
     const token = JSON.parse(metadata) as FormStruct
-    const { name, image, description, attributes, animation_url, artist } =
-        token
+    const {
+        name,
+        image,
+        description,
+        attributes,
+        animation_url,
+        artist,
+        external_url,
+    } = token
     const style = {
         '--image-url': ` url(${image})`,
     } as React.CSSProperties
@@ -168,14 +175,32 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
                             id="OM-popup-token-info"
                             className="flex h-full w-full flex-col justify-start p-4"
                         >
-                            <div className="bg-base-50 text-base-950 h-fit w-full flex-col gap-8 rounded-lg p-6">
-                                <h1 className="w-fit text-3xl font-bold">
-                                    {name}
-                                </h1>
-                                {artist && (
-                                    <h1 className="w-fit text-lg font-thin">
-                                        {artist}
+                            <div className="bg-base-50 text-base-950 flex h-fit w-full flex-nowrap items-center justify-between gap-8 rounded-lg p-6">
+                                <div className="flex h-fit w-3/4 flex-col">
+                                    <h1 className="w-fit text-3xl font-bold">
+                                        {name}
                                     </h1>
+                                    {artist && (
+                                        <h1 className="w-fit text-lg font-thin">
+                                            {artist}
+                                        </h1>
+                                    )}
+                                </div>
+                                {external_url && (
+                                    <a
+                                        href={
+                                            external_url
+                                                ? external_url
+                                                : 'https://rebel-mint.vercel.app'
+                                        }
+                                        target="_blank"
+                                        className="aspect-square h-full"
+                                    >
+                                        <img
+                                            className="aspect-square h-full"
+                                            src="opennew.svg"
+                                        />
+                                    </a>
                                 )}
                             </div>
                             <p className="border-base-800 bg-base-950 my-4 max-h-[50svh] overflow-y-auto text-wrap rounded-lg p-6 font-light">
@@ -188,11 +213,13 @@ export const TokenPreview = ({ metadata }: TokenPreviewInputs) => {
                     </div>
                 </div>
             </div>
-            <div className="mt-12 flex w-full flex-col gap-5">
-                <h3 className="text-3xl font-bold">Custom Data:</h3>
+            {customData && customData[0] && (
+                <div className="mt-12 flex w-full flex-col gap-5">
+                    <h3 className="text-3xl font-bold">Custom Data:</h3>
 
-                <AllCustomData />
-            </div>
+                    <AllCustomData />
+                </div>
+            )}
         </div>
     )
 }

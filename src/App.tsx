@@ -34,7 +34,7 @@ function App() {
                 <NavBar hasNewShop={true} />
                 <div
                     id="hero"
-                    className="mb-24 mt-[30svh] flex flex-col items-center rounded-lg bg-bgcol p-10 text-textcol"
+                    className="bg-base-900 text-base-50 mb-24 mt-[30svh] flex flex-col items-center rounded-lg p-10"
                 >
                     <h1 className="mb-4 text-5xl font-extrabold lg:text-9xl">
                         REBELMINT
@@ -60,7 +60,7 @@ function App() {
                     ></input>
                     <button
                         type="submit"
-                        className="h-[3rem] w-[23rem] rounded-lg bg-bgcol text-textcol hover:invert-[5%] active:invert-[10%] md:w-[26rem] lg:w-fit lg:px-4"
+                        className="hover:bg-base-800 active:bg-base-700 h-[3rem] w-[23rem] rounded-lg bg-bgcol text-textcol md:w-[26rem] lg:w-fit lg:px-4"
                     >
                         Load Shop
                     </button>
@@ -87,28 +87,28 @@ function App() {
                     <div className="grid grid-cols-1 gap-4 font-bold md:grid-cols-2">
                         <a
                             href="/createcontract"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
+                            className="hover:bg-base-800 active:bg-base-700 flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol"
                         >
                             CONTRACT BUILDER
                             <img src="store.svg" className="brightness-110" />
                         </a>
                         <a
                             href="/tokenmanager"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
+                            className="hover:bg-base-800 active:bg-base-700 flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol"
                         >
                             TOKEN MANAGER
                             <img src="apps.svg" className="brightness-110" />
                         </a>
                         <a
                             href="/metadatabuilder"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
+                            className="hover:bg-base-800 active:bg-base-700 flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol"
                         >
                             METADATA BUILDER
                             <img src="create.svg" className="brightness-110" />
                         </a>
                         <a
                             href="/metadatapreviewer"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:invert-[5%] active:invert-[10%]"
+                            className="hover:bg-base-800 active:bg-base-700 flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol"
                         >
                             METADATA PREVIEWER
                             <img src="eye.svg" className="brightness-110" />

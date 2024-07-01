@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import TokenPreview from '../components/TokenPreview'
+import { NavBar } from '../components/NavBar'
 
 const MetadataPreviewPage = () => {
     const [metadata, setMetadata] = useState('{}')
@@ -45,7 +46,8 @@ const MetadataPreviewPage = () => {
 
     console.log(metadata)
     return (
-        <div className="flex h-fit min-h-[100svh] w-full flex-col items-center bg-bgcol p-24 font-satoshi text-textcol">
+        <div className="flex h-fit min-h-[100svh] w-full flex-col items-center bg-bgcol p-32 font-satoshi text-textcol">
+            <NavBar hasNewShop={true} />
             <h1 className="mt-5 w-full text-5xl font-bold">
                 Metadata Previewer
             </h1>
