@@ -72,6 +72,7 @@ const TokenManager = () => {
                     contractAddress={address}
                     chain={chainName}
                     bypassWeb3={true}
+                    apiKey={import.meta.env.VITE_ALCHEMY_KEY}
                 />
             </div>
         )
