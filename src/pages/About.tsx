@@ -39,7 +39,7 @@ export const About = () => {
                         Sick of platforms treating you like a cash cow, cutting
                         into your take with fees or mint charges? Not here. You
                         create, you sell and earn, you keep it all. No fees, no
-                        hidden charges, no middlemen, no bullshit. Artists 🤝
+                        hidden charges, no middlemen, no bullshit. Artists ⬅️➡️
                         Supporters.
                     </p>
                 </div>

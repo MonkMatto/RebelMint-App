@@ -3,10 +3,10 @@ const NavItem = ({ dest, label }: { dest: string; label: string }) => {
     let itemClass
     if (window.location.pathname == dest) {
         itemClass =
-            'bg-base-100 text-base-950  font-bold flex w-fit items-center justify-center gap-2 rounded-lg p-2 hover:bg-base-100 hover:scale-105 duration-200 active:bg-base-200'
+            'bg-base-100 text-base-950  font-bold flex w-fit items-center justify-center gap-2 rounded-lg p-2 hover:bg-base-100 duration-200 active:bg-base-200'
     } else {
         itemClass =
-            ' text-base-950 flex font-normal w-fit items-center justify-center gap-2 rounded-lg p-2 hover:bg-base-100 hover:scale-105 duration-200 active:bg-base-200'
+            ' text-base-950 flex font-normal w-fit items-center justify-center gap-2 rounded-lg p-2 hover:bg-base-200 duration-200 active:bg-base-200'
     }
     return (
         <a href={dest} key={label} className={itemClass}>
