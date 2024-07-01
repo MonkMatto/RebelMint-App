@@ -23,6 +23,7 @@ function App() {
                     <RebelMint
                         contractAddress={contractAddress}
                         chain={'baseSepolia'}
+                        apiKey={import.meta.env.VITE_ALCHEMY_KEY}
                     />
                 </div>
             </div>
