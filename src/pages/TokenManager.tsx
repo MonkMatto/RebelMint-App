@@ -31,16 +31,25 @@ const TokenManager = () => {
     const { chainId } = useAccount()
     console.log(account)
     console.log(chainId)
+    const getSubdomain = () => {
+        const host = window.location.hostname // example: test.localhost
+        const parts = host.split('.')
 
-    const chainName = findKeyByChainID(chainsData, chainId as number) as
-        | 'base'
-        | 'ethereum'
-        | 'sepolia'
-        | 'baseSepolia'
+        if (parts[0].length > 2) {
+            return parts[0]
+        }
+
+        return null
+    }
+    const subdomain = getSubdomain()
+
+    // const chainName = findKeyByChainID(chainsData, chainId as number) as
+    //     | 'base'
+    //     | 'baseSepolia'
     console.log(address)
     if (address) {
         return (
-            <div className="bg-base-900 flex h-fit min-h-[100svh] w-full flex-col gap-5 text-wrap p-4 pt-32 font-satoshi font-bold text-textcol md:p-24">
+            <div className="flex h-fit min-h-[100svh] w-full flex-col gap-5 text-wrap bg-base-900 p-4 pt-32 font-satoshi font-bold text-textcol md:p-24">
                 <NavBar />
                 <span className="mt-12 px-2 font-normal">
                     <span>
@@ -70,7 +79,7 @@ const TokenManager = () => {
 
                 <RebelMintTokenManager
                     contractAddress={address}
-                    chain={chainName}
+                    chain={subdomain == 'test' ? 'baseSepolia' : 'base'}
                     bypassWeb3={true}
                     apiKey={import.meta.env.VITE_ALCHEMY_KEY}
                 />
