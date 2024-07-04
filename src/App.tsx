@@ -14,7 +14,7 @@ function App() {
     }
 
     const getSubdomain = () => {
-        const host = window.location.hostname // example: test.localhost
+        const host = window.location.hostname
         const parts = host.split('.')
 
         if (parts[0].length > 2) {
@@ -35,13 +35,17 @@ function App() {
                 <div className="justify-cente flex h-full min-h-[100svh] w-[100vw] bg-base-900 align-middle">
                     <RebelMint
                         contractAddress={contractAddress}
-                        chain={subdomain == 'test' ? 'baseSepolia' : 'base'}
+                        test={subdomain == 'test' ? true : false}
                         apiKey={import.meta.env.VITE_ALCHEMY_KEY}
                     />
                 </div>
             </div>
         )
     } else {
+        const body = document.getElementById('body')
+        if (body) {
+            body?.setAttribute('class', 'bg-base-50')
+        }
         return (
             <div className="relative flex h-fit min-h-[100svh] w-[100vw] flex-col items-center justify-center p-3 md:p-10">
                 <NavBar hasNewShop={true} />
@@ -86,7 +90,7 @@ function App() {
                     onClick={() => {
                         setSearchParams({
                             contract:
-                                '0x21fed8cd09e1355ec79c79a195bd0d43cb26e52a',
+                                '0x73fd10aa4d3d12c1db2074d8b2cb7bf6fb1356fe',
                         })
                     }}
                     className="mb-52 h-[2rem] w-[13rem] rounded-lg bg-base-100 text-sm font-extralight text-bgcol hover:invert-[5%] active:invert-[10%]"

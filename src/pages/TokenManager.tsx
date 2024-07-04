@@ -1,36 +1,12 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { RebelMintTokenManager } from '../RebelMint/src/RebelMint'
-import { useAccount } from 'wagmi'
-import chainsData from '../RebelMint/src/contract/ChainsData'
 import { NavBar } from '../components/NavBar'
-
-interface ChainStruct {
-    url: string
-    chainID: number
-}
-
-interface ChainsDataStruct {
-    [key: string]: ChainStruct
-}
-
-function findKeyByChainID(chains: ChainsDataStruct, targetChainID: number) {
-    for (const key in chains) {
-        if (chains[key].chainID === targetChainID) {
-            return key
-        }
-    }
-    return null
-}
 
 const TokenManager = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const [input, setInput] = useState('')
     const address = searchParams.get('contract')
-    const account = useAccount()
-    const { chainId } = useAccount()
-    console.log(account)
-    console.log(chainId)
     const getSubdomain = () => {
         const host = window.location.hostname // example: test.localhost
         const parts = host.split('.')
@@ -43,10 +19,6 @@ const TokenManager = () => {
     }
     const subdomain = getSubdomain()
 
-    // const chainName = findKeyByChainID(chainsData, chainId as number) as
-    //     | 'base'
-    //     | 'baseSepolia'
-    console.log(address)
     if (address) {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col gap-5 text-wrap bg-base-900 p-4 pt-32 font-satoshi font-bold text-textcol md:p-24">
@@ -79,7 +51,7 @@ const TokenManager = () => {
 
                 <RebelMintTokenManager
                     contractAddress={address}
-                    chain={subdomain == 'test' ? 'baseSepolia' : 'base'}
+                    test={subdomain == 'test' ? true : false}
                     bypassWeb3={true}
                     apiKey={import.meta.env.VITE_ALCHEMY_KEY}
                 />
