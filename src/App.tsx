@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import RebelMint from './RebelMint/src/RebelMint'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { NavBar } from './components/NavBar'
 
 function App() {
-    const [searchParams, setSearchParams] = useSearchParams()
-    const contractAddress = searchParams.get('contract')
+    const { contractAddress } = useParams()
+    const navigate = useNavigate()
     const [inputAddress, setInputAddress] = useState<string>('')
     useEffect(() => {}, [inputAddress])
     let invalidInput = false
@@ -62,9 +62,9 @@ function App() {
                     className="mb-4 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
                     onSubmit={(e) => {
                         e.preventDefault()
-                        setSearchParams(
-                            inputAddress ? { contract: inputAddress } : ''
-                        )
+                        if (inputAddress) {
+                            navigate(`/${inputAddress}`)
+                        }
                     }}
                 >
                     <input
@@ -88,10 +88,7 @@ function App() {
 
                 <button
                     onClick={() => {
-                        setSearchParams({
-                            contract:
-                                '0x73fd10aa4d3d12c1db2074d8b2cb7bf6fb1356fe',
-                        })
+                        navigate('/0x73fd10aa4d3d12c1db2074d8b2cb7bf6fb1356fe')
                     }}
                     className="mb-52 h-[2rem] w-[13rem] rounded-lg bg-base-100 text-sm font-extralight text-bgcol hover:invert-[5%] active:invert-[10%]"
                 >

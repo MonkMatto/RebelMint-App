@@ -12,7 +12,7 @@ import { About } from './pages/About.tsx'
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: '/:contractAddress?',
         element: <App />,
     },
     {
@@ -28,11 +28,11 @@ const router = createBrowserRouter([
         element: <ContractBuilderPage />,
     },
     {
-        path: '/tokenmanager',
+        path: '/tokenmanager/:contractAddress?',
         element: <TokenManager />,
     },
     {
-        path: '/editcontract',
+        path: '/editcontract/:contractAddress?',
         element: <ConfigureContract />,
     },
     {

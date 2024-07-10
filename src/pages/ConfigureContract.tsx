@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import {
     useAccount,
-    // useReadContract,
     useWaitForTransactionReceipt,
     useWriteContract,
 } from 'wagmi'
 import contractABI from '../RebelMint/src/contract/abi'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { NavBar } from '../components/NavBar'
 interface ContractDetails {
     title: string
@@ -34,8 +33,8 @@ function sanitizeAndEscapeInput(inputString: string) {
 }
 
 const ConfigureContract = () => {
-    const [searchParams, setSearchParams] = useSearchParams()
-    const contractAddress = searchParams.get('contract')
+    const { contractAddress } = useParams()
+    const navigate = useNavigate()
     const { writeContractAsync, data: hash } = useWriteContract()
     const { address } = useAccount()
     const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -188,7 +187,9 @@ const ConfigureContract = () => {
                         className="mb-4 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
                         onSubmit={(e) => {
                             e.preventDefault()
-                            setSearchParams(input ? { contract: input } : '')
+                            if (input) {
+                                navigate(`/editcontract/${input}`)
+                            }
                         }}
                     >
                         <input
