@@ -1,12 +1,14 @@
 import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { RebelMintTokenManager } from '../RebelMint/src/RebelMint'
 import { NavBar } from '../components/NavBar'
+import { setPageTitle } from '../util/setPageTitle'
 
 const TokenManager = () => {
-    const [searchParams, setSearchParams] = useSearchParams()
+    setPageTitle('Token Manager')
+    const navigate = useNavigate()
+    const { contractAddress } = useParams()
     const [input, setInput] = useState('')
-    const address = searchParams.get('contract')
     const getSubdomain = () => {
         const host = window.location.hostname // example: test.localhost
         const parts = host.split('.')
@@ -19,7 +21,7 @@ const TokenManager = () => {
     }
     const subdomain = getSubdomain()
 
-    if (address) {
+    if (contractAddress) {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col gap-5 text-wrap bg-base-900 p-4 pt-32 font-satoshi font-bold text-textcol md:p-24">
                 <NavBar />
@@ -50,7 +52,7 @@ const TokenManager = () => {
                 </span>
 
                 <RebelMintTokenManager
-                    contractAddress={address}
+                    contractAddress={contractAddress}
                     test={subdomain == 'test' ? true : false}
                     bypassWeb3={true}
                     apiKey={import.meta.env.VITE_ALCHEMY_KEY}
@@ -65,7 +67,9 @@ const TokenManager = () => {
                     className="mb-4 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
                     onSubmit={(e) => {
                         e.preventDefault()
-                        setSearchParams(input ? { contract: input } : '')
+                        if (input) {
+                            navigate(`/tokenmanager/${input}`)
+                        }
                     }}
                 >
                     <input

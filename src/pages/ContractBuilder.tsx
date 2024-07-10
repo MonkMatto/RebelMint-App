@@ -7,11 +7,13 @@ import {
 } from 'wagmi'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { NavBar } from '../components/NavBar'
+import { setPageTitle } from '../util/setPageTitle'
 
 const versions = ['v0j0'] as const
 type Version = (typeof versions)[number]
 
 const ContractBuilderPage = () => {
+    setPageTitle('New Shop')
     const { address, chain, chainId } = useAccount()
     const { open } = useWeb3Modal()
 
@@ -191,7 +193,7 @@ const ContractBuilderPage = () => {
                             {`View Contract On ${chain && chain.blockExplorers ? chain.blockExplorers.default.name : ''}`}
                         </div>
                     </a>
-                    <a href={`/editcontract/?contract=${contractAddress}`}>
+                    <a href={`/editcontract/${contractAddress}`}>
                         <div className="flex h-24 w-fit items-center justify-center rounded-lg border-2 border-textcol bg-textcol p-5 text-center text-3xl font-bold text-bgcol">
                             {`Next Step: Set Up Details`}
                             <img src="arrowright.svg" />

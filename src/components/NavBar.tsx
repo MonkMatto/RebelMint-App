@@ -29,7 +29,7 @@ export const NavBar = ({
                 >
                     <div className="h-12 w-12 flex-shrink-0">
                         <img
-                            src="android-chrome-512x512.png"
+                            src="/android-chrome-512x512.png"
                             className="h-full w-full object-cover"
                             alt="Site Logo"
                         />

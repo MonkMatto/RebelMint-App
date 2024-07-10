@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import RebelMint from './RebelMint/src/RebelMint'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { NavBar } from './components/NavBar'
 
 function App() {
-    const [searchParams, setSearchParams] = useSearchParams()
-    const contractAddress = searchParams.get('contract')
+    const { contractAddress } = useParams()
+    const navigate = useNavigate()
     const [inputAddress, setInputAddress] = useState<string>('')
     useEffect(() => {}, [inputAddress])
     let invalidInput = false
@@ -26,7 +26,6 @@ function App() {
 
     const subdomain = getSubdomain()
 
-    //0x21fed8cd09e1355ec79c79a195bd0d43cb26e52a
     if (contractAddress) {
         return (
             <div className="flex h-fit min-h-[100svh] flex-col items-center justify-start pt-24">
@@ -62,9 +61,9 @@ function App() {
                     className="mb-4 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
                     onSubmit={(e) => {
                         e.preventDefault()
-                        setSearchParams(
-                            inputAddress ? { contract: inputAddress } : ''
-                        )
+                        if (inputAddress) {
+                            navigate(`/${inputAddress}`)
+                        }
                     }}
                 >
                     <input
@@ -88,10 +87,11 @@ function App() {
 
                 <button
                     onClick={() => {
-                        setSearchParams({
-                            contract:
-                                '0x73fd10aa4d3d12c1db2074d8b2cb7bf6fb1356fe',
-                        })
+                        navigate(
+                            subdomain == 'test'
+                                ? '/0x73fd10aa4d3d12c1db2074d8b2cb7bf6fb1356fe'
+                                : '/0x69Cc263973b1b22F7d81C5Be880A27CAd4c4E0De'
+                        )
                     }}
                     className="mb-52 h-[2rem] w-[13rem] rounded-lg bg-base-100 text-sm font-extralight text-bgcol hover:invert-[5%] active:invert-[10%]"
                 >

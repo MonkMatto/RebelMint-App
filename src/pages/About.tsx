@@ -1,14 +1,16 @@
 import { NavBar } from '../components/NavBar'
+import { setPageTitle } from '../util/setPageTitle'
 
 export const About = () => {
+    setPageTitle('About')
     const headerClass = 'text-3xl font-bold'
     const paragraphClass = 'text-lg font-light'
     const itemClass =
         'text-base-950 bg-base-50 p-10 flex flex-col gap-8 rounded-lg'
     return (
-        <div className="bg-base-900 flex h-fit min-h-[100svh] w-full flex-col gap-8 text-wrap p-4 pt-24 font-satoshi font-bold text-textcol md:px-24">
+        <div className="flex h-fit min-h-[100svh] w-full flex-col gap-8 text-wrap bg-base-900 p-4 pt-24 font-satoshi font-bold text-textcol md:px-24">
             <NavBar />
-            <div className="bg-base-50 text-base-950 mt-12 flex w-full flex-col gap-8 rounded-lg p-10">
+            <div className="mt-12 flex w-full flex-col gap-8 rounded-lg bg-base-50 p-10 text-base-950">
                 <h1 id="rebelmint-manifesto" className="text-7xl font-bold">
                     RebelMint Manifesto
                 </h1>
