@@ -10,7 +10,23 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                satoshi: ['Satoshi'],
+                satoshi: [
+                    'Satoshi',
+                    'Roboto',
+                    'ui-sans-serif',
+                    'system-ui',
+                    '-apple-system',
+                    'BlinkMacSystemFont',
+                    'Segoe UI',
+                    'Helvetica Neue',
+                    'Arial',
+                    'Noto Sans',
+                    'sans-serif',
+                    'Apple Color Emoji',
+                    'Segoe UI Emoji',
+                    'Segoe UI Symbol',
+                    'Noto Color Emoji',
+                ],
             },
             backgroundImage: (theme) => ({
                 logo: "url('/public/android-chrome-512x512.png')",
