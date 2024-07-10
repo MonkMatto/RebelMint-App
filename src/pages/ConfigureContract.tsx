@@ -172,7 +172,7 @@ const ConfigureContract = () => {
                     {isConfirmed && (
                         <a
                             className="w-fit self-end rounded-lg bg-textcol p-4 text-bgcol disabled:invert-[30%]"
-                            href={`/tokenmanager?contract=${contractAddress}`}
+                            href={`/tokenmanager/${contractAddress}`}
                         >{`Next Step: Create Tokens for ${form.title} ->`}</a>
                     )}
                 </div>
