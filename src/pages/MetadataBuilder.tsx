@@ -4,6 +4,7 @@ import CustomMetadataInputs from '../components/CustomMetadataInputs'
 import TokenPreview from '../components/TokenPreview'
 import { downloadJSON, removeSpaces } from '../util/handleJson'
 import { NavBar } from '../components/NavBar'
+import { setPageTitle } from '../util/setPageTitle'
 
 interface Trait {
     trait_type: string
@@ -28,6 +29,7 @@ interface FormStruct {
 }
 
 const MetadataBuilder = () => {
+    setPageTitle('Metadata Builder')
     const [form, setForm] = useState<FormStruct>({
         name: '',
         artist: '',

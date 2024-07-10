@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { RebelMintTokenManager } from '../RebelMint/src/RebelMint'
 import { NavBar } from '../components/NavBar'
+import { setPageTitle } from '../util/setPageTitle'
 
 const TokenManager = () => {
+    setPageTitle('Token Manager')
     const navigate = useNavigate()
     const { contractAddress } = useParams()
     const [input, setInput] = useState('')

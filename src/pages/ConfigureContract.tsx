@@ -7,6 +7,7 @@ import {
 import contractABI from '../RebelMint/src/contract/abi'
 import { useNavigate, useParams } from 'react-router-dom'
 import { NavBar } from '../components/NavBar'
+import { setPageTitle } from '../util/setPageTitle'
 interface ContractDetails {
     title: string
     creator: string
@@ -33,6 +34,7 @@ function sanitizeAndEscapeInput(inputString: string) {
 }
 
 const ConfigureContract = () => {
+    setPageTitle('Collection Setup')
     const { contractAddress } = useParams()
     const navigate = useNavigate()
     const { writeContractAsync, data: hash } = useWriteContract()

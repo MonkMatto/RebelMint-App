@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import TokenPreview from '../components/TokenPreview'
 import { NavBar } from '../components/NavBar'
+import { setPageTitle } from '../util/setPageTitle'
 
 const MetadataPreviewPage = () => {
+    setPageTitle('Metadata Preview')
     const [metadata, setMetadata] = useState('{}')
     const [link, setLink] = useState('')
     const [isLinkError, setIsLinkError] = useState(false)
@@ -66,7 +68,7 @@ const MetadataPreviewPage = () => {
                 />
                 <button
                     onClick={() => fetchJsonFromUri(link)}
-                    className="bg-base-50 text-base-950 hover:bg-base-100 h-full w-1/3 rounded-lg p-4"
+                    className="h-full w-1/3 rounded-lg bg-base-50 p-4 text-base-950 hover:bg-base-100"
                 >
                     Fetch Data
                 </button>

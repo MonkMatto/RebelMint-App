@@ -7,11 +7,13 @@ import {
 } from 'wagmi'
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { NavBar } from '../components/NavBar'
+import { setPageTitle } from '../util/setPageTitle'
 
 const versions = ['v0j0'] as const
 type Version = (typeof versions)[number]
 
 const ContractBuilderPage = () => {
+    setPageTitle('New Shop')
     const { address, chain, chainId } = useAccount()
     const { open } = useWeb3Modal()
 
