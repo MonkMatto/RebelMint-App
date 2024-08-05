@@ -5,6 +5,7 @@ import TokenPreview from '../components/TokenPreview'
 import { downloadJSON, removeSpaces } from '../util/handleJson'
 import { NavBar } from '../components/NavBar'
 import { setPageTitle } from '../util/setPageTitle'
+import Footer from '../components/Footer'
 
 interface Trait {
     trait_type: string
@@ -322,6 +323,7 @@ const MetadataBuilder = () => {
             </button>
             <h1 className="mb-6 w-full text-5xl font-bold">Token Preview</h1>
             <TokenPreview metadata={metadata} />
+            <Footer />
         </div>
     )
 }

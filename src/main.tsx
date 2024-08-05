@@ -9,6 +9,7 @@ import ConfigureContract from './pages/ConfigureContract.tsx'
 import MetadataPreviewPage from './pages/MetadataPreviewPage.tsx'
 import MetadataBuilder from './pages/MetadataBuilder.tsx'
 import { About } from './pages/About.tsx'
+import TOS from './pages/TOS.tsx'
 
 const router = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
     {
         path: '/about',
         element: <About />,
+    },
+    {
+        path: '/tos',
+        element: <TOS />,
     },
 ])
 

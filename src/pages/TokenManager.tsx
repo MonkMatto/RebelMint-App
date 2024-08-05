@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { RebelMintTokenManager } from '../RebelMint/src/RebelMint'
 import { NavBar } from '../components/NavBar'
 import { setPageTitle } from '../util/setPageTitle'
+import Footer from '../components/Footer'
 
 const TokenManager = () => {
     setPageTitle('Token Manager')
@@ -87,6 +88,7 @@ const TokenManager = () => {
                         Load Tokens
                     </button>
                 </form>
+                <Footer />
             </div>
         )
     }
