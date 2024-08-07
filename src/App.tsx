@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import RebelMint from './RebelMint/src/RebelMint'
 import { useNavigate, useParams } from 'react-router-dom'
 import { NavBar } from './components/NavBar'
+import Footer from './components/Footer'
 
 function App() {
     const { contractAddress } = useParams()
@@ -132,6 +133,7 @@ function App() {
                         </a>
                     </div>
                 </div>
+                <Footer />
             </div>
         )
     }

@@ -1,3 +1,4 @@
+import Footer from '../components/Footer'
 import { NavBar } from '../components/NavBar'
 import { setPageTitle } from '../util/setPageTitle'
 
@@ -163,6 +164,7 @@ export const About = () => {
                     </p>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

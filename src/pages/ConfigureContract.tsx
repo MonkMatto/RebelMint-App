@@ -8,6 +8,7 @@ import contractABI from '../RebelMint/src/contract/abi'
 import { useNavigate, useParams } from 'react-router-dom'
 import { NavBar } from '../components/NavBar'
 import { setPageTitle } from '../util/setPageTitle'
+import Footer from '../components/Footer'
 interface ContractDetails {
     title: string
     creator: string
@@ -210,6 +211,7 @@ const ConfigureContract = () => {
                         </button>
                     </form>
                 </div>
+                <Footer />
             </div>
         )
     }

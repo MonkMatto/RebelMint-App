@@ -2,6 +2,7 @@ import { useState } from 'react'
 import TokenPreview from '../components/TokenPreview'
 import { NavBar } from '../components/NavBar'
 import { setPageTitle } from '../util/setPageTitle'
+import Footer from '../components/Footer'
 
 const MetadataPreviewPage = () => {
     setPageTitle('Metadata Preview')
@@ -91,6 +92,7 @@ const MetadataPreviewPage = () => {
             />
 
             <TokenPreview metadata={isValidJSON ? metadata : '{}'} />
+            <Footer />
         </div>
     )
 }

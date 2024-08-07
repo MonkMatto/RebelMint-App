@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Footer from '../components/Footer'
 
 interface DetailStruct {
     title: string
@@ -81,6 +82,7 @@ const EditContract = () => {
             <h1 className="mb-6 mt-5 w-full text-5xl font-bold">
                 Metadata Output
             </h1>
+            <Footer />
         </div>
     )
 }

@@ -8,6 +8,7 @@ import {
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { NavBar } from '../components/NavBar'
 import { setPageTitle } from '../util/setPageTitle'
+import Footer from '../components/Footer'
 
 const versions = ['v0j0'] as const
 type Version = (typeof versions)[number]
@@ -19,6 +20,7 @@ const ContractBuilderPage = () => {
 
     const { data: walletClient } = useWalletClient({ chainId: chain?.id })
     const [version, setVersion] = useState<Version>(versions[0])
+    const [acceptedTerms, setAcceptedTerms] = useState(false)
     const [contractAddress, setContractAddress] = useState<string | null>(null)
     const [recentHash, setRecentHash] = useState<`0x${string}` | undefined>(
         undefined
@@ -156,10 +158,30 @@ const ContractBuilderPage = () => {
                             ))}
                         </select>
                     </div>
+                    <div className="flex gap-2">
+                        <input
+                            id="termsCheckbox"
+                            type="checkbox"
+                            onClick={() => setAcceptedTerms(!acceptedTerms)}
+                            checked={acceptedTerms}
+                        />
+                        <label htmlFor="termsCheckbox">
+                            Agree to the{' '}
+                            <a
+                                href="/tos"
+                                target="_blank"
+                                className="underline"
+                            >
+                                Terms of Use
+                            </a>
+                        </label>
+                    </div>
 
                     <button
                         onClick={createContract}
-                        disabled={recentHash != undefined}
+                        disabled={
+                            recentHash != undefined || acceptedTerms != true
+                        }
                         className="h-fit w-full rounded-lg border-2 border-bgcol bg-textcol p-5 font-bold text-bgcol disabled:invert-[30%]"
                     >
                         {`Create Contract on ${chain.name}`}
@@ -201,6 +223,7 @@ const ContractBuilderPage = () => {
                     </a>
                 </div>
             )}
+            <Footer />
         </div>
     )
 }
