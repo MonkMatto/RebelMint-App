@@ -56,7 +56,7 @@ function App() {
                     <h1 className="mb-4 text-5xl font-extrabold lg:text-9xl">
                         REBELMINT
                     </h1>
-                    <p>{`WEB3 STOREFRONTS`}</p>
+                    <p>{`WEB3 STOREFRONTS WITH ATTITUDE`}</p>
                 </div>
                 <form
                     className="mb-4 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
@@ -99,8 +99,45 @@ function App() {
                     View example shop
                 </button>
                 <div className="flex flex-col rounded-lg bg-base-100 p-5">
-                    <h1 className="mb-4 flex items-center justify-center font-semibold">
-                        TOOLS
+                    <h1 className="mb-4 flex items-center justify-center font-bold">
+                        PREPARE YOUR TOKENS
+                    </h1>
+                    <div className="grid grid-cols-1 gap-4 font-bold md:grid-cols-2">
+                        {/* <a
+                            href="/createcontract"
+                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:bg-base-800 active:bg-base-700"
+                        >
+                            CONTRACT BUILDER
+                            <img src="store.svg" className="brightness-110" />
+                        </a>
+                        <a
+                            href="/tokenmanager"
+                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:bg-base-800 active:bg-base-700"
+                        >
+                            TOKEN MANAGER
+                            <img src="apps.svg" className="brightness-110" />
+                        </a> */}
+                        <a
+                            href="/metadatabuilder"
+                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:bg-base-800 active:bg-base-700"
+                        >
+                            METADATA BUILDER
+                            <img src="create.svg" className="brightness-110" />
+                        </a>
+                        <a
+                            href="/metadatapreviewer"
+                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:bg-base-800 active:bg-base-700"
+                        >
+                            METADATA PREVIEWER
+                            <img src="eye.svg" className="brightness-110" />
+                        </a>
+                    </div>
+                    
+                </div>
+                <br></br>
+                <div className="flex flex-col rounded-lg bg-base-100 p-5">
+                    <h1 className="mb-4 flex items-center justify-center font-bold">
+                        EXECUTE YOUR VISION
                     </h1>
                     <div className="grid grid-cols-1 gap-4 font-bold md:grid-cols-2">
                         <a
@@ -117,7 +154,7 @@ function App() {
                             TOKEN MANAGER
                             <img src="apps.svg" className="brightness-110" />
                         </a>
-                        <a
+                        {/* <a
                             href="/metadatabuilder"
                             className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:bg-base-800 active:bg-base-700"
                         >
@@ -130,9 +167,12 @@ function App() {
                         >
                             METADATA PREVIEWER
                             <img src="eye.svg" className="brightness-110" />
-                        </a>
+                        </a> */}
                     </div>
+                    
                 </div>
+
+
                 <Footer />
             </div>
         )
