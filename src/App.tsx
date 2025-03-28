@@ -47,57 +47,67 @@ function App() {
             body?.setAttribute('class', 'bg-base-50')
         }
         return (
-            <div className="relative flex h-fit min-h-[100svh] w-[100vw] flex-col items-center justify-center p-3 md:p-10">
+            <div className="relative flex h-fit min-h-[100svh] w-[100vw] flex-col items-center justify-center p-3 pb-2 md:p-10 md:pb-2">
                 <NavBar hasNewShop={true} />
-                <div
-                    id="hero"
-                    className="mb-24 mt-[30svh] flex flex-col items-center rounded-lg bg-base-900 p-10 text-base-50"
+                <section
+                    id="hero-and-form"
+                    className="flex min-h-[100svh] w-full flex-col items-center justify-center gap-24"
                 >
-                    <h1 className="mb-4 text-5xl font-extrabold lg:text-9xl">
-                        REBELMINT
-                    </h1>
-                    <p>{`WEB3 STOREFRONTS WITH ATTITUDE`}</p>
-                </div>
-                <form
-                    className="mb-4 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
-                    onSubmit={(e) => {
-                        e.preventDefault()
-                        if (inputAddress) {
-                            navigate(`/${inputAddress}`)
-                        }
-                    }}
-                >
-                    <input
-                        spellCheck={false}
-                        placeholder="Enter a shop's Contract Address"
-                        className="h-[3rem] w-[23rem] rounded-md border-2 border-bgcol p-2 md:w-[26rem]"
-                        onChange={(e) => {
-                            setInputAddress(e.target.value)
-                        }}
-                    ></input>
-                    <button
-                        type="submit"
-                        className="h-[3rem] w-[23rem] rounded-lg bg-bgcol text-textcol hover:bg-base-800 active:bg-base-700 md:w-[26rem] lg:w-fit lg:px-4"
+                    <div
+                        id="hero"
+                        className="mt-[30svh] flex flex-col items-center gap-4 rounded-lg bg-base-900 p-10 text-base-50"
                     >
-                        Load Shop
-                    </button>
-                </form>
-                {invalidInput && (
-                    <p className="mb-5 text-red-500">Invalid address</p>
-                )}
+                        <h1 className="text-5xl font-extrabold lg:text-9xl">
+                            REBELMINT
+                        </h1>
+                        <p>{`WEB3 STOREFRONTS WITH ATTITUDE`}</p>
+                    </div>
+                    <div
+                        id="form-and-example"
+                        className="flex flex-col items-center justify-center gap-4"
+                    >
+                        <form
+                            className="flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
+                            onSubmit={(e) => {
+                                e.preventDefault()
+                                if (inputAddress) {
+                                    navigate(`/${inputAddress}`)
+                                }
+                            }}
+                        >
+                            <input
+                                spellCheck={false}
+                                placeholder="Enter a shop's Contract Address"
+                                className="h-[3rem] w-[23rem] rounded-md border-2 border-bgcol p-2 md:w-[26rem]"
+                                onChange={(e) => {
+                                    setInputAddress(e.target.value)
+                                }}
+                            ></input>
+                            <button
+                                type="submit"
+                                className="h-[3rem] w-[23rem] rounded-lg bg-bgcol text-textcol hover:bg-base-800 active:bg-base-700 md:w-[26rem] lg:w-fit lg:px-4"
+                            >
+                                Load Shop
+                            </button>
+                        </form>
+                        {invalidInput && (
+                            <p className="mb-5 text-red-500">Invalid address</p>
+                        )}
 
-                <button
-                    onClick={() => {
-                        navigate(
-                            subdomain == 'test'
-                                ? '/0x73fd10aa4d3d12c1db2074d8b2cb7bf6fb1356fe'
-                                : '/0x69Cc263973b1b22F7d81C5Be880A27CAd4c4E0De'
-                        )
-                    }}
-                    className="mb-52 h-[2rem] w-[13rem] rounded-lg bg-base-100 text-sm font-extralight text-bgcol hover:invert-[5%] active:invert-[10%]"
-                >
-                    View example shop
-                </button>
+                        <button
+                            onClick={() => {
+                                navigate(
+                                    subdomain == 'test'
+                                        ? '/0x73fd10aa4d3d12c1db2074d8b2cb7bf6fb1356fe'
+                                        : '/0x69Cc263973b1b22F7d81C5Be880A27CAd4c4E0De'
+                                )
+                            }}
+                            className="mb-52 h-[2rem] w-[13rem] rounded-lg bg-base-100 text-sm font-extralight text-bgcol hover:invert-[5%] active:invert-[10%]"
+                        >
+                            View example shop
+                        </button>
+                    </div>
+                </section>
                 <div className="flex flex-col rounded-lg bg-base-100 p-5">
                     <h1 className="mb-4 flex items-center justify-center font-bold">
                         PREPARE YOUR TOKENS
@@ -132,7 +142,6 @@ function App() {
                             <img src="eye.svg" className="brightness-110" />
                         </a>
                     </div>
-                    
                 </div>
                 <br></br>
                 <div className="flex flex-col rounded-lg bg-base-100 p-5">
@@ -169,9 +178,7 @@ function App() {
                             <img src="eye.svg" className="brightness-110" />
                         </a> */}
                     </div>
-                    
                 </div>
-
 
                 <Footer />
             </div>

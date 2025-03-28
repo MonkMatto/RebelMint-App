@@ -24,9 +24,9 @@ export const NavBar = ({
             <div className="h-18 flex max-h-24 w-full items-center justify-start gap-2 rounded-lg bg-base-50 px-1 py-1">
                 <a
                     href="/"
-                    className="flex items-center gap-2 rounded-lg bg-base-900 p-1 pl-2 pr-4"
+                    className="flex items-center gap-2 rounded-md bg-base-900 p-1 pl-2 pr-4 hover:bg-base-800"
                 >
-                    <div className="h-12 w-12 flex-shrink-0">
+                    <div className="h-8 w-8 flex-shrink-0">
                         <img
                             src="/android-chrome-512x512.png"
                             className="h-full w-full object-cover"
