@@ -1,14 +1,21 @@
+import { Blocks, Eye, Grip, MonitorCog, Store } from 'lucide-react'
+import NavDropdown from './NavDropdown'
+
 const NavItem = ({ dest, label }: { dest: string; label: string }) => {
     let itemClass
     if (window.location.pathname == dest) {
         itemClass =
-            'bg-base-100 text-base-950  font-bold flex w-fit items-center justify-center gap-2 rounded-lg p-2 hover:bg-base-100 duration-200 active:bg-base-200'
+            'flex items-center gap-2 px-4 py-2 text-base-400 transition-all hover:cursor-pointer hover:text-base-950 dark:hover:text-base-50'
     } else {
         itemClass =
-            ' text-base-950 flex font-normal w-fit items-center justify-center gap-2 rounded-lg p-2 hover:bg-base-200 duration-200 active:bg-base-200'
+            'flex items-center gap-2 px-4 py-2 text-base-400 transition-all hover:cursor-pointer hover:text-base-950 dark:hover:text-base-50'
     }
     return (
-        <a href={dest} key={label} className={itemClass}>
+        <a
+            href={dest}
+            key={label}
+            className="flex items-center gap-2 px-4 py-2 text-base-400 transition-all hover:cursor-pointer hover:text-base-950 dark:hover:text-base-50"
+        >
             {label}
         </a>
     )
@@ -42,8 +49,38 @@ export const NavBar = ({
                 </a>
 
                 <div className="hidden h-12 w-full flex-1 items-center justify-start gap-5 border-base-400 px-5 md:flex">
-                    <NavItem dest="/about" label="MANIFESTO" />
-                    <NavItem dest="/tokenmanager" label="TOKEN MANAGER" />
+                    <NavItem dest="/about" label="Manifesto" />
+                    {/* <NavItem dest="/tokenmanager" label="TOKEN MANAGER" /> */}
+                    <NavDropdown
+                        title="Prepare"
+                        options={[
+                            {
+                                label: 'Metadata Previewer',
+                                destination: '/metadatapreviewer',
+                                icon: <Eye size={16} />,
+                            },
+                            {
+                                label: 'Metadata Builder',
+                                destination: '/metadatabuilder',
+                                icon: <Blocks size={16} />,
+                            },
+                        ]}
+                    />
+                    <NavDropdown
+                        title="Execute"
+                        options={[
+                            {
+                                label: 'Contract Builder',
+                                destination: '/createcontract',
+                                icon: <Store size={16} />,
+                            },
+                            {
+                                label: 'Token Manager',
+                                destination: '/tokenmanager',
+                                icon: <Grip size={16} />,
+                            },
+                        ]}
+                    />
                 </div>
                 {hasNewShop && (
                     <a

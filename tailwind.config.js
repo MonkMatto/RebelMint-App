@@ -1,14 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    content: {
-        files: [
-            './src/components/**/*.{html,js,jsx,tsx,ts}',
-            './src/**/*.{html,js,jsx,tsx,ts}',
-            '!./src/RebelMint/**/*.{html,js,ts,tsx,jsx}',
-            '!./src/RebelMint/node_modules/**/*.{html,js,ts,tsx,jsx}',
-            '!./node_nodules/**/*.{html,js,jsx,tsx,ts}',
-        ],
-    },
+    content: [
+        './src/**/*.{js,jsx,ts,tsx}',
+        './src/components/**/*.{js,jsx,ts,tsx}',
+        '!./src/RebelMint/**/*.{html,js,ts,tsx,jsx}',
+    ],
     theme: {
         extend: {
             fontFamily: {
