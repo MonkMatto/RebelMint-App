@@ -37,7 +37,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({ title, options }) => {
         <div ref={dropdownRef} className="relative">
             <button
                 onClick={toggleOpen}
-                className="flex items-center gap-2 px-4 py-2 text-base-400 transition-all hover:cursor-pointer hover:text-base-950 dark:hover:text-base-50"
+                className="flex items-center gap-2 px-4 py-2 text-base-400 transition-all hover:cursor-pointer hover:text-base-950"
             >
                 {title}
                 <ChevronDown

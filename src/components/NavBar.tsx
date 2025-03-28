@@ -2,19 +2,11 @@ import { Blocks, Eye, Grip, MonitorCog, Store } from 'lucide-react'
 import NavDropdown from './NavDropdown'
 
 const NavItem = ({ dest, label }: { dest: string; label: string }) => {
-    let itemClass
-    if (window.location.pathname == dest) {
-        itemClass =
-            'flex items-center gap-2 px-4 py-2 text-base-400 transition-all hover:cursor-pointer hover:text-base-950 dark:hover:text-base-50'
-    } else {
-        itemClass =
-            'flex items-center gap-2 px-4 py-2 text-base-400 transition-all hover:cursor-pointer hover:text-base-950 dark:hover:text-base-50'
-    }
     return (
         <a
             href={dest}
             key={label}
-            className="flex items-center gap-2 px-4 py-2 text-base-400 transition-all hover:cursor-pointer hover:text-base-950 dark:hover:text-base-50"
+            className="flex items-center gap-2 px-4 py-2 text-base-400 transition-all hover:cursor-pointer hover:text-base-950"
         >
             {label}
         </a>
@@ -82,20 +74,10 @@ export const NavBar = ({
                         ]}
                     />
                 </div>
-                {hasNewShop && (
-                    <a
-                        href="/createcontract"
-                        className="active:bg-800 ml-auto flex w-fit items-center justify-center gap-2 text-nowrap rounded-lg bg-base-950 p-4 text-base-50 duration-200 hover:scale-[103%] hover:bg-base-800 active:bg-base-200"
-                    >
-                        NEW SHOP
-                        <img src="add.svg" className="brighten-110" />
-                    </a>
-                )}
-                {!hasNewShop && (
-                    <div className="hover:bg-900 active:bg-800 ml-auto mr-2 flex w-fit items-center justify-center gap-2 rounded-lg bg-base-950 text-base-50">
-                        <w3m-network-button />
-                    </div>
-                )}
+
+                <div className="hover:bg-900 active:bg-800 ml-auto mr-2 flex w-fit items-center justify-center gap-2 rounded-lg bg-base-950 text-base-50">
+                    <w3m-network-button />
+                </div>
             </div>
         </div>
     )
