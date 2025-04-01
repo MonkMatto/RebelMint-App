@@ -1,4 +1,4 @@
-import { Blocks, Eye, Grip, MonitorCog, Store } from 'lucide-react'
+import { Blocks, Eye, Grip, Store } from 'lucide-react'
 import NavDropdown from './NavDropdown'
 
 const NavItem = ({ dest, label }: { dest: string; label: string }) => {
@@ -13,15 +13,10 @@ const NavItem = ({ dest, label }: { dest: string; label: string }) => {
     )
 }
 
-export const NavBar = ({
-    hasNewShop,
-}: {
-    hasNewShop?: boolean
-    hasConnector?: boolean
-}) => {
+export const NavBar = ({}: { hasConnector?: boolean }) => {
     return (
         <div className="absolute left-0 right-0 top-0 z-20 h-24 w-full p-3 text-base">
-            <div className="h-18 flex max-h-24 w-full items-center justify-start gap-2 rounded-lg bg-base-50 px-1 py-1">
+            <div className="h-18 flex max-h-24 w-full items-center justify-start gap-2 rounded-lg px-1 py-1">
                 <a
                     href="/"
                     className="flex items-center gap-2 rounded-md bg-base-900 p-1 pl-2 pr-4 hover:bg-base-800"
@@ -42,7 +37,6 @@ export const NavBar = ({
 
                 <div className="hidden h-12 w-full flex-1 items-center justify-start gap-5 border-base-400 px-5 md:flex">
                     <NavItem dest="/about" label="Manifesto" />
-                    {/* <NavItem dest="/tokenmanager" label="TOKEN MANAGER" /> */}
                     <NavDropdown
                         title="Prepare"
                         options={[
@@ -75,7 +69,7 @@ export const NavBar = ({
                     />
                 </div>
 
-                <div className="hover:bg-900 active:bg-800 ml-auto mr-2 flex w-fit items-center justify-center gap-2 rounded-lg bg-base-950 text-base-50">
+                <div className="hover:bg-900 ml-auto mr-2 flex w-fit items-center justify-center gap-2 rounded-lg text-base-50">
                     <w3m-network-button />
                 </div>
             </div>

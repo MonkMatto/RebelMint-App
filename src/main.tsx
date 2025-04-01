@@ -13,7 +13,7 @@ import TOS from './pages/TOS.tsx'
 
 const router = createBrowserRouter([
     {
-        path: '/:contractAddress?',
+        path: '/:chain?/:contractAddress?',
         element: <App />,
     },
     {
@@ -29,11 +29,11 @@ const router = createBrowserRouter([
         element: <ContractBuilderPage />,
     },
     {
-        path: '/tokenmanager/:contractAddress?',
+        path: '/tokenmanager/:chain/:contractAddress?',
         element: <TokenManager />,
     },
     {
-        path: '/editcontract/:contractAddress?',
+        path: '/editcontract/:chain/:contractAddress?',
         element: <ConfigureContract />,
     },
     {

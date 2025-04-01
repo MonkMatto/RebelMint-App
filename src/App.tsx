@@ -3,9 +3,11 @@ import RebelMint from './RebelMint/src/RebelMint'
 import { useNavigate, useParams } from 'react-router-dom'
 import { NavBar } from './components/NavBar'
 import Footer from './components/Footer'
+import { RMInfo } from './RebelMint/src/contract/ChainsData'
+import { AlertTriangle } from 'lucide-react'
 
 function App() {
-    const { contractAddress } = useParams()
+    const { chain, contractAddress } = useParams()
     const navigate = useNavigate()
     const [inputAddress, setInputAddress] = useState<string>('')
     useEffect(() => {}, [inputAddress])
@@ -14,31 +16,34 @@ function App() {
         invalidInput = true
     }
 
-    const getSubdomain = () => {
-        const host = window.location.hostname
-        const parts = host.split('.')
+    const rmInfo = new RMInfo()
+    const chainIsValid = rmInfo.validateChainByName(chain as string)
 
-        if (parts[0].length > 2) {
-            return parts[0]
-        }
-
-        return null
+    if (chain && !chainIsValid) {
+        return (
+            <div className="flex h-fit min-h-[100svh] flex-col items-center justify-center pt-24">
+                <NavBar />
+                <h1 className="flex items-center gap-2 text-2xl text-red-500 lg:text-5xl">
+                    <AlertTriangle size={32} /> Invalid Chain
+                </h1>
+                <p>{`Please select a valid chain`}</p>
+            </div>
+        )
     }
 
-    const subdomain = getSubdomain()
-
-    if (contractAddress) {
+    if (chain && contractAddress) {
         return (
             <div className="flex h-fit min-h-[100svh] flex-col items-center justify-start pt-24">
-                <NavBar hasNewShop={true} />
-                <h1>This is an app running the RebelMint Component</h1>
-                <div className="justify-cente flex h-full min-h-[100svh] w-[100vw] bg-base-900 align-middle">
+                <NavBar />
+
+                <div className="flex h-full min-h-[100svh] w-[100vw] justify-center bg-base-900 align-middle">
                     <RebelMint
                         contractAddress={contractAddress}
-                        test={subdomain == 'test' ? true : false}
+                        chainName={chain}
                         apiKey={import.meta.env.VITE_ALCHEMY_KEY}
                     />
                 </div>
+                <Footer showInfo />
             </div>
         )
     } else {
@@ -47,8 +52,8 @@ function App() {
             body?.setAttribute('class', 'bg-base-50')
         }
         return (
-            <div className="relative flex h-fit min-h-[100svh] w-[100vw] flex-col items-center justify-center p-3 pb-2 md:p-10 md:pb-2">
-                <NavBar hasNewShop={true} />
+            <div className="relative flex min-h-[100svh] w-[100vw] flex-col items-center justify-center p-3 pb-2 md:p-10 md:pb-2">
+                <NavBar />
                 <section
                     id="hero-and-form"
                     className="flex min-h-[100svh] w-full flex-col items-center justify-center gap-24"
@@ -97,9 +102,9 @@ function App() {
                         <button
                             onClick={() => {
                                 navigate(
-                                    subdomain == 'test'
-                                        ? '/0x73fd10aa4d3d12c1db2074d8b2cb7bf6fb1356fe'
-                                        : '/0x69Cc263973b1b22F7d81C5Be880A27CAd4c4E0De'
+                                    chain == 'base-sepolia'
+                                        ? '/base-sepolia/0x73fd10aa4d3d12c1db2074d8b2cb7bf6fb1356fe'
+                                        : '/base/0x69Cc263973b1b22F7d81C5Be880A27CAd4c4E0De'
                                 )
                             }}
                             className="mb-52 h-[2rem] w-[13rem] rounded-lg bg-base-100 text-sm font-extralight text-bgcol hover:invert-[5%] active:invert-[10%]"
@@ -113,20 +118,6 @@ function App() {
                         PREPARE YOUR TOKENS
                     </h1>
                     <div className="grid grid-cols-1 gap-4 font-bold md:grid-cols-2">
-                        {/* <a
-                            href="/createcontract"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:bg-base-800 active:bg-base-700"
-                        >
-                            CONTRACT BUILDER
-                            <img src="store.svg" className="brightness-110" />
-                        </a>
-                        <a
-                            href="/tokenmanager"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:bg-base-800 active:bg-base-700"
-                        >
-                            TOKEN MANAGER
-                            <img src="apps.svg" className="brightness-110" />
-                        </a> */}
                         <a
                             href="/metadatabuilder"
                             className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:bg-base-800 active:bg-base-700"
@@ -163,23 +154,8 @@ function App() {
                             TOKEN MANAGER
                             <img src="apps.svg" className="brightness-110" />
                         </a>
-                        {/* <a
-                            href="/metadatabuilder"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:bg-base-800 active:bg-base-700"
-                        >
-                            METADATA BUILDER
-                            <img src="create.svg" className="brightness-110" />
-                        </a>
-                        <a
-                            href="/metadatapreviewer"
-                            className="flex w-64 items-center justify-between gap-2 rounded-lg bg-bgcol p-4 text-textcol hover:bg-base-800 active:bg-base-700"
-                        >
-                            METADATA PREVIEWER
-                            <img src="eye.svg" className="brightness-110" />
-                        </a> */}
                     </div>
                 </div>
-
                 <Footer />
             </div>
         )
