@@ -17,7 +17,12 @@ function App() {
     }
 
     const rmInfo = new RMInfo()
-    const chainIsValid = rmInfo.validateChainByName(chain as string)
+    const network = rmInfo.getNetworkByName(chain as string)
+    const chainId = network?.chainId
+    const chainIsValid = !!network
+
+    console.log(`network:`)
+    console.log(network)
 
     if (chain && !chainIsValid) {
         return (
@@ -39,7 +44,7 @@ function App() {
                 <div className="flex h-full min-h-[100svh] w-[100vw] justify-center bg-base-900 align-middle">
                     <RebelMint
                         contractAddress={contractAddress}
-                        chainName={chain}
+                        chainId={chainId as number}
                         apiKey={import.meta.env.VITE_ALCHEMY_KEY}
                     />
                 </div>

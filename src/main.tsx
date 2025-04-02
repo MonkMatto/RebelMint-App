@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         element: <MetadataPreviewPage />,
     },
     {
-        path: '/createcontract',
+        path: '/createcontract/:chain?',
         element: <ContractBuilderPage />,
     },
     {
