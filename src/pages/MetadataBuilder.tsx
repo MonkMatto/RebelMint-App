@@ -232,7 +232,7 @@ const MetadataBuilder = () => {
 
     return (
         <div className="mint-h-[100svh] flex h-fit w-full flex-col items-center bg-bgcol p-4 font-satoshi text-textcol md:p-24">
-            <NavBar hasNewShop={true} />
+            <NavBar />
 
             <h1 className="mt-5 w-full text-5xl font-bold">
                 Token Metadata Builder

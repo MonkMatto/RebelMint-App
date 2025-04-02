@@ -4,23 +4,16 @@ import { RebelMintTokenManager } from '../RebelMint/src/RebelMint'
 import { NavBar } from '../components/NavBar'
 import { setPageTitle } from '../util/setPageTitle'
 import Footer from '../components/Footer'
+import { RMInfo } from '../RebelMint/src/contract/ChainsData'
 
 const TokenManager = () => {
     setPageTitle('Token Manager')
     const navigate = useNavigate()
-    const { contractAddress } = useParams()
+    const { chain, contractAddress } = useParams()
     const [input, setInput] = useState('')
-    const getSubdomain = () => {
-        const host = window.location.hostname // example: test.localhost
-        const parts = host.split('.')
-
-        if (parts[0].length > 2) {
-            return parts[0]
-        }
-
-        return null
-    }
-    const subdomain = getSubdomain()
+    const rmInfo = new RMInfo()
+    const network = rmInfo.getNetworkByName(chain as string)
+    const chainId = network?.chainId
 
     if (contractAddress) {
         return (
@@ -54,7 +47,7 @@ const TokenManager = () => {
 
                 <RebelMintTokenManager
                     contractAddress={contractAddress}
-                    test={subdomain == 'test' ? true : false}
+                    chainId={chainId as number}
                     bypassWeb3={true}
                     apiKey={import.meta.env.VITE_ALCHEMY_KEY}
                 />

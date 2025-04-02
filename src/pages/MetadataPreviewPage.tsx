@@ -50,7 +50,7 @@ const MetadataPreviewPage = () => {
     console.log(metadata)
     return (
         <div className="flex h-fit min-h-[100svh] w-full flex-col items-center bg-bgcol p-32 font-satoshi text-textcol">
-            <NavBar hasNewShop={true} />
+            <NavBar />
             <h1 className="mt-5 w-full text-5xl font-bold">
                 Metadata Previewer
             </h1>

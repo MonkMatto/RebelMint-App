@@ -1,11 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
-        './src/components/**/*.{html,js,jsx,tsx,ts}',
-        './src/**/*.{html,js,jsx,tsx,ts}',
-        '!./src/components/RebelMint/**/*.{html,js,ts,tsx,jsx}',
-        '!./src/components/RebelMint/node_modules/**/*.{html,js,ts,tsx,jsx}',
-        '!./node_nodules/**/*.{html,js,jsx,tsx,ts}',
+        './src/**/*.{js,jsx,ts,tsx}',
+        './src/components/**/*.{js,jsx,ts,tsx}',
+        '!./src/RebelMint/**/*.{html,js,ts,tsx,jsx}',
     ],
     theme: {
         extend: {
@@ -35,18 +33,20 @@ export default {
                 textcol: '#ffffff',
                 bgcol: '#000000',
                 base: {
-                    DEFAULT: '#000000',
+                    DEFAULT: '#767676',
                     50: '#FFFFFF',
-                    100: '#F0F0F0',
-                    200: '#D1D1D1',
-                    300: '#B3B3B3',
-                    400: '#949494',
+                    100: '#FAFAFA',
+                    150: '#eeeeee',
+                    200: '#D9D9D9',
+                    300: '#B8B8B8',
+                    400: '#979797',
                     500: '#767676',
                     600: '#5C5C5C',
                     700: '#434343',
                     800: '#292929',
+                    850: '#181818',
                     900: '#101010',
-                    950: '#000000',
+                    950: '#030303',
                 },
                 sapphire: {
                     DEFAULT: '#303399',
