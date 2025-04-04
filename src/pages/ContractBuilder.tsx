@@ -8,17 +8,25 @@ import {
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { NavBar } from '../components/NavBar'
 import { setPageTitle } from '../util/setPageTitle'
+import ChainGallery from '../components/ChainGallery'
 import Footer from '../components/Footer'
+import { useParams } from 'react-router-dom'
+import { RMInfo } from '../RebelMint/src/contract/ChainsData'
 
 const versions = ['v0j0'] as const
 type Version = (typeof versions)[number]
 
 const ContractBuilderPage = () => {
     setPageTitle('New Shop')
-    const { address, chain, chainId } = useAccount()
-    const { open } = useWeb3Modal()
+    const { address, chain, isConnected } = useAccount()
+    const { open } = isConnected ? useWeb3Modal() : { open: () => {} }
+    const rmInfo = new RMInfo()
+    const { chain: chainParam } = useParams()
+    const chainId = chainParam
+        ? rmInfo.getNetworkByName(chainParam as string)?.chainId
+        : chain?.id
 
-    const { data: walletClient } = useWalletClient({ chainId: chain?.id })
+    const { data: walletClient } = useWalletClient({ chainId: chainId })
     const [version, setVersion] = useState<Version>(versions[0])
     const [acceptedTerms, setAcceptedTerms] = useState(false)
     const [contractAddress, setContractAddress] = useState<string | null>(null)
@@ -94,7 +102,19 @@ const ContractBuilderPage = () => {
         console.log(scanURL + '/tx/' + recentHash)
     }, [receipt, recentHash])
 
-    if (!address || !chain || !chainId) {
+    if (!chainParam) {
+        return (
+            <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi text-9xl font-bold text-textcol">
+                <NavBar />
+                <div className="fixed right-0 top-0 m-5">
+                    <w3m-network-button />
+                </div>
+                <ChainGallery baseDestination={'createcontract'} />
+            </div>
+        )
+    }
+
+    if (!isConnected) {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi text-9xl font-bold text-textcol">
                 <NavBar />
@@ -184,7 +204,7 @@ const ContractBuilderPage = () => {
                         }
                         className="h-fit w-full rounded-lg border-2 border-bgcol bg-textcol p-5 font-bold text-bgcol disabled:invert-[30%]"
                     >
-                        {`Create Contract on ${chain.name}`}
+                        {`Create Contract on ${chain?.name}`}
                     </button>
                 </div>
             )}
@@ -192,7 +212,7 @@ const ContractBuilderPage = () => {
                 <div className="mt-24 flex h-fit w-full flex-col items-center justify-center gap-5 p-5">
                     <h1>{`Please do not refresh or leave the page`}</h1>
                     <div className="flex h-24 w-52 items-center justify-center rounded-lg bg-yellow-200 text-center text-bgcol">
-                        {`Deploying Contract to ${chain.name}...`}
+                        {`Deploying Contract to ${chain?.name}...`}
                     </div>
                 </div>
             )}

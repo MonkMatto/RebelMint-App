@@ -14,7 +14,11 @@ import TOS from './pages/TOS.tsx'
 const router = createBrowserRouter([
     {
         path: '/:chain?/:contractAddress?',
-        element: <App />,
+        element: (
+            <Web3ModalProvider>
+                <App />
+            </Web3ModalProvider>
+        ),
     },
     {
         path: '/metadatabuilder',
@@ -26,15 +30,27 @@ const router = createBrowserRouter([
     },
     {
         path: '/createcontract/:chain?',
-        element: <ContractBuilderPage />,
+        element: (
+            <Web3ModalProvider>
+                <ContractBuilderPage />
+            </Web3ModalProvider>
+        ),
     },
     {
-        path: '/tokenmanager/:chain/:contractAddress?',
-        element: <TokenManager />,
+        path: '/tokenmanager/:chain?/:contractAddress?',
+        element: (
+            <Web3ModalProvider>
+                <TokenManager />
+            </Web3ModalProvider>
+        ),
     },
     {
         path: '/editcontract/:chain/:contractAddress?',
-        element: <ConfigureContract />,
+        element: (
+            <Web3ModalProvider>
+                <ConfigureContract />
+            </Web3ModalProvider>
+        ),
     },
     {
         path: '/about',
@@ -48,8 +64,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <div className="h-fit w-full">
-        <Web3ModalProvider>
-            <RouterProvider router={router} />
-        </Web3ModalProvider>
+        <RouterProvider router={router} />
     </div>
 )
