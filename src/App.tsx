@@ -8,30 +8,36 @@ import { AlertTriangle, ChevronDown } from 'lucide-react'
 import { useAccount } from 'wagmi'
 
 function App() {
+    // UNIVERSAL
     const rmInfo = new RMInfo()
-    const { chain, contractAddress } = useParams()
     const navigate = useNavigate()
-    const [inputAddress, setInputAddress] = useState<string>('')
+
+    // CHAIN CONTEXT (connected wallet and url params)
+    const { chain, contractAddress } = useParams()
     const { chain: connectedChain } = useAccount()
     const connectedChainKey = rmInfo.getNetworkById(
         connectedChain?.id as number
     )?.name
-    const [chainSelectorOpen, setChainSelectorOpen] = useState(false)
     const network = chain
         ? rmInfo.getNetworkByName(chain as string)
         : rmInfo.getNetworkById(connectedChain?.id as number)
-    let invalidInput = false
-    if (inputAddress && inputAddress.length != 0 && inputAddress.length != 42) {
-        invalidInput = true
-    }
     const chainId = network?.chainId
     const chainIsValid = !!network
+
+    // CONTRACT NAVIGATOR
+    const [chainSelectorOpen, setChainSelectorOpen] = useState(false)
     const [showTestnets, setShowTestnets] = useState(
         connectedChain?.testnet || network?.isTestnet || false
     )
     const dropdownNetworks = showTestnets
         ? rmInfo.getAllNetworks()
         : rmInfo.getMainnets()
+
+    const [inputAddress, setInputAddress] = useState<string>('')
+    let invalidInput = false
+    if (inputAddress && inputAddress.length != 0 && inputAddress.length != 42) {
+        invalidInput = true
+    }
 
     console.log(`network:`)
     console.log(network)
