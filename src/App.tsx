@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState, useRef } from 'react'
 import RebelMint from './RebelMint/src/RebelMint'
 import { useNavigate, useParams } from 'react-router-dom'
 import { NavBar } from './components/NavBar'
 import Footer from './components/Footer'
 import { RMInfo } from './RebelMint/src/contract/ChainsData'
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, ChevronDown } from 'lucide-react'
 import { useAccount } from 'wagmi'
 
 function App() {
@@ -12,18 +12,26 @@ function App() {
     const { chain, contractAddress } = useParams()
     const navigate = useNavigate()
     const [inputAddress, setInputAddress] = useState<string>('')
-    useEffect(() => {}, [inputAddress])
+    const { chain: connectedChain } = useAccount()
+    const connectedChainKey = rmInfo.getNetworkById(
+        connectedChain?.id as number
+    )?.name
+    const [chainSelectorOpen, setChainSelectorOpen] = useState(false)
+    const network = chain
+        ? rmInfo.getNetworkByName(chain as string)
+        : rmInfo.getNetworkById(connectedChain?.id as number)
     let invalidInput = false
     if (inputAddress && inputAddress.length != 0 && inputAddress.length != 42) {
         invalidInput = true
     }
-    const { isConnected, chain: connectedChain } = useAccount()
-    const connectedChainKey = rmInfo.getNetworkById(
-        connectedChain?.id as number
-    )?.name
-    const network = rmInfo.getNetworkByName(chain as string)
     const chainId = network?.chainId
     const chainIsValid = !!network
+    const [showTestnets, setShowTestnets] = useState(
+        connectedChain?.testnet || false
+    )
+    const dropdownNetworks = showTestnets
+        ? rmInfo.getAllNetworks()
+        : rmInfo.getMainnets()
 
     console.log(`network:`)
     console.log(network)
@@ -91,6 +99,99 @@ function App() {
                                 }
                             }}
                         >
+                            <div
+                                onClick={() => {
+                                    setChainSelectorOpen(!chainSelectorOpen)
+                                }}
+                                className="relative flex cursor-pointer items-center gap-2"
+                            >
+                                <img className="size-6" src={network?.icon} />{' '}
+                                <ChevronDown
+                                    size={16}
+                                    className={`duration-200 ${chainSelectorOpen ? 'rotate-180' : ''}`}
+                                />
+                                {chainSelectorOpen && (
+                                    <div className="absolute left-0 top-10 z-10 flex h-64 w-72 translate-x-[-50%] flex-col gap-4 rounded-md border bg-base-100 p-1 shadow-sm md:translate-x-0">
+                                        <div className="flex items-center justify-between rounded-md bg-base-150 p-2">
+                                            <h1 className="text-base-600">
+                                                Select a network
+                                            </h1>
+                                            <div className="h-6 border-r border-base-200" />
+
+                                            <label
+                                                onClick={(e) =>
+                                                    e.stopPropagation()
+                                                }
+                                                className="flex cursor-pointer items-center gap-2"
+                                            >
+                                                <span className="text-base-300">
+                                                    testnets
+                                                </span>
+                                                <span className="relative inline-block h-6 w-12">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="peer h-0 w-0 opacity-0"
+                                                        checked={showTestnets}
+                                                        onClick={(e) => {
+                                                            setShowTestnets(
+                                                                !showTestnets
+                                                            )
+                                                            e.stopPropagation()
+                                                        }}
+                                                    />
+                                                    <span className="absolute inset-0 rounded-full bg-gray-300 transition-colors duration-300 peer-checked:bg-blue-300"></span>
+                                                    <span className="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-transform duration-300 peer-checked:translate-x-6"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div className="flex flex-col overflow-y-auto">
+                                            {dropdownNetworks.map(
+                                                (networkOption) => {
+                                                    return (
+                                                        <div
+                                                            key={
+                                                                networkOption.name
+                                                            }
+                                                            className={`flex items-center gap-2 rounded-md p-2 ${
+                                                                network?.name ==
+                                                                networkOption.name
+                                                                    ? 'border bg-blue-50'
+                                                                    : 'hover:bg-base-150'
+                                                            }`}
+                                                            onClick={() => {
+                                                                navigate(
+                                                                    `/${networkOption.name}`
+                                                                )
+                                                                setChainSelectorOpen(
+                                                                    false
+                                                                )
+                                                            }}
+                                                        >
+                                                            <img
+                                                                className="size-6"
+                                                                src={
+                                                                    networkOption.icon
+                                                                }
+                                                            />
+                                                            <div className="flex flex-col">
+                                                                {
+                                                                    networkOption.displayName
+                                                                }
+                                                                {networkOption.name ==
+                                                                    connectedChainKey && (
+                                                                    <p className="text-xs text-blue-500">
+                                                                        Connected
+                                                                    </p>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                             <input
                                 spellCheck={false}
                                 placeholder="Enter a shop's Contract Address"
@@ -113,10 +214,14 @@ function App() {
                         <button
                             onClick={() => {
                                 navigate(
-                                    chain == 'base-sepolia'
-                                        ? '/base-sepolia/0x73fd10aa4d3d12c1db2074d8b2cb7bf6fb1356fe'
-                                        : '/base/0x69Cc263973b1b22F7d81C5Be880A27CAd4c4E0De'
+                                    `/${network?.name}/${network?.address}`
+                                    // chain == 'base-sepolia'
+                                    //     ? '/base-sepolia/0x73fd10aa4d3d12c1db2074d8b2cb7bf6fb1356fe'
+                                    //     : '/base/0x69Cc263973b1b22F7d81C5Be880A27CAd4c4E0De'
                                 )
+                                // chain == 'base-sepolia'
+                                //     ? '/base-sepolia/0x73fd10aa4d3d12c1db2074d8b2cb7bf6fb1356fe'
+                                //     : '/base/0x69Cc263973b1b22F7d81C5Be880A27CAd4c4E0De'
                             }}
                             className="mb-52 h-[2rem] w-[13rem] rounded-lg bg-base-100 text-sm font-extralight text-bgcol hover:invert-[5%] active:invert-[10%]"
                         >
