@@ -5,8 +5,10 @@ import { NavBar } from './components/NavBar'
 import Footer from './components/Footer'
 import { RMInfo } from './RebelMint/src/contract/ChainsData'
 import { AlertTriangle } from 'lucide-react'
+import { useAccount } from 'wagmi'
 
 function App() {
+    const rmInfo = new RMInfo()
     const { chain, contractAddress } = useParams()
     const navigate = useNavigate()
     const [inputAddress, setInputAddress] = useState<string>('')
@@ -15,8 +17,10 @@ function App() {
     if (inputAddress && inputAddress.length != 0 && inputAddress.length != 42) {
         invalidInput = true
     }
-
-    const rmInfo = new RMInfo()
+    const { isConnected, chain: connectedChain } = useAccount()
+    const connectedChainKey = rmInfo.getNetworkById(
+        connectedChain?.id as number
+    )?.name
     const network = rmInfo.getNetworkByName(chain as string)
     const chainId = network?.chainId
     const chainIsValid = !!network
@@ -81,7 +85,9 @@ function App() {
                             onSubmit={(e) => {
                                 e.preventDefault()
                                 if (inputAddress) {
-                                    navigate(`/${inputAddress}`)
+                                    navigate(
+                                        `/${connectedChainKey ?? 'ethereum'}/${inputAddress}`
+                                    )
                                 }
                             }}
                         >

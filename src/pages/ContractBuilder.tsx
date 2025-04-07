@@ -106,49 +106,38 @@ const ContractBuilderPage = () => {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi text-9xl font-bold text-textcol">
                 <NavBar />
-                <div className="fixed right-0 top-0 m-5">
-                    <w3m-network-button />
-                </div>
+
                 <ChainGallery baseDestination={'createcontract'} />
             </div>
         )
     }
 
-    if (!isConnected) {
+    if (!isConnected || !chain || chain?.id !== chainId) {
+        const intendedChain = rmInfo.getNetworkByName(chainParam)
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi text-9xl font-bold text-textcol">
                 <NavBar />
-                <div className="fixed right-0 top-0 m-5">
-                    <w3m-network-button />
-                </div>
                 <span className="text-justify leading-[10rem]">
                     <span
                         onClick={() => {
                             open()
                         }}
                     >
-                        Please Connect Wallet with
+                        Please Connect Wallet with{' '}
                     </span>
-                    <a
-                        href={
-                            subdomain == 'test'
-                                ? 'https://sepolia.basescan.org/'
-                                : 'https://basescan.org/'
-                        }
-                        target="_blank"
-                    >
+                    <a href={intendedChain?.explorer} target="_blank">
                         <span className="text-red-500">
-                            {subdomain == 'test' ? ' Base Sepolia ' : ' Base '}
+                            {intendedChain?.displayName}
                         </span>
                     </a>
-                    <span>to use the RebelMint Contract Creator</span>
+                    <span> to use the RebelMint Contract Creator</span>
                 </span>
             </div>
         )
     }
 
     return (
-        <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 bg-bgcol p-24 pt-32 font-satoshi text-textcol">
+        <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 bg-bgcol p-24 pb-0 pt-32 font-satoshi text-textcol">
             <NavBar />
             {!recentHash && (
                 <div className="flex h-fit w-full flex-col gap-5">
@@ -235,7 +224,7 @@ const ContractBuilderPage = () => {
                             {`View Contract On ${chain && chain.blockExplorers ? chain.blockExplorers.default.name : ''}`}
                         </div>
                     </a>
-                    <a href={`/editcontract/${contractAddress}`}>
+                    <a href={`/editcontract/${chainParam}/${contractAddress}`}>
                         <div className="flex h-24 w-fit items-center justify-center rounded-lg border-2 border-textcol bg-textcol p-5 text-center text-3xl font-bold text-bgcol">
                             {`Next Step: Set Up Details`}
                             <img src="arrowright.svg" />
