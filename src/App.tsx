@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import RebelMint from './RebelMint/src/RebelMint'
 import { useNavigate, useParams } from 'react-router-dom'
 import { NavBar } from './components/NavBar'
@@ -27,7 +27,7 @@ function App() {
     const chainId = network?.chainId
     const chainIsValid = !!network
     const [showTestnets, setShowTestnets] = useState(
-        connectedChain?.testnet || false
+        connectedChain?.testnet || network?.isTestnet || false
     )
     const dropdownNetworks = showTestnets
         ? rmInfo.getAllNetworks()
