@@ -33,18 +33,6 @@ const ContractBuilderPage = () => {
     const [recentHash, setRecentHash] = useState<`0x${string}` | undefined>(
         undefined
     )
-    const getSubdomain = () => {
-        const host = window.location.hostname
-        const parts = host.split('.')
-
-        if (parts[0].length > 2) {
-            return parts[0]
-        }
-
-        return null
-    }
-
-    const subdomain = getSubdomain()
 
     const scanURL =
         chain && chain.blockExplorers ? chain.blockExplorers.default.url : ''

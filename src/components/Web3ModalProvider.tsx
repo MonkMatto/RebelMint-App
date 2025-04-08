@@ -19,7 +19,7 @@ import { ReactNode, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { RMInfo } from '../RebelMint/src/contract/ChainsData'
 import { shape } from '../RebelMint/src/contract/custom-networks/shape'
-import { shapeSepolia } from '../RebelMint/src/contract/custom-networks/ShapeSepolia'
+import { shapeSepolia } from '../RebelMint/src/contract/custom-networks/shapeSepolia'
 
 const queryClient = new QueryClient()
 const projectId = '915bfa8adb5da85a137c332d75b35ae4'

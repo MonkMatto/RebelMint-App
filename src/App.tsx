@@ -6,7 +6,6 @@ import Footer from './components/Footer'
 import { RMInfo } from './RebelMint/src/contract/ChainsData'
 import { AlertTriangle, ChevronDown } from 'lucide-react'
 import { useAccount } from 'wagmi'
-import { useWeb3ModalEvents } from '@web3modal/wagmi/react'
 
 function App() {
     // UNIVERSAL
