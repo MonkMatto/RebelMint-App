@@ -105,7 +105,7 @@ const ContractBuilderPage = () => {
     if (!chainParam) {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi text-9xl font-bold text-textcol">
-                <NavBar />
+                <NavBar hasConnector />
 
                 <ChainGallery baseDestination={'createcontract'} />
             </div>
@@ -116,7 +116,7 @@ const ContractBuilderPage = () => {
         const intendedChain = rmInfo.getNetworkByName(chainParam)
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi text-9xl font-bold text-textcol">
-                <NavBar />
+                <NavBar hasConnector />
                 <span className="text-justify leading-[10rem]">
                     <span
                         onClick={() => {
@@ -138,7 +138,7 @@ const ContractBuilderPage = () => {
 
     return (
         <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 bg-bgcol p-24 pb-0 pt-32 font-satoshi text-textcol">
-            <NavBar />
+            <NavBar hasConnector />
             {!recentHash && (
                 <div className="flex h-fit w-full flex-col gap-5">
                     <h1 className="mt-5 w-full text-5xl font-bold">

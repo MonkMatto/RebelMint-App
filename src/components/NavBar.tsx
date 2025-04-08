@@ -13,7 +13,7 @@ const NavItem = ({ dest, label }: { dest: string; label: string }) => {
     )
 }
 
-export const NavBar = ({}: { hasConnector?: boolean }) => {
+export const NavBar = ({ hasConnector }: { hasConnector?: boolean }) => {
     return (
         <div className="absolute left-0 right-0 top-0 z-20 h-24 w-full p-3 text-base">
             <div className="h-18 flex max-h-24 w-full items-center justify-start gap-2 rounded-lg px-1 py-1">
@@ -70,7 +70,7 @@ export const NavBar = ({}: { hasConnector?: boolean }) => {
                 </div>
 
                 <div className="hover:bg-900 ml-auto mr-2 flex w-fit items-center justify-center gap-2 rounded-lg text-base-50">
-                    <w3m-network-button />
+                    {hasConnector && <w3m-network-button />}
                 </div>
             </div>
         </div>

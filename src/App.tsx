@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import RebelMint from './RebelMint/src/RebelMint'
 import { useNavigate, useParams } from 'react-router-dom'
 import { NavBar } from './components/NavBar'
@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import { RMInfo } from './RebelMint/src/contract/ChainsData'
 import { AlertTriangle, ChevronDown } from 'lucide-react'
 import { useAccount } from 'wagmi'
+import { useWeb3ModalEvents } from '@web3modal/wagmi/react'
 
 function App() {
     // UNIVERSAL
@@ -14,13 +15,50 @@ function App() {
 
     // CHAIN CONTEXT (connected wallet and url params)
     const { chain, contractAddress } = useParams()
-    const { chain: connectedChain } = useAccount()
-    const connectedChainKey = rmInfo.getNetworkById(
-        connectedChain?.id as number
-    )?.name
-    const network = chain
-        ? rmInfo.getNetworkByName(chain as string)
-        : rmInfo.getNetworkById(connectedChain?.id as number)
+    const { isConnected: localIsConnected, chain: localConnectedChain } =
+        useAccount()
+    // Use the wrapper above navigation to have a fallback when useAccount is not ready between navigations
+    const storedAccount = JSON.parse(
+        sessionStorage.getItem('persistedAccount') as string
+    )
+
+    useEffect(() => {
+        if (contractAddress) {
+            // window.location.reload()
+        }
+    }, [])
+    useEffect(() => {
+        if (localIsConnected) {
+            sessionStorage.setItem(
+                'persistedAccount',
+                JSON.stringify({
+                    isConnected: localIsConnected,
+                    chain: localConnectedChain,
+                })
+            )
+        }
+    }, [localIsConnected, localConnectedChain])
+    const isConnected = storedAccount?.isConnected
+    const connectedChain = storedAccount?.chain
+
+    const connectedNetwork = isConnected
+        ? rmInfo.getNetworkById(connectedChain?.id as number)
+        : null
+
+    if (isConnected) {
+        console.log(`connected to wallet`)
+    } else {
+        console.log(`trouble connecting to wallet`)
+    }
+    const network =
+        (chain ? rmInfo.getNetworkByName(chain as string) : null) ||
+        (isConnected
+            ? rmInfo.getNetworkById(connectedChain?.id as number)
+            : null) ||
+        rmInfo.getNetworkByName('ethereum')
+    console.log(`connectedChain: ${connectedChain?.name}`)
+    console.log(`connectedNetwork: ${connectedNetwork?.name}`)
+    console.log(`network: ${network?.name}`)
     const chainId = network?.chainId
     const chainIsValid = !!network
 
@@ -45,7 +83,7 @@ function App() {
     if (chain && !chainIsValid) {
         return (
             <div className="flex h-fit min-h-[100svh] flex-col items-center justify-center pt-24">
-                <NavBar />
+                <NavBar hasConnector />
                 <h1 className="flex items-center gap-2 text-2xl text-red-500 lg:text-5xl">
                     <AlertTriangle size={32} /> Invalid Chain
                 </h1>
@@ -57,7 +95,7 @@ function App() {
     if (chain && contractAddress) {
         return (
             <div className="flex h-fit min-h-[100svh] flex-col items-center justify-start pt-24">
-                <NavBar />
+                <NavBar hasConnector />
 
                 <div className="flex h-full min-h-[100svh] w-[100vw] justify-center bg-base-900 align-middle">
                     <RebelMint
@@ -76,7 +114,7 @@ function App() {
         }
         return (
             <div className="relative flex min-h-[100svh] w-[100vw] flex-col items-center justify-center p-3 pb-2 md:p-10 md:pb-2">
-                <NavBar />
+                <NavBar hasConnector />
                 <section
                     id="hero-and-form"
                     className="flex min-h-[100svh] w-full flex-col items-center justify-center gap-24"
@@ -100,7 +138,7 @@ function App() {
                                 e.preventDefault()
                                 if (inputAddress) {
                                     navigate(
-                                        `/${connectedChainKey ?? 'ethereum'}/${inputAddress}`
+                                        `/${connectedNetwork?.name ?? 'ethereum'}/${inputAddress}`
                                     )
                                 }
                             }}
@@ -111,7 +149,10 @@ function App() {
                                 }}
                                 className="relative flex cursor-pointer items-center gap-2"
                             >
-                                <img className="size-6" src={network?.icon} />{' '}
+                                <img
+                                    className="size-6 rounded-md"
+                                    src={network?.icon}
+                                />{' '}
                                 <ChevronDown
                                     size={16}
                                     className={`duration-200 ${chainSelectorOpen ? 'rotate-180' : ''}`}
@@ -153,14 +194,19 @@ function App() {
                                         <div className="flex flex-col overflow-y-auto">
                                             {dropdownNetworks.map(
                                                 (networkOption) => {
+                                                    const isConnectedChain =
+                                                        connectedChain?.id ===
+                                                        networkOption.chainId
+                                                    const isSelectedChain =
+                                                        network?.chainId ===
+                                                        networkOption.chainId
                                                     return (
                                                         <div
                                                             key={
                                                                 networkOption.name
                                                             }
                                                             className={`flex items-center gap-2 rounded-md p-2 ${
-                                                                network?.name ==
-                                                                networkOption.name
+                                                                isSelectedChain
                                                                     ? 'border bg-blue-50'
                                                                     : 'hover:bg-base-150'
                                                             }`}
@@ -183,8 +229,7 @@ function App() {
                                                                 {
                                                                     networkOption.displayName
                                                                 }
-                                                                {networkOption.name ==
-                                                                    connectedChainKey && (
+                                                                {isConnectedChain && (
                                                                     <p className="text-xs text-blue-500">
                                                                         Connected
                                                                     </p>

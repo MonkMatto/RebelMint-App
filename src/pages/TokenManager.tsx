@@ -18,7 +18,7 @@ const TokenManager = () => {
     if (contractAddress) {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col gap-5 text-wrap bg-base-900 p-4 pt-32 font-satoshi font-bold text-textcol md:p-24">
-                <NavBar />
+                <NavBar hasConnector />
                 <span className="mt-12 px-2 font-normal">
                     <span>
                         {
@@ -56,7 +56,7 @@ const TokenManager = () => {
     } else {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col items-center justify-center gap-5 text-wrap bg-bgcol p-32 font-satoshi text-9xl font-bold text-textcol">
-                <NavBar />
+                <NavBar hasConnector />
                 <form
                     className="mb-4 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
                     onSubmit={(e) => {

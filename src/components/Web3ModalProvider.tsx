@@ -48,7 +48,7 @@ const allChains = [
 ]
 
 export function Web3ModalProvider({ children }: { children: ReactNode }) {
-    const { chain } = useParams()
+    const { chain, contractAddress } = useParams()
     const [config, setConfig] = useState<any>(null)
     const [ready, setReady] = useState(false)
 
@@ -61,8 +61,12 @@ export function Web3ModalProvider({ children }: { children: ReactNode }) {
         // Set up available chains based on URL param
         let availableChains: Chain[] = [...allChains]
 
-        // If we have a chain parameter, filter to only include that chain
-        if (chain) {
+        // If we have a chain parameter and the route isn't base, filter to only include that chain
+        if (
+            chain &&
+            contractAddress &&
+            window.location.pathname != `/${chain}`
+        ) {
             try {
                 const rmInfo = new RMInfo()
                 const network = rmInfo.getNetworkByName(chain)
@@ -117,7 +121,7 @@ export function Web3ModalProvider({ children }: { children: ReactNode }) {
 
         setConfig(wagmiConfig)
         setReady(true)
-    }, [chain])
+    }, [chain, contractAddress])
 
     if (!ready || !config) {
         return (

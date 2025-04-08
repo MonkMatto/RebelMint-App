@@ -105,7 +105,7 @@ const ConfigureContract = () => {
     if (contractAddress) {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col gap-5 text-wrap bg-bgcol p-4 font-satoshi font-bold text-textcol md:p-24">
-                <NavBar />
+                <NavBar hasConnector />
                 <h1 className="text-3xl">Collection Details</h1>
                 <div className="flex w-full flex-col gap-5">
                     <div className="flex flex-col gap-2">
