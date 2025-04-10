@@ -12,7 +12,12 @@ const ChainGallery: React.FC<ChainGalleryProps> = ({ baseDestination }) => {
     const toggleTestnets = () => {
         setShowTestnets((prev) => !prev)
     }
-    const { isConnected, chain } = useAccount()
+    const persistedAccount = localStorage.getItem('persistedAccount')
+        ? JSON.parse(localStorage.getItem('persistedAccount') || '')
+        : {}
+    const { isConnected: localIsConnected, chain: localChain } = useAccount()
+    const chain = localChain || persistedAccount.chain
+    const isConnected = localIsConnected || persistedAccount.isConnected
     const networks = showTestnets
         ? (RMInfo.getTestnets() as NetworkConfig[])
         : (RMInfo.getMainnets() as NetworkConfig[])
@@ -22,7 +27,7 @@ const ChainGallery: React.FC<ChainGalleryProps> = ({ baseDestination }) => {
                 <div className="flex flex-col items-center justify-center gap-4">
                     <a
                         href={`/${baseDestination}/${RMInfo.getNetworkByChainId(chain.id)?.name}`}
-                        className="aspect-[1:2] flex cursor-pointer flex-col items-center justify-center gap-4 rounded-md border border-base-800 bg-base-850 p-4 text-base-300 shadow-inner hover:bg-base-800 hover:text-base-50"
+                        className="aspect-[1:2] indie-selectable flex flex-col items-center justify-center gap-4 p-4"
                     >
                         {' '}
                         <img
@@ -38,17 +43,27 @@ const ChainGallery: React.FC<ChainGalleryProps> = ({ baseDestination }) => {
                     </span>
                 </div>
             )}
-
-            <label className="label cursor-pointer">
-                <input
-                    type="checkbox"
-                    className="toggle toggle-primary"
-                    checked={showTestnets}
-                    onChange={toggleTestnets}
-                />
-                <span className="label-text">Use Testnet</span>
+            <h2 className="text-xl text-base-200">Select Network</h2>
+            <label
+                onClick={(e) => e.stopPropagation()}
+                className="flex cursor-pointer items-center gap-2"
+            >
+                <span className="text-sm text-base-600">Use Testnet</span>
+                <span className="relative inline-block h-3 w-6">
+                    <input
+                        type="checkbox"
+                        className="peer h-0 w-0 opacity-0"
+                        checked={showTestnets}
+                        onClick={(e) => {
+                            toggleTestnets()
+                            e.stopPropagation()
+                        }}
+                    />
+                    <span className="absolute inset-0 rounded-full bg-base-700 transition-colors duration-300 peer-checked:bg-blue-700"></span>
+                    <span className="absolute left-0.5 top-0.5 h-2 w-2 rounded-full bg-base-200 transition-transform duration-300 peer-checked:translate-x-3"></span>
+                </span>
             </label>
-            <div className="grid w-full grid-cols-5 gap-4">
+            <div className="flex w-full flex-col items-center gap-4">
                 {networks.map((network) => {
                     if (isConnected && chain && network.chainId === chain.id) {
                         return
@@ -56,14 +71,14 @@ const ChainGallery: React.FC<ChainGalleryProps> = ({ baseDestination }) => {
                     return (
                         <div
                             key={network.chainId}
-                            className="flex aspect-[4/5] cursor-pointer flex-col items-center justify-center rounded-md border border-base-800 bg-base-850 p-4 text-base-300 shadow-inner hover:bg-base-800 hover:text-base-50"
+                            className="indie-selectable flex min-w-[30ch] flex-col items-center p-4"
                         >
                             <a
                                 href={`/${baseDestination}/${network.name}`}
-                                className="flex h-full w-full flex-col items-center justify-center gap-4 p-1"
+                                className="flex h-full w-full items-center gap-4 p-1"
                             >
                                 <img
-                                    className="aspect-square h-full w-full rounded-lg"
+                                    className="aspect-square size-6 rounded-lg"
                                     src={network.icon}
                                 />
                                 {network.displayName}

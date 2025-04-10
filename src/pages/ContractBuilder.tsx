@@ -93,7 +93,7 @@ const ContractBuilderPage = () => {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi text-9xl font-bold text-textcol">
                 <NavBar hasConnector />
-
+                <h1 className="w-full text-xl">Contract Builder</h1>
                 <ChainGallery baseDestination={'createcontract'} />
             </div>
         )
