@@ -74,7 +74,7 @@ const TokenManager = () => {
                         onSubmit={(e) => {
                             e.preventDefault()
                             if (input) {
-                                navigate(`/tokenmanager/${input}`)
+                                navigate(`/tokenmanager/${chain}/${input}`)
                             }
                         }}
                     >
@@ -88,7 +88,7 @@ const TokenManager = () => {
                         ></input>
                         <button
                             type="submit"
-                            disabled={!contractAddress}
+                            disabled={!input}
                             className="submit-button px-2 py-3"
                         >
                             Load Tokens
