@@ -17,7 +17,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactNode, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { RMInfo } from '../RebelMint/src/contract/ChainsData'
+import { RMInfo } from '../RebelMint/src/contract/RMInfo'
 import { shape } from '../RebelMint/src/contract/custom-networks/shape'
 import { shapeSepolia } from '../RebelMint/src/contract/custom-networks/shapeSepolia'
 
@@ -68,8 +68,7 @@ export function Web3ModalProvider({ children }: { children: ReactNode }) {
             window.location.pathname != `/${chain}`
         ) {
             try {
-                const rmInfo = new RMInfo()
-                const network = rmInfo.getNetworkByName(chain)
+                const network = RMInfo.getNetworkByName(chain)
 
                 if (network) {
                     // Filter chains to only include the one matching the chain ID

@@ -4,15 +4,14 @@ import { RebelMintTokenManager } from '../RebelMint/src/RebelMint'
 import { NavBar } from '../components/NavBar'
 import { setPageTitle } from '../util/setPageTitle'
 import Footer from '../components/Footer'
-import { RMInfo } from '../RebelMint/src/contract/ChainsData'
+import { RMInfo } from '../RebelMint/src/contract/RMInfo'
 
 const TokenManager = () => {
     setPageTitle('Token Manager')
     const navigate = useNavigate()
     const { chain, contractAddress } = useParams()
     const [input, setInput] = useState('')
-    const rmInfo = new RMInfo()
-    const network = rmInfo.getNetworkByName(chain as string)
+    const network = RMInfo.getNetworkByName(chain as string)
     const chainId = network?.chainId
 
     if (contractAddress) {

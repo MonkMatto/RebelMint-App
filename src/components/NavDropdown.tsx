@@ -37,7 +37,7 @@ const NavDropdown: React.FC<NavDropdownProps> = ({ title, options }) => {
         <div ref={dropdownRef} className="relative">
             <button
                 onClick={toggleOpen}
-                className="flex items-center gap-2 px-4 py-2 text-base-400 transition-all hover:cursor-pointer hover:text-base-950"
+                className="flex items-center gap-2 px-4 py-2 text-base-500 transition-all hover:cursor-pointer hover:text-base-200"
             >
                 {title}
                 <ChevronDown
@@ -46,10 +46,10 @@ const NavDropdown: React.FC<NavDropdownProps> = ({ title, options }) => {
                 />
             </button>
             {isOpen && (
-                <div className="absolute left-0 top-[110%] z-50 flex w-fit min-w-64 flex-col rounded-md border bg-base-50 p-1 shadow-md dark:bg-base-950">
+                <div className="absolute left-0 top-[110%] z-50 flex w-fit min-w-64 flex-col rounded-md border border-base-800 bg-base-850 p-1 shadow-md">
                     {options.map((option) => (
                         <a
-                            className="dark:hover:bg-base-750 hover:bg-base-150 flex w-full cursor-pointer items-center justify-between gap-2 rounded-md px-4 py-2 text-base-400 hover:bg-base-100 hover:text-base-800 dark:text-base-50 dark:hover:text-base-50"
+                            className="flex w-full cursor-pointer items-center justify-between gap-2 rounded-md px-4 py-2 text-base-500 hover:bg-base-800 hover:text-base-200"
                             href={option.destination}
                             key={option.label}
                         >

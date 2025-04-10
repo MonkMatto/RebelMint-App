@@ -1,5 +1,5 @@
 import React from 'react'
-import { NetworkConfig, RMInfo } from '../RebelMint/src/contract/ChainsData'
+import { NetworkConfig, RMInfo } from '../RebelMint/src/contract/RMInfo'
 import { useAccount } from 'wagmi'
 
 interface ChainGalleryProps {
@@ -8,27 +8,26 @@ interface ChainGalleryProps {
     // goes to /create/chainId or /tokenmanager/chainId
 }
 const ChainGallery: React.FC<ChainGalleryProps> = ({ baseDestination }) => {
-    const rmInfo = new RMInfo()
     const [showTestnets, setShowTestnets] = React.useState(false)
     const toggleTestnets = () => {
         setShowTestnets((prev) => !prev)
     }
     const { isConnected, chain } = useAccount()
     const networks = showTestnets
-        ? (rmInfo.getTestnets() as NetworkConfig[])
-        : (rmInfo.getMainnets() as NetworkConfig[])
+        ? (RMInfo.getTestnets() as NetworkConfig[])
+        : (RMInfo.getMainnets() as NetworkConfig[])
     return (
         <div className="flex w-full max-w-[80ch] flex-col items-center justify-center gap-8 pt-24 text-base">
             {isConnected && chain && (
                 <div className="flex flex-col items-center justify-center gap-4">
                     <a
-                        href={`/${baseDestination}/${rmInfo.getNetworkByChainId(chain.id)?.name}`}
+                        href={`/${baseDestination}/${RMInfo.getNetworkByChainId(chain.id)?.name}`}
                         className="aspect-[1:2] flex cursor-pointer flex-col items-center justify-center gap-4 rounded-md border border-base-800 bg-base-850 p-4 text-base-300 shadow-inner hover:bg-base-800 hover:text-base-50"
                     >
                         {' '}
                         <img
                             className="size-14 rounded-lg"
-                            src={rmInfo.getNetworkById(chain?.id)?.icon}
+                            src={RMInfo.getNetworkById(chain?.id)?.icon}
                         />
                         {`Continue with ${chain?.name}`}
                     </a>

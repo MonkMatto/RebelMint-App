@@ -4,7 +4,7 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ showInfo }) => {
     const year = new Date().getFullYear()
     return (
-        <div className="mt-auto flex w-full items-start justify-between gap-4 rounded-md bg-base-100 bg-opacity-30 p-4 text-sm text-base-400">
+        <div className="mt-auto flex w-full items-start justify-between gap-4 rounded-md border-t border-base-800 bg-base-850 bg-opacity-30 p-4 text-sm text-base-400">
             <div className="flex w-full flex-col gap-4 md:w-1/3">
                 <a
                     href="https://docs.rebelmint.org"

@@ -6,7 +6,7 @@ const NavItem = ({ dest, label }: { dest: string; label: string }) => {
         <a
             href={dest}
             key={label}
-            className="flex items-center gap-2 px-4 py-2 text-base-400 transition-all hover:cursor-pointer hover:text-base-950"
+            className="flex items-center gap-2 px-4 py-2 text-base-500 transition-all hover:cursor-pointer hover:text-base-200"
         >
             {label}
         </a>

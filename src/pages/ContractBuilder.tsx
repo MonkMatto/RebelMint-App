@@ -11,7 +11,7 @@ import { setPageTitle } from '../util/setPageTitle'
 import ChainGallery from '../components/ChainGallery'
 import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
-import { RMInfo } from '../RebelMint/src/contract/ChainsData'
+import { RMInfo } from '../RebelMint/src/contract/RMInfo'
 
 const versions = ['v0j0'] as const
 type Version = (typeof versions)[number]
@@ -20,10 +20,9 @@ const ContractBuilderPage = () => {
     setPageTitle('New Shop')
     const { address, chain, isConnected } = useAccount()
     const { open } = isConnected ? useWeb3Modal() : { open: () => {} }
-    const rmInfo = new RMInfo()
     const { chain: chainParam } = useParams()
     const chainId = chainParam
-        ? rmInfo.getNetworkByName(chainParam as string)?.chainId
+        ? RMInfo.getNetworkByName(chainParam as string)?.chainId
         : chain?.id
 
     const { data: walletClient } = useWalletClient({ chainId: chainId })
@@ -101,7 +100,7 @@ const ContractBuilderPage = () => {
     }
 
     if (!isConnected || !chain || chain?.id !== chainId) {
-        const intendedChain = rmInfo.getNetworkByName(chainParam)
+        const intendedChain = RMInfo.getNetworkByName(chainParam)
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi text-9xl font-bold text-textcol">
                 <NavBar hasConnector />
