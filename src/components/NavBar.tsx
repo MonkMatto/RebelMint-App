@@ -15,7 +15,7 @@ const NavItem = ({ dest, label }: { dest: string; label: string }) => {
 
 export const NavBar = ({ hasConnector }: { hasConnector?: boolean }) => {
     return (
-        <div className="absolute left-0 right-0 top-0 z-20 h-24 w-full p-3">
+        <div className="absolute left-0 right-0 top-0 z-20 h-24 w-full p-3 text-base">
             <div className="h-18 flex max-h-24 w-full items-center justify-start gap-2 rounded-lg px-1 py-1">
                 <a
                     href="/"
