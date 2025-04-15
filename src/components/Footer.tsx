@@ -9,13 +9,13 @@ const Footer: React.FC<FooterProps> = ({ showInfo }) => {
                 <a
                     href="https://docs.rebelmint.org"
                     target="_blank"
-                    className="w-fit underline hover:text-base-900"
+                    className="w-fit underline hover:text-base-50"
                 >
                     Documentation
                 </a>
                 <span>
                     By using RebelMint you accept the{' '}
-                    <a href="/tos" className="underline hover:text-base-900">
+                    <a href="/tos" className="underline hover:text-base-50">
                         Terms Of Use
                     </a>
                 </span>
@@ -26,7 +26,7 @@ const Footer: React.FC<FooterProps> = ({ showInfo }) => {
                     <a
                         href="https://github.com/MonkMatto/RebelMint"
                         target="_blank"
-                        className="hover:text-base-900 hover:underline"
+                        className="hover:text-base-50 hover:underline"
                     >
                         Learn more
                     </a>

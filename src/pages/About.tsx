@@ -4,22 +4,22 @@ import { setPageTitle } from '../util/setPageTitle'
 
 export const About = () => {
     setPageTitle('About')
-    const headerClass = 'text-3xl font-bold'
+    const headerClass = 'text-3xl text-base-200 font-bold'
     const paragraphClass = 'text-lg font-light'
     const itemClass =
-        'text-base-950 bg-base-50 p-10 flex flex-col gap-8 rounded-lg'
+        'text-base-50 bg-base-800 p-10 flex flex-col gap-8 rounded-lg'
     return (
         <div className="flex h-fit min-h-[100svh] w-full flex-col gap-8 text-wrap bg-base-900 p-4 pt-24 font-satoshi font-bold text-textcol md:px-24">
             <NavBar />
-            <div className="mt-12 flex w-full flex-col gap-8 rounded-lg bg-base-50 p-10 text-base-950">
+            <div className="mt-12 flex w-full flex-col gap-8 rounded-lg bg-base-800 p-10 text-base-50">
                 <h1 id="rebelmint-manifesto" className="text-7xl font-bold">
                     RebelMint Manifesto
                 </h1>
                 <p className="text-lg font-medium">
-                    Listen up, rebels. This isn’t your average, 
-                    play-it-safe, hand-holding NFT platform that censors 
-                    artists for a fee. This is RebelMint, where we’re ripping 
-                    up the rulebooks and putting the power in your hands.
+                    Listen up, rebels. This isn’t your average, play-it-safe,
+                    hand-holding NFT platform that censors artists for a fee.
+                    This is RebelMint, where we’re ripping up the rulebooks and
+                    putting the power in your hands.
                 </p>
             </div>
             <div className="grid h-fit w-full grid-cols-1 gap-8 lg:grid-cols-2 2xl:grid-cols-3">
@@ -30,9 +30,9 @@ export const About = () => {
                     <p className={paragraphClass}>
                         We made the tools so you can use them however you want.
                         Want to make edgy shit? Political shit? F’kin shit up,
-                        shit? RebelMint doesn’t censor shit! You’re the
-                        artist and creator, not us. Push whatever boundaries you
-                        want, give ‘em hell.
+                        shit? RebelMint doesn’t censor shit! You’re the artist
+                        and creator, not us. Push whatever boundaries you want,
+                        give ‘em hell.
                     </p>
                 </div>
                 <div className={itemClass}>
@@ -43,7 +43,7 @@ export const About = () => {
                         Sick of platforms treating you like a cash cow, cutting
                         into your take with fees or mint charges? Not here. You
                         create, you sell and earn, you keep it all. No fees, no
-                        hidden charges, no middlemen, no bullshit. Artists ⇿ 
+                        hidden charges, no middlemen, no bullshit. Artists ⇿
                         Supporters.
                     </p>
                 </div>
@@ -99,8 +99,7 @@ export const About = () => {
                         do you want to split it up and send funds all over? Our
                         contracts let you send mint money where you want. Tokens
                         can set different payout accounts, and you can change
-                        ‘em whenever you want. It’s your crypto, your
-                        choice.
+                        ‘em whenever you want. It’s your crypto, your choice.
                     </p>
                 </div>
 
@@ -121,12 +120,12 @@ export const About = () => {
                         Gas Prices That Don’t Bite
                     </h2>
                     <p className={paragraphClass}>
-                        You can choose to launch your contract on mainnet or an 
-                        L2. The template contracts are the same and they’re 
-                        built so gas fees won’t drain your wallet. Sharing art 
-                        and sending a message shouldn’t cost an arm and a leg. 
-                        If you want to use the tech on a different chain, go 
-                        for it. More power to you.{' '}
+                        You can choose to launch your contract on mainnet or an
+                        L2. The template contracts are the same and they’re
+                        built so gas fees won’t drain your wallet. Sharing art
+                        and sending a message shouldn’t cost an arm and a leg.
+                        If you want to use the tech on a different chain, go for
+                        it. More power to you.{' '}
                     </p>
                 </div>
 
@@ -136,10 +135,10 @@ export const About = () => {
                     </h2>
                     <p className={paragraphClass}>
                         See our logo with the hand throwing horns? That’s us
-                        telling the establishment we’re here to disrupt.
-                        We’re loud, we’re proud, and we’re here to
-                        turn heads. Make your statement, scream it until they
-                        can’t ignore you. Be seen, be heard.
+                        telling the establishment we’re here to disrupt. We’re
+                        loud, we’re proud, and we’re here to turn heads. Make
+                        your statement, scream it until they can’t ignore you.
+                        Be seen, be heard.
                     </p>
                 </div>
                 <div className={itemClass}>
@@ -150,28 +149,27 @@ export const About = () => {
                         Create as many or as few tokens as your bloody heart
                         desires. Update your work whenever you want. Change
                         prices, swap currencies, alter traits—go wild. The only
-                        thing you can’t do on RebelMint is increase a
-                        token’s max mintable once it’s selling. And if you don’t
-                        like that, good for you! Go fork the repo and do
-                        whatever the f’ck you want.
+                        thing you can’t do on RebelMint is increase a token’s
+                        max mintable once it’s selling. And if you don’t like
+                        that, good for you! Go fork the repo and do whatever the
+                        f’ck you want.
                     </p>
                 </div>
             </div>
 
-            <div className="mt-10 flex w-full flex-col gap-8 rounded-lg bg-base-50 p-10 text-base-950">
-                    <h2 id="your-choice" className="text-5xl font-bold">
-                        Your Choice
-                    </h2>
-                    <p className={paragraphClass}>
-                        So, are you with us? RebelMint isn’t for the timid.
-                        It’s for the urchin rebel punk metal hippie troublemaker
-                        renegades who’re tired of the fake celebrity pump and
-                        dump corporate bullshit. Join in or get out of the way,
-                        because we’ve got the tech, we’re giving it to everyone,
-                        and there’s no stopping us.
-                    </p>
+            <div className="mt-10 flex w-full flex-col gap-8 rounded-lg bg-base-800 p-10 text-base-50">
+                <h2 id="your-choice" className="text-5xl font-bold">
+                    Your Choice
+                </h2>
+                <p className={paragraphClass}>
+                    So, are you with us? RebelMint isn’t for the timid. It’s for
+                    the urchin rebel punk metal hippie troublemaker renegades
+                    who’re tired of the fake celebrity pump and dump corporate
+                    bullshit. Join in or get out of the way, because we’ve got
+                    the tech, we’re giving it to everyone, and there’s no
+                    stopping us.
+                </p>
             </div>
-
 
             <Footer />
         </div>
