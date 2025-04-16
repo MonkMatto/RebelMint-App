@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { RebelMintTokenManager } from '../RebelMint/src/RebelMint'
 import { NavBar } from '../components/NavBar'
 import { setPageTitle } from '../util/setPageTitle'
@@ -9,9 +9,9 @@ import ChainGallery from '../components/ChainGallery'
 
 const TokenManager = () => {
     setPageTitle('Token Manager')
-    const navigate = useNavigate()
     const { chain, contractAddress } = useParams()
     const [input, setInput] = useState('')
+
     const network = RMInfo.getNetworkByName(chain as string)
     const chainId = network?.chainId
 
@@ -74,7 +74,7 @@ const TokenManager = () => {
                         onSubmit={(e) => {
                             e.preventDefault()
                             if (input) {
-                                navigate(`/tokenmanager/${chain}/${input}`)
+                                window.location.href = `/tokenmanager/${chain}/${input}`
                             }
                         }}
                     >
