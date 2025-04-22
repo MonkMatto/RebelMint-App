@@ -12,6 +12,8 @@ import {
     polygonAmoy,
     optimism,
     optimismSepolia,
+    zora,
+    zoraSepolia,
     Chain,
 } from 'wagmi/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -45,6 +47,8 @@ const allChains = [
     optimismSepolia,
     shape,
     shapeSepolia,
+    zora,
+    zoraSepolia,
 ]
 
 export function Web3ModalProvider({ children }: { children: ReactNode }) {
