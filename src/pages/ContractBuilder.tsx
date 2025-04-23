@@ -8,35 +8,30 @@ import {
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { NavBar } from '../components/NavBar'
 import { setPageTitle } from '../util/setPageTitle'
+import ChainGallery from '../components/ChainGallery'
 import Footer from '../components/Footer'
+import { useParams } from 'react-router-dom'
+import { RMInfo } from '../RebelMint/src/contract/RMInfo'
 
 const versions = ['v0j0'] as const
 type Version = (typeof versions)[number]
 
 const ContractBuilderPage = () => {
     setPageTitle('New Shop')
-    const { address, chain, chainId } = useAccount()
-    const { open } = useWeb3Modal()
+    const { address, chain, isConnected } = useAccount()
+    const { open } = isConnected ? useWeb3Modal() : { open: () => {} }
+    const { chain: chainParam } = useParams()
+    const chainId = chainParam
+        ? RMInfo.getNetworkByName(chainParam as string)?.chainId
+        : chain?.id
 
-    const { data: walletClient } = useWalletClient({ chainId: chain?.id })
+    const { data: walletClient } = useWalletClient({ chainId: chainId })
     const [version, setVersion] = useState<Version>(versions[0])
     const [acceptedTerms, setAcceptedTerms] = useState(false)
     const [contractAddress, setContractAddress] = useState<string | null>(null)
     const [recentHash, setRecentHash] = useState<`0x${string}` | undefined>(
         undefined
     )
-    const getSubdomain = () => {
-        const host = window.location.hostname
-        const parts = host.split('.')
-
-        if (parts[0].length > 2) {
-            return parts[0]
-        }
-
-        return null
-    }
-
-    const subdomain = getSubdomain()
 
     const scanURL =
         chain && chain.blockExplorers ? chain.blockExplorers.default.url : ''
@@ -94,42 +89,43 @@ const ContractBuilderPage = () => {
         console.log(scanURL + '/tx/' + recentHash)
     }, [receipt, recentHash])
 
-    if (!address || !chain || !chainId) {
+    if (!chainParam) {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi text-9xl font-bold text-textcol">
-                <NavBar />
-                <div className="fixed right-0 top-0 m-5">
-                    <w3m-network-button />
-                </div>
+                <NavBar hasConnector />
+                <h1 className="w-full text-xl">Contract Builder</h1>
+                <ChainGallery baseDestination={'createcontract'} />
+            </div>
+        )
+    }
+
+    if (!isConnected || !chain || chain?.id !== chainId) {
+        const intendedChain = RMInfo.getNetworkByName(chainParam)
+        return (
+            <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi text-9xl font-bold text-textcol">
+                <NavBar hasConnector />
                 <span className="text-justify leading-[10rem]">
                     <span
                         onClick={() => {
                             open()
                         }}
                     >
-                        Please Connect Wallet with
+                        Please Connect Wallet with{' '}
                     </span>
-                    <a
-                        href={
-                            subdomain == 'test'
-                                ? 'https://sepolia.basescan.org/'
-                                : 'https://basescan.org/'
-                        }
-                        target="_blank"
-                    >
+                    <a href={intendedChain?.explorer} target="_blank">
                         <span className="text-red-500">
-                            {subdomain == 'test' ? ' Base Sepolia ' : ' Base '}
+                            {intendedChain?.displayName}
                         </span>
                     </a>
-                    <span>to use the RebelMint Contract Creator</span>
+                    <span> to use the RebelMint Contract Creator</span>
                 </span>
             </div>
         )
     }
 
     return (
-        <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 bg-bgcol p-24 pt-32 font-satoshi text-textcol">
-            <NavBar />
+        <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 bg-bgcol p-24 pb-0 pt-32 font-satoshi text-textcol">
+            <NavBar hasConnector />
             {!recentHash && (
                 <div className="flex h-fit w-full flex-col gap-5">
                     <h1 className="mt-5 w-full text-5xl font-bold">
@@ -184,7 +180,7 @@ const ContractBuilderPage = () => {
                         }
                         className="h-fit w-full rounded-lg border-2 border-bgcol bg-textcol p-5 font-bold text-bgcol disabled:invert-[30%]"
                     >
-                        {`Create Contract on ${chain.name}`}
+                        {`Create Contract on ${chain?.name}`}
                     </button>
                 </div>
             )}
@@ -192,7 +188,7 @@ const ContractBuilderPage = () => {
                 <div className="mt-24 flex h-fit w-full flex-col items-center justify-center gap-5 p-5">
                     <h1>{`Please do not refresh or leave the page`}</h1>
                     <div className="flex h-24 w-52 items-center justify-center rounded-lg bg-yellow-200 text-center text-bgcol">
-                        {`Deploying Contract to ${chain.name}...`}
+                        {`Deploying Contract to ${chain?.name}...`}
                     </div>
                 </div>
             )}
@@ -215,7 +211,7 @@ const ContractBuilderPage = () => {
                             {`View Contract On ${chain && chain.blockExplorers ? chain.blockExplorers.default.name : ''}`}
                         </div>
                     </a>
-                    <a href={`/editcontract/${contractAddress}`}>
+                    <a href={`/editcontract/${chainParam}/${contractAddress}`}>
                         <div className="flex h-24 w-fit items-center justify-center rounded-lg border-2 border-textcol bg-textcol p-5 text-center text-3xl font-bold text-bgcol">
                             {`Next Step: Set Up Details`}
                             <img src="arrowright.svg" />

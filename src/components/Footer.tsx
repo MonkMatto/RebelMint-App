@@ -4,18 +4,18 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ showInfo }) => {
     const year = new Date().getFullYear()
     return (
-        <div className="flex w-full items-start justify-between gap-4 rounded-md bg-base-100 bg-opacity-30 p-4 text-sm text-base-400">
+        <div className="mt-auto flex w-full items-start justify-between gap-4 rounded-md border-t border-base-800 bg-base-850 bg-opacity-30 p-4 text-sm text-base-400">
             <div className="flex w-full flex-col gap-4 md:w-1/3">
                 <a
                     href="https://docs.rebelmint.org"
                     target="_blank"
-                    className="w-fit underline hover:text-base-900"
+                    className="w-fit underline hover:text-base-50"
                 >
                     Documentation
                 </a>
                 <span>
                     By using RebelMint you accept the{' '}
-                    <a href="/tos" className="underline hover:text-base-900">
+                    <a href="/tos" className="underline hover:text-base-50">
                         Terms Of Use
                     </a>
                 </span>
@@ -26,7 +26,7 @@ const Footer: React.FC<FooterProps> = ({ showInfo }) => {
                     <a
                         href="https://github.com/MonkMatto/RebelMint"
                         target="_blank"
-                        className="hover:text-base-900 hover:underline"
+                        className="hover:text-base-50 hover:underline"
                     >
                         Learn more
                     </a>

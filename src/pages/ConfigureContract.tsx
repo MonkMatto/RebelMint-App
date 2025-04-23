@@ -36,7 +36,7 @@ function sanitizeAndEscapeInput(inputString: string) {
 
 const ConfigureContract = () => {
     setPageTitle('Collection Setup')
-    const { contractAddress } = useParams()
+    const { contractAddress, chain: chainParam } = useParams()
     const navigate = useNavigate()
     const { writeContractAsync, data: hash } = useWriteContract()
     const { address } = useAccount()
@@ -105,7 +105,7 @@ const ConfigureContract = () => {
     if (contractAddress) {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col gap-5 text-wrap bg-bgcol p-4 font-satoshi font-bold text-textcol md:p-24">
-                <NavBar />
+                <NavBar hasConnector />
                 <h1 className="text-3xl">Collection Details</h1>
                 <div className="flex w-full flex-col gap-5">
                     <div className="flex flex-col gap-2">
@@ -173,7 +173,7 @@ const ConfigureContract = () => {
                     {isConfirmed && (
                         <a
                             className="w-fit self-end rounded-lg bg-textcol p-4 text-bgcol disabled:invert-[30%]"
-                            href={`/tokenmanager/${contractAddress}`}
+                            href={`/tokenmanager/${chainParam}/${contractAddress}`}
                         >{`Next Step: Create Tokens for ${form.title} ->`}</a>
                     )}
                 </div>

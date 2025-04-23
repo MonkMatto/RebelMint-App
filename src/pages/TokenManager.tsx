@@ -1,24 +1,34 @@
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { RebelMintTokenManager } from '../RebelMint/src/RebelMint'
 import { NavBar } from '../components/NavBar'
 import { setPageTitle } from '../util/setPageTitle'
 import Footer from '../components/Footer'
-import { RMInfo } from '../RebelMint/src/contract/ChainsData'
+import { RMInfo } from '../RebelMint/src/contract/RMInfo'
+import ChainGallery from '../components/ChainGallery'
 
 const TokenManager = () => {
     setPageTitle('Token Manager')
-    const navigate = useNavigate()
     const { chain, contractAddress } = useParams()
     const [input, setInput] = useState('')
-    const rmInfo = new RMInfo()
-    const network = rmInfo.getNetworkByName(chain as string)
+
+    const network = RMInfo.getNetworkByName(chain as string)
     const chainId = network?.chainId
+
+    if (!chain) {
+        return (
+            <div className="flex h-fit min-h-[100svh] w-full flex-col items-center gap-5 text-wrap bg-bgcol p-24 font-satoshi font-bold text-textcol">
+                <NavBar hasConnector />
+                <h1 className="text-5xl">Token Manager</h1>
+                <ChainGallery baseDestination={'tokenmanager'} />
+            </div>
+        )
+    }
 
     if (contractAddress) {
         return (
             <div className="flex h-fit min-h-[100svh] w-full flex-col gap-5 text-wrap bg-base-900 p-4 pt-32 font-satoshi font-bold text-textcol md:p-24">
-                <NavBar />
+                <NavBar hasConnector />
                 <span className="mt-12 px-2 font-normal">
                     <span>
                         {
@@ -55,32 +65,36 @@ const TokenManager = () => {
         )
     } else {
         return (
-            <div className="flex h-fit min-h-[100svh] w-full flex-col items-center justify-center gap-5 text-wrap bg-bgcol p-32 font-satoshi text-9xl font-bold text-textcol">
-                <NavBar />
-                <form
-                    className="mb-4 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
-                    onSubmit={(e) => {
-                        e.preventDefault()
-                        if (input) {
-                            navigate(`/tokenmanager/${input}`)
-                        }
-                    }}
-                >
-                    <input
-                        spellCheck={false}
-                        className="h-[3rem] w-[23rem] rounded-md border-2 border-textcol bg-bgcol p-2 text-textcol md:w-[26rem]"
-                        placeholder="Contract Address"
-                        onChange={(e) => {
-                            setInput(e.target.value)
+            <div className="flex h-fit min-h-[100svh] w-full flex-col items-center justify-center gap-5 text-wrap bg-bgcol p-32 pb-0 font-satoshi text-9xl font-bold text-textcol">
+                <NavBar hasConnector />
+                <div className="flex h-[80svh] flex-col items-center justify-center gap-4">
+                    <h1 className="w-full text-3xl">Token Manager</h1>
+                    <form
+                        className="mb-4 flex flex-col items-center gap-2 text-sm md:text-base lg:flex-row"
+                        onSubmit={(e) => {
+                            e.preventDefault()
+                            if (input) {
+                                window.location.href = `/tokenmanager/${chain}/${input}`
+                            }
                         }}
-                    ></input>
-                    <button
-                        type="submit"
-                        className="h-[3rem] w-[23rem] rounded-lg bg-textcol text-bgcol hover:invert-[5%] active:invert-[10%] md:w-[26rem] lg:w-fit lg:px-4"
                     >
-                        Load Tokens
-                    </button>
-                </form>
+                        <input
+                            spellCheck={false}
+                            className="address-input"
+                            placeholder="Contract Address"
+                            onChange={(e) => {
+                                setInput(e.target.value)
+                            }}
+                        ></input>
+                        <button
+                            type="submit"
+                            disabled={!input}
+                            className="submit-button px-2 py-3"
+                        >
+                            Load Tokens
+                        </button>
+                    </form>
+                </div>
                 <Footer />
             </div>
         )
