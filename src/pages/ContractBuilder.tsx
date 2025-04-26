@@ -12,7 +12,6 @@ import ChainGallery from '../components/ChainGallery'
 import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
 import { RMInfo } from '../RebelMint/src/contract/RMInfo'
-import { ArrowRight } from 'lucide-react'
 
 const versions = ['v0j0'] as const
 type Version = (typeof versions)[number]
@@ -215,7 +214,7 @@ const ContractBuilderPage = () => {
                     <a href={`/editcontract/${chainParam}/${contractAddress}`}>
                         <div className="flex h-24 w-fit items-center justify-center rounded-lg border-2 border-textcol bg-textcol p-5 text-center text-3xl font-bold text-bgcol">
                             {`Next Step: Set Up Details`}
-                            <ArrowRight className="ml-2" />
+                            <img src="arrowright.svg" />
                         </div>
                     </a>
                 </div>
