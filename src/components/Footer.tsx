@@ -4,7 +4,7 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ showInfo }) => {
     const year = new Date().getFullYear()
     return (
-        <div className="mt-auto flex w-full items-start justify-between gap-4 rounded-md border-t border-base-800 bg-base-850 bg-opacity-30 p-4 text-sm text-base-400">
+        <div className="mt-auto flex w-full flex-col items-start justify-between gap-4 rounded-md border-t border-base-800 bg-base-850 bg-opacity-30 p-4 text-sm text-base-400 md:flex-row">
             <div className="flex w-full flex-col gap-4 md:w-1/3">
                 <a
                     href="https://docs.rebelmint.org"
@@ -21,7 +21,7 @@ const Footer: React.FC<FooterProps> = ({ showInfo }) => {
                 </span>
             </div>
             {showInfo && (
-                <span className="flex w-full justify-center gap-2 text-center md:w-1/3">
+                <span className="flex justify-center gap-2 text-center md:w-1/3 md:text-left">
                     This app was built with the RebelMint SDK.{' '}
                     <a
                         href="https://github.com/MonkMatto/RebelMint"
